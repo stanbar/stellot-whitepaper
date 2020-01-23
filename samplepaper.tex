@@ -26,32 +26,38 @@
 % First names are abbreviated in the running head.
 % If there are more than two authors, 'et al.' is used.
 %
-\institute{Faculty of Electronics, Telecommunications and Informatics\\Princeton University, Princeton NJ 08544, USA \and
-Gdansk University of TechnologSpringer Heidelberg, Tiergartenstr. 17, 69121 Heidelberg, Germany\\
-Gdansk, Poland
-\email{lncs@springer.com}\\
-\url{http://www.springer.com/gp/computer-science/lncs} \and
-ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
-\email{s160518@student.pg.edu.gda.pl\{abc,lncs\}@uni-heidelberg.de}}
+\institute{Faculty of Electronics, Telecommunications and Informatics\\
+Gdansk University of Technology\\
+Gdansk, Poland\\
+\email{s160518@student.pg.edu.gda.pl}}
 %
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-The abstract should briefly summarize the contents of the paper in
+Blockchain as a technology provides two major properties that are highly desirable in applications like election voting. Those properties are immutability which ensures that no one can modify the data once wrote into a blockchain, there might be concerns if this property is truly desirable for everyone, but I assume this system is designed for healthy subjects. Another property is transparency that allows everyone to validates the election correctness and calculate results on its own. In consequences, one can distrust authorities, while trust voting resultThe abstract should briefly summarize the contents of the paper in
 15--250 words.
 
-\keywords{First keyword  \and Second keyword \and Another keyword.}
+\keywords{BlockchainFirst keyword \and Tokenization \and VotingSecond keyword \and Another keyword.}
 \end{abstract}
 %
 %
 %
-\section{First Section}
+\section{IntroduFirst Section}
 \subsection{A Subsection Sample}
-Please note that the first paragraph of a section or subsection is
+Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveragingPlease note that the first paragraph of a section or subsection is
 not indented. The first paragraph that follows a table, figure,
 equation etc. does not need an indent, either.
 
-Subsequent paragraphs, however, are indented.
+Subsequent paragraphs, however, already existing infrastructure indented.
+
+\subsection{Tokenization}
+Currently, the most popular application of smart contracts is token issuance. Those tokens can represent any arbitrary asset either in the virtual or physical world. One can create tokens for funding his startup; hence token represent company shares. This pattern is called ICO (Initial Coin Offering) or STO (Security Token Offering), alluding to IPO (Initial Public Offering). Another one can issue tokens backed by a physical asset like national currency; bypassing slow and expensive international transfers and taxes from exchanging cryptocurrencies with national currencies. This pattern is called Stable Coin. There are many other token applications particularly vote as a token used here in this survey.
+
+\subsection{Stellar platform}
+Ethereum provides high flexibility, mainly because of its fully-fledged smart contracts ecosystem, particularly it’s Turing-complete Solidity language. Stellar on the other hand is a blockchain platform specializing just in one application that is asset tokenization. Thus becoming easier, cheaper and faster than general-purpose Ethereum smart contracts. Here I will try to fit this simple election system into Stellar functionality boundaries.
+
+\section{System proposition}
+
 
 \subsubsection{Sample Heading (Third Level)} Only two levels of
 headings should be numbered. Lower level headings remain unnumbered;
