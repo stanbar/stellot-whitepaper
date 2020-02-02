@@ -6,7 +6,6 @@
 %
 \usepackage{graphicx}
 % Used for displaying a sample figure. If possible, figure files should
-
 % be included in EPS format.
 %
 % If you use the hyperref package, please uncomment the following line
@@ -42,6 +41,10 @@ Blockchain as a technology provides two major properties that are highly desirab
 %
 %
 %
+\section{State of the art}
+Breaking the Encryption Scheme of the Moscow Internet Voting
+System ~\cite{ref_moscow_voting}
+
 \section{Introduction}
 Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveraging already existing infrastructure.
 
@@ -122,12 +125,6 @@ Demo represents the 2019 Polish parliamentary election, but for the sake of simp
 \section{Results}
 The proposed system prototype satisfies core expectations. Authorities can not falsify election results. There is a limit on how much votes can be issued. Each vote is recorded on Blockchain, and everyone can calculate election results without trusting authorities. What we get is a system where Blockchain is the only subject who needs to be trusted. Both government and electoral can distrust each other, while still perform valid elections (assuming that they trust Blockchain). We confirmed that Blockchain can be used not only for cryptocurrencies but also in assets tokenization and building dapps (decentralized applications). Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is transaction fees, were estimated costs of 2019 Polish parliamentary election to 254.48zł. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queueing overhead. Doing it would also allow to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such system on different blockchain platforms.
 
-
-
-\subsubsubsection{Sample Heading (Third Level)} Only two levels of
-headings should be numbered. Lower level headings remain unnumbered;
-they are formatted as run-in headings.
-
 \paragraph{Sample Heading (Fourth Level)}
 The contribution should contain no more than four levels of
 headings. Table~\ref{tab1} gives a summary of all heading levels.
@@ -197,6 +194,18 @@ and a homepage~\cite{ref_url1}. Multiple citations are grouped
 % \bibliography{mybibliography}
 %
 \begin{thebibliography}{8}
+\bibiterm{ref_moscow_voting}
+P. Gaudry, A. Golovnev: Breaking the Encryption Scheme of the Moscow Internet Voting System.
+SoK: Verifiability Notions for E-Voting Protocols
+Veronique Cortier ´
+∗
+, David Galindo†
+, Ralf Kusters ¨
+‡
+, Johannes Muller ¨
+‡
+, Tomasz Truderung§
+
 \bibitem{ref_article1}
 Author, F.: Article title. Journal \textbf{2}(5), 99--110 (2016)
 
