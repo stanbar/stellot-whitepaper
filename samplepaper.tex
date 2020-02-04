@@ -34,7 +34,7 @@ Gdansk, Poland\\
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-Blockchain as a technology provides two major properties that are highly desirable in applications like election voting. Those properties are immutability which ensures that no one can modify the data once wrote into a blockchain, there might be concerns if this property is truly desirable for everyone, but I assume this system is designed for healthy subjects. Another property is transparency that allows everyone to validates the election correctness and calculate results on its own. In consequences, one can distrust authorities, while trust voting results.
+Blockchain as a technology provides two major properties that are highly desirable in applications like election voting. Those properties are immutability which ensures that no one can modify the data once wrote into a blockchain, there might be concerns if this property is truly desirable for everyone, but I assume this system is designed for healthy subjects. Another property is transparency that allows everyone to validates the election correctness and calculate results on its own. In consequences, one can distrust authorities, while trust voting results. 
 
 \keywords{Blockchain \and Tokenization \and Voting}
 \end{abstract}
@@ -43,6 +43,17 @@ Blockchain as a technology provides two major properties that are highly desirab
 %
 \section{State of the art}
 Breaking the Encryption Scheme of the Moscow Internet Voting
+[Motivation](https://eng.ambcrypto.com/ethereum-blockchain-voting-sets-precedent-with-moscow-elections/)
+Why it was not used until now ? It would be unacceptable to let someone (hacker) reveal who voted on who. And it's impossible before Blockchain.
+
+[Why blockchain-based voting could threaten democracy](https://www.computerworld.com/article/3430697/why-blockchain-could-be-a-threat-to-democracy.html)
+
+[Secret Voting](https://blog.enigma.co/secret-voting-smart-contracts-with-enigma-a-walkthrough-5bb976164753)
+
+[Veryfying Identity](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3375436)
+
+[On Collusion](https://vitalik.ca/general/2019/04/03/collusion.html)
+
 System ~\cite{ref_moscow_voting}
 
 \section{Introduction}
@@ -82,6 +93,11 @@ The goal of the system is to provide the highest level of transparency while kee
 
 Ideally, the system should only consist of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized identity provider and issuance/authorization server. Unfortunately proposed system requires a central authorization server for vote token issuance, thus becoming a single point
 of failure. This flaw has been addressed at the end of this survey. There are also many proposals on how to achieve identification in the blockchain ecosystem, but I won’t use it in this survey.
+
+\subsection{Scalability}
+
+Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claims that Blockchains face [trillema](https://github.com/ethereum/wiki/wiki/Sharding-FAQ#this-sounds-like-theres-some-kind-of-scalability-trilemma-at-play-what-is-this-trilemma-and-can-we-break-through-it) which allows them to choose only two of three properties: Decentralization, Security and Scalability. And here is the place where variety many Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offers higher Scalability on the cost of Decentralization and Security. Stellar is one of such solutions. 
+At the date of writing, Ethereum is able to process 15 transactions per second (TPS).
 
 \subsection{Authorization}
 To protect from double token issuance, the proposed system links each token issuance transaction with a user identifier e.g. national identification number. Link is achieved by attaching HMAC of user identifiers in the transaction MEMO field. Thus all information required to perform authorization is contained in the blockchain itself. In consequence, such a system becomes more transparent. We use HMAC of user identifiers to prevent private data exposure, while still allowing to perform authorization check on a public blockchain. The user is eligible to issue token only if his user identifier HMAC is not present in any issuance transaction made from the distribution account.
@@ -195,12 +211,9 @@ and a homepage~\cite{ref_url1}. Multiple citations are grouped
 %
 \begin{thebibliography}{8}
 
-\bibiterm{ref_moscowvoting}
 \bibitem{ref_moscow_voting}
-Author, P. Gaudry, Author A. Golovnev: Breaking the Encryption Scheme of the 
-Moscow Internet Voting System
+Author, P. Gaudry, Author A. Golovnev: Breaking the Encryption Scheme of the Moscow Internet Voting System
 
-\bibiterm{ref_verifiability}
 \bibitem{ref_verifiability}
 Author, V. Cortier, Author. D. Galindo, Author. R. Kusters, Author. J. Muller, Author. T. Truderung: SoK:
 Verifiability Notions for E-Voting Protocols
