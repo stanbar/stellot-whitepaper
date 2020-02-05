@@ -42,6 +42,13 @@ Blockchain as a technology provides two major properties that are highly desirab
 
 Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} Secret Voting ~\cite{tam_2018} On Collusion ~\cite{buterin_2019}
 
+\section{E-Voting system requirements}
+\textbf{privacy}: to na kogo zagłosowałem powinien być sekretem dla wszystkich. Miejsca gdzie będę szukał odpowiedzi to Homomorphic encryption, Mix-Networks oraz Secure multi-party computation. Może uda się to osiągnąć dzięki [Shamir's Secret Sharing].
+\textbf{end-to-end verifiability}: każdy wyborca powinien być w stanie zweryfikować wyniki wyborów oraz to czy jego głos został uwzględniony w wyborach.
+\textbf{coercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
+\textbf{availability}: system powinien być odporny na atak DoS.
+
+
 \section{Introduction}
 Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveraging already existing infrastructure.
 
@@ -58,7 +65,7 @@ The goal of the system is to provide the highest level of transparency while kee
 \subsection{Architecture}
 \begin{figure}
 \begin{verbatim}
-                         +---------------+
+                        +---------------+
        +----------------+ Client Webapp +--------+
        |                +--------+------+        |
        |                         |               |
@@ -82,7 +89,7 @@ of failure. This flaw has been addressed at the end of this survey. There are al
 
 \subsection{Scalability}
 
-Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claims that Blockchains face trillema ~\cite{ethereum} which allows them to choose only two of three properties: Decentralization, Security and Scalability. And here is the place where variety of different many Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offers higher Scalability on the cost of Decentralization and Security. Stellar is one of such solutions. 
+Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claims that Blockchains face trillema ~\cite{ethereum} which allows them to choose only two of three properties: Decentralization, Security and Scalability. And here is the place where variety of different Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offers higher Scalability on the cost of Decentralization and Security. Stellar is one of such solutions. 
 At the date of writing, Ethereum is able to process 15 transactions per second (TPS). Whereas Stellar is able to process 1000 operations per seconds (OPS). 
 
 \subsection{Authorization}
