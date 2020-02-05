@@ -43,7 +43,11 @@ Blockchain as a technology provides two major properties that are highly desirab
 Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} Secret Voting ~\cite{tam_2018} On Collusion ~\cite{buterin_2019}
 
 \section{E-Voting system requirements}
-\textbf{privacy}: to na kogo zagłosowałem powinien być sekretem dla wszystkich. Miejsca gdzie będę szukał odpowiedzi to Homomorphic encryption, Mix-Networks oraz Secure multi-party computation. Może uda się to osiągnąć dzięki [Shamir's Secret Sharing].
+\textbf{privacy}: relacja głosująca-oddany głos musi pozostać tajemnicą, tak by wyborcy mogli wyrażać swoją wolę bez obawy o
+bycie zastraszonym.to na kogo zagłosowałem powinien być sekretem dla wszystkich. Miejsca gdzie będę szukał odpowiedzi to Homomorphic encryption, Mix-Networks oraz Secure multi-party computation. Może uda się to osiągnąć dzięki [Shamir's Secret Sharing].
+\textbf{Accuracy}: Results should be accurate. No error allowed.
+\textbf{Eligibility}: Only votes made by eligable votes are taken into account.
+\textbf{Un-reusability}: 
 \textbf{end-to-end verifiability}: każdy wyborca powinien być w stanie zweryfikować wyniki wyborów oraz to czy jego głos został uwzględniony w wyborach.
 \textbf{coercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
 \textbf{availability}: system powinien być odporny na atak DoS.
