@@ -40,22 +40,25 @@ Blockchain as a technology provides two major properties that are highly desirab
 
 \section{State of the art}
 
-Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} Secret Voting ~\cite{tam_2018} On Collusion ~\cite{buterin_2019}
+Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} Secret Voting ~\cite{tam_2018} On Collusion ~\cite{buterin_2019} E-voting with blockchain: An e-voting protocol with
+decentralisation and voter privacy ~\cite{hardwick2018voting} Blockchain for democratic voting: how blockchain could cast of
+voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshetri2018blockchain} The future of democracy: Blockchain voting ~\cite{osgood2016future} An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting}
 
 \section{E-Voting system requirements}
-\textbf{privacy}: relacja głosująca-oddany głos musi pozostać tajemnicą, tak by wyborcy mogli wyrażać swoją wolę bez obawy o
-bycie zastraszonym. Miejsca gdzie będę szukał odpowiedzi to Homomorphic encryption, Mix-Networks oraz Secure multi-party computation. Może uda się to osiągnąć dzięki [Shamir's Secret Sharing].
-\textbf{Accuracy}: Results should be accurate. No error allowed.
+\textbf{privacy}: relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy.
 \textbf{Eligibility}: Only votes made by eligable votes are taken into account.
 \textbf{Fairness}: No partial results are available until end of election.
 \textbf{Completeness}: All correct votes should be counted. 
 \textbf{Accuracy}: Results should be accurate. No error allowed.
 \textbf{Personal verifiability}: Each user should be able to verify if his vote has been counted correctly.
-\textbf{Universal verifiability}: Each user should be able to calculate election results on thier own.Un-reusability}: 
-\textbf{end-to-end verifiability}: każdy wyborca powinien być w stanie zweryfikować wyniki wyborów oraz to czy jego głos został uwzględniony w wyborach.
+\textbf{Universal verifiability}: Each user should be able to calculate election results on their own.
 \textbf{coercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
 \textbf{availability}: system powinien być odporny na atak DoS.
 \textbf{Immutability}: Noone can change thier mind after vote is made.
+
+\section{Privacy}
+
+Miejsca gdzie będę szukał odpowiedzi to Homomorphic encryption, Mix-Networks, oraz Secure multi-party computatio, n. Może uda się to osiągnąć dzięki [Shamir's Secret Sharing].
 
 \section{Introduction}
 Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveraging already existing infrastructure.
