@@ -20,7 +20,7 @@
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
-\author{Stanisław Barański}
+\author{Stanisław Barański, Julian Szymanski, ktoś z alicante}
 
 % First names are abbreviated in the running head.
 % If there are more than two authors, 'et al.' is used.
@@ -35,16 +35,20 @@ Gdansk, Poland\\
 \begin{abstract}
 Blockchain as a technology provides two major properties that are highly desirable in applications like election voting. Those properties are immutability which ensures that no one can modify the data once wrote into a blockchain. Another property is transparency that allows everyone to validates the election correctness and calculate results on its own. In consequences, one can distrust authorities, while trust voting results. 
 
-\keywords{Blockchain \and Tokenization \and Voting}
+%JS
+wypunktować co jest wkładem artykułu
+
+\keywords{Blockchain \and Tokenization \and Voting} %JS  e? i? Voting 
 \end{abstract}
 
-\section{State of the art}
 
-Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} Secret Voting ~\cite{tam_2018} On Collusion ~\cite{buterin_2019} E-voting with blockchain: An e-voting protocol with
-decentralisation and voter privacy ~\cite{hardwick2018voting} Blockchain for democratic voting: how blockchain could cast of
-voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshetri2018blockchain} The future of democracy: Blockchain voting ~\cite{osgood2016future} An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting}
+\section{Introduction}
+Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveraging already existing infrastructure.
 
-\section{E-Voting system requirements}
+%\subsection{Tokenization}
+Currently, the most popular application of smart contracts is token issuance. Those tokens can represent any arbitrary asset either in the virtual or physical world. One can create tokens for funding his startup; hence token represent company shares. This pattern is called ICO (Initial Coin Offering) or STO (Security Token Offering), alluding to IPO (Initial Public Offering). Another one can issue tokens backed by a physical asset like national currency; bypassing slow and expensive international transfers and taxes from exchanging cryptocurrencies with national currencies. This pattern is called Stable Coin. There are many other token applications particularly vote as a token used here in this survey.
+
+ \subsection{E-Voting system requirements}
 \textbf{privacy}: relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy.
 \textbf{Eligibility}: Only votes made by eligable votes are taken into account.
 \textbf{Fairness}: No partial results are available until end of election.
@@ -55,23 +59,32 @@ voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshe
 \textbf{coercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
 \textbf{availability}: system powinien być odporny na atak DoS.
 \textbf{Immutability}: Noone can change thier mind after vote is made.
+%JS czy to wszystko czy jesli zostanie spelnione to mozna wdrazac w panstwe,
+%w dyskusji trzeba sie do tego odniesc  
 
-\section{Privacy}
+\section{State of the art}
 
-Miejsca gdzie będę szukał odpowiedzi to Homomorphic encryption, Mix-Networks, oraz Secure multi-party computatio, n. Może uda się to osiągnąć dzięki [Shamir's Secret Sharing].
+Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} Secret Voting ~\cite{tam_2018} On Collusion ~\cite{buterin_2019} E-voting with blockchain: An e-voting protocol with
+decentralisation and voter privacy ~\cite{hardwick2018voting} Blockchain for democratic voting: how blockchain could cast of
+voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshetri2018blockchain} The future of democracy: Blockchain voting ~\cite{osgood2016future} An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting}
 
-\section{Introduction}
-Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveraging already existing infrastructure.
 
-\subsection{Tokenization}
-Currently, the most popular application of smart contracts is token issuance. Those tokens can represent any arbitrary asset either in the virtual or physical world. One can create tokens for funding his startup; hence token represent company shares. This pattern is called ICO (Initial Coin Offering) or STO (Security Token Offering), alluding to IPO (Initial Public Offering). Another one can issue tokens backed by a physical asset like national currency; bypassing slow and expensive international transfers and taxes from exchanging cryptocurrencies with national currencies. This pattern is called Stable Coin. There are many other token applications particularly vote as a token used here in this survey.
+
+\section{Privacy - co tu ma być? } %JS
+Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
+
+
+
+\section{System proposition}
+
+
+
+The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. I decided to use a government authorized polish system
+“Profil Zaufany” as an identity provider, with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. I assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. Vote token exchanging is permitted intentionally and treated as a feature. It’s no different from the traditional election system where some people delegate their vote decision to one family member who tells them what should they vote on. In this system, it’s possible to send the token and let the receiver to perform vote on thy behalf. This decision possibly allows unhealthy vote trading, so this feature can be easily prohibited by disabling manual path described in the following chapters. Stellar is capable of limiting users who are eligible to receive tokens, but I can not see any benefits from using it in proposed system, where user authentication is done by external service (Profil Zaufany), and authorization is done by our backend, which verifies if user is eligible for token issuance.
 
 \subsection{Stellar platform}
 Ethereum provides high flexibility, mainly because of its fully-fledged smart contracts ecosystem, particularly it’s Turing-complete Solidity language. Stellar on the other hand is a blockchain platform specializing just in one application that is asset tokenization. Thus becoming easier, cheaper and faster than general-purpose Ethereum smart contracts. Here I will try to fit this simple election system into Stellar functionality boundaries.
 
-\section{System proposition}
-The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. I decided to use a government authorized polish system
-“Profil Zaufany” as an identity provider, with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. I assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. Vote token exchanging is permitted intentionally and treated as a feature. It’s no different from the traditional election system where some people delegate their vote decision to one family member who tells them what should they vote on. In this system, it’s possible to send the token and let the receiver to perform vote on thy behalf. This decision possibly allows unhealthy vote trading, so this feature can be easily prohibited by disabling manual path described in the following chapters. Stellar is capable of limiting users who are eligible to receive tokens, but I can not see any benefits from using it in proposed system, where user authentication is done by external service (Profil Zaufany), and authorization is done by our backend, which verifies if user is eligible for token issuance.
 
 \subsection{Architecture}
 \begin{figure}
@@ -91,7 +104,7 @@ The goal of the system is to provide the highest level of transparency while kee
                     |                        |
                     +------------------------+
 \end{verbatim}
-\caption{Stelar based architecture}
+\caption{Stellar based architecture}
 \label{fig:ascii-box}
 \end{figure}
 
@@ -144,6 +157,10 @@ Demo represents the 2019 Polish parliamentary election, but for the sake of simp
 
 \section{Results}
 The proposed system prototype satisfies core expectations. Authorities can not falsify election results. There is a limit on how much votes can be issued. Each vote is recorded on Blockchain, and everyone can calculate election results without trusting authorities. What we get is a system where Blockchain is the only subject who needs to be trusted. Both government and electoral can distrust each other, while still perform valid elections (assuming that they trust Blockchain). We confirmed that Blockchain can be used not only for cryptocurrencies but also in assets tokenization and building dapps (decentralized applications). Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is transaction fees, were estimated costs of 2019 Polish parliamentary election to 254.48zł. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queueing overhead. Doing it would also allow to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such system on different blockchain platforms.
+
+\section{Discussion}
+%JS podkreslic zalety systemu, jakie funkcjonalnosci sie udalo zrealizowac, jakie nie jak je mozna skompensowac.
+
 
 
 %
