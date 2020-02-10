@@ -74,7 +74,14 @@ voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshe
 
 \section{Privacy - co tu ma być? } %JS
 Privacy seems to be the hardest problem to achieve. Especially where each transaction is saved on public database. There are some propositions on how to solve the problem. First one is to allow each voter to pick one authorization code which can then be attached into transaction making it valid. Method which allows to achieve exactly this is called ANDOS(All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}(23.9 All-or-Nothing Disclosure of Secrets). Unfortunatelly it has some unacceptable flaw i.e. each voter has to communicate with all other voters, which seems to be highly unpractical in e.g parlament election, but might be acceptable in smaller contextes. Another proposition on achieving privacy by using blind signatures ~\cite{applied_cryptography}(5.3 Blind Signatures), this protocol require some kind of interactivity. 
-Alice create n * 100 transactions, where n is number of possible voters
+Alice create 1000 random vote transactions, each of them encrypt with different key. Bob ask Alice for 999 keys, so he can validate them. 
+- If any transaction is malicious (try to issue more than 1 Vote token, steal some lumens, perform any illegal operation), Alice losse her right to vote[, and needs to pay a fine].
+- If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the party she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote on her option.
+
+There are 0.1\% chance that, Alice will succeed cheating. 
+She may lie and force Bob to perform infinite many computations, performing some kind of DoS attack.
+
+ 
 Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
 
 
