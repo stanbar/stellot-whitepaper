@@ -34,10 +34,8 @@ Gdansk, Poland\\
 %
 \begin{abstract}
 We propose e-Voting system which satisfy transparency, audibility, verifiability and privacy. System is backed by open stellar blockchain, which turn outs to fits our needs.
-Voting backed by Stellar Blockchain. Auditable. Transparent.  Privacy. 
 
-%JS 
-wypunktować co jest wkładem artykułu
+%JS wypunktować co jest wkładem artykułu
 
 \keywords{Blockchain \and Tokenization \and Voting} %JS  e? i? Voting 
 \end{abstract}
@@ -51,7 +49,7 @@ Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offere
 %\subsection{Tokenization}
 Currently, the most popular application of smart contracts is token issuance. Those tokens can represent any arbitrary asset either in the virtual or physical world. One can create tokens for funding his startup; hence token represent company shares. This pattern is called ICO (Initial Coin Offering) or STO (Security Token Offering), alluding to IPO (Initial Public Offering). Another one can issue tokens backed by a physical asset like national currency; bypassing slow and expensive international transfers and taxes from exchanging cryptocurrencies with national currencies. This pattern is called Stable Coin. There are many other token applications particularly vote as a token used here in this survey.
 
- \subsection{E-Voting system requirements}
+\subsection{E-Voting system requirements}
 \textbf{Privacy}: relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
 \textbf{Eligibility}: Only votes made by eligable votes are taken into account.
 \textbf{Fairness}: No partial results are available until end of election.
@@ -74,9 +72,15 @@ voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshe
 
 
 \section{Privacy} %JS  - co tu ma być? SB - Opis zapewnienia prywatności
-Privacy seems to be the hardest problem to achieve. Especially where each transaction is saved on public database. There are some propositions on how to solve the problem. First one is to allow each voter to pick one authorization code which can then be attached into transaction making it valid. Method which allows to achieve exactly this is called ANDOS (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}(23.9 All-or-Nothing Disclosure of Secrets). Unfortunatelly it has some unacceptable flaw i.e. each voter has to communicate with all other voters, which seems to be highly unpractical in e.g parlament election, but might be acceptable in smaller contextes. Another proposition on achieving privacy by using blind signatures ~\cite{applied_cryptography}(5.3 Blind Signatures), this protocol require some kind of interactivity. 
-Alice create 1000 random vote transactions, each of them encrypt with different key. Bob ask Alice for 999 keys, so he can validate them. 
+Privacy seems to be the hardest problem to achieve. Especially where each transaction is saved on public database. There are some propositions on how to solve this problem. 
+
+First one is to allow each voter to pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called \textbf{ANDOS} (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunatelly it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It, which seems to be highly unpractical in public elections, but e.g parlament election, but might be acceptable in smaller contextes. 
+
+Another proposition on achieving privacy by using \textbf{blind signatures} ~\cite{applied_cryptography}(5.3 Blind Signatures), this protocol require some kind of interactivity. 
+Alice create n (e.g. 1000) random vote transactions, encrypt each of them encrypt with different key. Bob ask Alice for 999 keys, so he can decrypt and validate them, now:. 
+
 - If any transaction is malicious (try to issue more than 1 Vote token, steal some lumens, perform any illegal operation), Alice loss her right to vote[, and needs to pay a fine].
+
 - If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the party she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote on her option.
 
 There are two problems with such method.
