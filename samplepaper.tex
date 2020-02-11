@@ -82,7 +82,7 @@ Alice create \textit{n} (e.g. 1000) random vote transactions, encrypt each of th
 
 - If any transaction is malicious (try to issue more than 1 Vote token, perform any illegal operation), Alice loss her right to vote[, and gets punished].
 
-- If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the optionparty she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote following her option.
+- If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the option she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote following her option.
 
 Since all the votes are random, the issuer can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect the voter with his vote. In fact he doesn't know anything about such transaction, but since he checked and validated randomly selected (n-1)/n*100\% previous transactions, he can assume with high probability that this one is also not malicious.
 
@@ -91,16 +91,14 @@ First, there are 1/n*100\% chance that, Alice will succeed cheating. In case whe
 
 Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, and force Issuer to perform infinite many computations, performing some kind of DoS attack, but it could be mitigated by introducing some kind of limits.
 
+We decide to make some modification where
+Since Stellar uses ed25519 signature scheme which seems to not support blinded signatures, we slightly modify the concept of encrypted signature as a signature on the hash on transaction  
 
 Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 
 Since Stellar uses ed25519 signature scheme which seems to not support blinded signatures, we use 
 
-
-
-
 %Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
-
 
 
 \section{System proposition}
