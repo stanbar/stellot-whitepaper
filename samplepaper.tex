@@ -78,21 +78,21 @@ First one is to allow each voter to pick one authorization code which can then b
 
 Another proposition on achieving privacy by using \textbf{blind signatures} ~\cite{applied_cryptography}. This protocol requires some kind of interactivity. 
 Let's assume that Alice is voter who want to issue vote. Bob is the issuer.
-Alice create \textit{n} (e.g. 1000) random vote transactions, encrypt each of them with different key. By "random vote" we understand vote on random option. Bob ask Alice for n-1 keys, so he can decrypt and validate them, now: 
+Alice create \textit{\(n\)n} (e.g. 1000) \textit{random vote} \footnote{By \textit{random vote} we understand vote on random option} transactions, encrypt each of them with different key and send them to Bob. He. Bob ask Alice for \(n-1\)n-1 keys, so he can decrypt and validate them, now: 
+\begin{itemize}
+ \item- If any transaction is malicious (try to issue more than 1 Vote token, perform any illegal operation), Alice loss her right to vote[, and gets punished].
 
-- If any transaction is malicious (try to issue more than 1 Vote token, perform any illegal operation), Alice loss her right to vote[, and gets punished].
-
-- If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the option she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote following her option.
-
-Since all the votes are random, the issuer can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect the voter with his vote. In fact he doesn't know anything about such transaction, but since he checked and validated randomly selected (n-1)/n*100\% previous transactions, he can assume with high probability that this one is also not malicious.
+ \item- If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the option she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote following her option.
+\end{itemize}
+Since all the votes are random, the issuer can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect the voter with his vote. In fact he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}(n-1)/n*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
 
 There are two problems with such method.
-First, there are 1/n*100\% chance that, Alice will succeed cheating. In case where she steal all vote tokens, the election must be remade, because no more tokens can be issued from Issuer account. Additionally no consequences can be made to such attacker, because we've get rid of authentication during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from Issuer for malicious transactions, she may just not respond, preventing from revealing the content of such malicious transaction. In such case Issuer should block on the request, preventing Alice from "taking another try in lottery".
+First, there are \(\frac{1}{n}*100\%\)1/n*100\% chance that, Alice will succeed cheating. In case where she steal all vote tokens, the election must be remade, because no more tokens can be issued from Issuer account. Additionally no consequences can be made to such attacker, because we've get rid of authentication during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from Issuer for malicious transactions, she may just not respond, preventing from revealing the content of such malicious transaction. In such case Issuer should block on the request, preventing Alice from "taking another try in lottery".
 
 Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, and force Issuer to perform infinite many computations, performing some kind of DoS attack, but it could be mitigated by introducing some kind of limits.
 
-Since Stellar uses ed25519 signature scheme, which seems to not support blinded signatures(understood as valid signatures on encrypted transactions), we slightly modify the concept of blinencrypted signature, as a signature on the hash on transaction without knowing origin transaction., When Bob request Alice for encrypt the (n-1) transactions, he actually request for raw transaction. Verification can be done decrypting transaction would mean sending raw transaction (which can be verified by computing and comparing hashes). 
-% SB Refer to stellar implementation details, so probably move it to other place  
+Since Stellar uses ed25519 signature scheme, which seems to not support blinded signatures(understood as valid signatures on encrypted transactions), we slightly modify the concept of blind signature, as a signature on the hash on transaction without knowing origin transaction. When Bob request Alice for encrypt the (n-1) transactions, he actually request for raw transaction. Verification can be done by computing and comparing hashes. 
+% SB Refer to stellar implementation details, so probably move it to other place
 
 Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 
