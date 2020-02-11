@@ -91,12 +91,11 @@ First, there are 1/n*100\% chance that, Alice will succeed cheating. In case whe
 
 Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, and force Issuer to perform infinite many computations, performing some kind of DoS attack, but it could be mitigated by introducing some kind of limits.
 
-We decide to make some modification where
-Since Stellar uses ed25519 signature scheme which seems to not support blinded signatures, we slightly modify the concept of encrypted signature as a signature on the hash on transaction  
+Since Stellar uses ed25519 signature scheme, which seems to not support blinded signatures(understood as valid signatures on encrypted transactions), we slightly modify the concept of blinencrypted signature, as a signature on the hash on transaction without knowing origin transaction., When Bob request Alice for encrypt the (n-1) transactions, he actually request for raw transaction. Verification can be done decrypting transaction would mean sending raw transaction (which can be verified by computing and comparing hashes). 
+% SB Refer to stellar implementation details, so probably move it to other place  
 
 Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 
-Since Stellar uses ed25519 signature scheme which seems to not support blinded signatures, we use 
 
 %Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
 
