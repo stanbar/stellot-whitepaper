@@ -49,20 +49,7 @@ Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offere
 %\subsection{Tokenization}
 Currently, the most popular application of smart contracts is token issuance. Those tokens can represent any arbitrary asset either in the virtual or physical world. One can create tokens for funding his startup; hence token represent company shares. This pattern is called ICO (Initial Coin Offering) or STO (Security Token Offering), alluding to IPO (Initial Public Offering). Another one can issue tokens backed by a physical asset like national currency; bypassing slow and expensive international transfers and taxes from exchanging cryptocurrencies with national currencies. This pattern is called Stable Coin. There are many other token applications particularly vote as a token used here in this survey.
 
-\subsection{E-Voting system requirements}
-\textbf{Privacy}: relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
-\textbf{Eligibility}: Only votes made by eligable votes are taken into account.
-\textbf{Fairness}: No partial results are available until end of election.
-\textbf{Completeness}: All correct votes should be counted. 
-\textbf{Accuracy}: Results should be accurate. No error allowed.
-\textbf{Personal verifiability}: Each user should be able to verify if his vote has been counted correctly.
-\textbf{Universal verifiability}: Each user should be able to calculate election results on their own.
-\textbf{coercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
-\textbf{availability}: system powinien być odporny na atak DoS.
-\textbf{Immutability}: Noone can change thier mind after vote is made.
-%JS czy to wszystko czy jesli zostanie spelnione to mozna wdrazac w panstwe,
-%w dyskusji trzeba sie do tego odniesc  
-
+% merge with introduction
 \section{State of the art}
 
 Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} Secret Voting ~\cite{tam_2018} On Collusion ~\cite{buterin_2019} E-voting with blockchain: An e-voting protocol with
@@ -70,36 +57,29 @@ decentralisation and voter privacy ~\cite{hardwick2018voting} Blockchain for dem
 voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshetri2018blockchain} The future of democracy: Blockchain voting ~\cite{osgood2016future} An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting} 
 
 
+\subsection{E-Voting system requirements}
+\textbf{VerifabilityTransparency}: Each user should be able to verify if his vote has been counted correctly.
+\textbf{Trustless}: Each user should be able to compute results on it's own.
+\textbf{Immutability}: Noone can change thier mind after vote is made.
 
-\section{Privacy} %JS  - co tu ma być? SB - Opis zapewnienia prywatności
-Privacy seems to be the hardest problem to achieve. Especially where each transaction is saved on public database. There are some propositions on how to solve this problem. 
+\textbf{AuthorizationEligibility}: Only votes made by eligable votes are taken into account.
+\textbf{Completeness}: All correct votes should be counted. 
+\textbf{Accuracy}: Results should be accurate. No error allowed.
+\textbf{Personal verifiability}: Each user should be able to verify if his vote has been counted correctly.
+\textbf{Universal verifiability}: Each user should be able to calculate election results on their own.
 
-First one is to allow each voter to privately pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called \textbf{ANDOS} (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
+\textbf{Privacy}: relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
 
-Another proposition on achieving privacy is \textbf{blind signatures} ~\cite{applied_cryptography}. This technique make it possible to sign encrypted(blinded) transaction and use the signature with decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it and send back to Alice. In result, Alice get valid signature without revealing her vote option. When Alice publish such transaction, Bob can not connect the previously signed transaction with Alice. 
-There is one problem, what If Alice prepare malicious transaction, send it to Bob, who then blindly sign the transaction? What is even worst, is the fact that Bob can not punish Alice, since he has already broke link between her identity and such malicious transaction during blind signature.
+\textbf{Ccoercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
+\textbf{availability}: system powinien być odporny na atak DoS.
+\textbf{Fairness}: No partial results are available until end of election.
 
-Solution to this problem requires interactive protocol.
-Alice creates \(n\) (e.g. 100) \textit{random votes} \footnote{by \textit{random vote} we understand vote on random option}, encrypts each of them with different key and sends them to Bob. He asks(challenge) Alice for \(n-1\) keys, so he can decrypt and validate them, now: 
-\begin{itemize}
- \item If any transaction is malicious (try to issue more than 1 Vote token, perform any illegal operation), Alice loss her right to vote[, and gets punished].
+%JS czy to wszystko czy jesli zostanie spelnione to mozna wdrazac w panstwe,
+%w dyskusji trzeba sie do tego odniesc 
 
- \item If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the option she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote following her option.
-\end{itemize}
-Since all the votes are random, Bobthe issuer can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect the Alicevoter with her vote opinionis vote. In fact he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
 
-There are two problems with such method.
-First, there are \(\frac{1}{n}*100\%\) chance that, Alice will succeed cheating. In case where she steal all vote tokens, the election must be remade, because no more tokens can be issued from Issuer account. Additionally no consequences can be made to such attacker, because we gets rid of authentication during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from BobIssuer for malicious transactions, she may just not respond, preventing from revealing the content of such transaction. In such case BobIssuer should block on the request, preventing Alice from "taking another try in lottery".
-
-Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, and forcingce BobIssuer to perform infinite many computations, achieving performing some kind of DoS attack, but it could be mitigated by introducing some kind of limits.
-
-Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
-
-%Here is the  blind signature implementation for ECDSA [https://github.com/oleganza/bitcoin-papers/blob/master/BitcoinBlindSignatures.md]
-%Another post on Schnorr/DSA https://blog.cryptographyengineering.com/a-note-on-blind-signature-schemes/
-% My question: https://crypto.stackexchange.com/questions/77558/ed25519-blind-signature
-
-%Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
+\section{Verifability, Trustless and Immutability}
+%Thats why we use Blockchain
 
 
 \section{System proposition}
@@ -150,6 +130,36 @@ Assets in stellar blockchain, are divisible to 7 decimal points. This is an unwa
 
 \subsection{Token distribution}
 Each user who authenticates itself by Profil Zaufany and authorizes by our issuance/authorization server will be able to issue 1 voting token (seen by the user as 0.0000001). One can do with this token whatever he wants, ideally votes for one of the eligible parties, but nothing prevents him from transferring this token to any other account, such as a family member. Since it already happens in the current traditional voting system, it should not be considered as a system flaw, rather as a feature.
+
+\section{Privacy} %JS  - co tu ma być? SB - Opis zapewnienia prywatności
+Privacy seems to be the hardest problem to achieve. Especially where each transaction is saved on public database. There are some propositions on how to solve this problem. 
+
+First one is to allow each voter to privately pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called \textbf{ANDOS} (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
+
+Another proposition on achieving privacy is \textbf{blind signatures} ~\cite{applied_cryptography}. This technique make it possible to sign encrypted(blinded) transaction and use the signature with decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it and send back to Alice. In result, Alice get valid signature without revealing her vote option. When Alice publish such transaction, Bob can not connect the previously signed transaction with Alice. 
+There is one problem, what If Alice prepare malicious transaction, send it to Bob, who then blindly sign the transaction? What is even worst, is the fact that Bob can not punish Alice, since he has already broke link between her identity and such malicious transaction during blind signature.
+
+Solution to this problem requires interactive protocol.
+Alice creates \(n\) (e.g. 100) \textit{random votes} \footnote{by \textit{random vote} we understand vote on random option}, encrypts each of them with different key and sends them to Bob. He asks(challenge) Alice for \(n-1\) keys, so he can decrypt and validate them, now: 
+\begin{itemize}
+ \item If any transaction is malicious (try to issue more than 1 Vote token, perform any illegal operation), Alice loss her right to vote[, and gets punished].
+
+ \item If all of them are correct, he signs the missing transaction and sends it back to Alice. She check if the transaction contains the option she wanted to vote on, if not, she repeat the process, until she gets the transaction with vote following her option.
+\end{itemize}
+Since all the votes are random, Bob can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote opinion. In fact he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
+
+There are two problems with such method.
+First, there are \(\frac{1}{n}*100\%\) chance that, Alice will succeed cheating. In case where she steal all vote tokens, the election must be remade, because no more tokens can be issued from Issuer account. Additionally no consequences can be made to such attacker, because we gets rid of authentication during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from Bob for malicious transactions, she may just not respond, preventing from revealing the content of such transaction. In such case Bob should block on the request, preventing Alice from "taking another try in lottery".
+
+Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, forcing Bob to perform infinite many computations, achieving DoS attack, but it could be mitigated by introducing some kind of limits.
+
+Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
+
+%Here is the  blind signature implementation for ECDSA [https://github.com/oleganza/bitcoin-papers/blob/master/BitcoinBlindSignatures.md]
+%Another post on Schnorr/DSA https://blog.cryptographyengineering.com/a-note-on-blind-signature-schemes/
+% My question: https://crypto.stackexchange.com/questions/77558/ed25519-blind-signature
+
+%Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
 
 \subsection{Voting Paths}
 Our system allows two paths of voting: simplified and manual. In manual path, the user already possesses a stellar account and wants to take control of the whole process, which involves creating trustline to distribution account and issuing vote token. Simplified path create a new keypair on the frontend side, not revealing the private key to the backend. Client prepare one ACID transaction that includes five operations:
