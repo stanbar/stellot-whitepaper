@@ -74,11 +74,13 @@ voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshe
 \section{Privacy} %JS  - co tu ma być? SB - Opis zapewnienia prywatności
 Privacy seems to be the hardest problem to achieve. Especially where each transaction is saved on public database. There are some propositions on how to solve this problem. 
 
-First one is to allow each voter to pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called \textbf{ANDOS} (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
+First one is to allow each voter to privately pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called \textbf{ANDOS} (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
 
-Another proposition on achieving privacy by using \textbf{blind signatures} ~\cite{applied_cryptography}. This protocol requires some kind of interactivity. 
+Another proposition on achieving privacy by using \textbf{blind signatures} ~\cite{applied_cryptography}. This technique make it possible to sign blinded/encrypted(blinded) transaction and use the signature with on unblinded/decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it, and send back to Alice. In result, Alice get valid signature without revealing her vote option. When Alice publish such transaction, Bob can not connect the previously signed transaction with Alice, because those transactions are completely different 
+
+This protocol requires some kind of interactivity. 
 Let's assume that Alice is voter who want to issue vote. Bob is the issuer.
-Alice create \(n\) (e.g. 1000) \textit{random vote} \footnote{By \textit{random vote} we understand vote on random option} transactions, encrypt each of them with different key and send them to Bob. He ask Alice for \(n-1\) keys, so he can decrypt and validate them, now: 
+Alice create \(n\) (e.g. 100) \textit{random vote} \footnote{By \textit{random vote} we understand vote on random option} transactions, encrypt each of them with different key and send them to Bob. He ask Alice for \(n-1\) keys, so he can decrypt and validate them, now: 
 \begin{itemize}
  \item If any transaction is malicious (try to issue more than 1 Vote token, perform any illegal operation), Alice loss her right to vote[, and gets punished].
 
