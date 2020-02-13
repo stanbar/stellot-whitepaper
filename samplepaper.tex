@@ -58,19 +58,15 @@ voter fraud ~\cite{casado2018blockchain} Blockchain-enabled e-voting ~\cite{kshe
 
 
 \subsection{E-Voting system requirements}
-\textbf{VerifabilityTransparency}: Each user should be able to verify if his vote has been counted correctly.
+\textbf{Verifability}: Each user should be able to verify if his vote has been counted correctly.
 \textbf{Trustless}: Each user should be able to compute results on it's own.
 \textbf{Immutability}: Noone can change thier mind after vote is made.
 
-\textbf{AuthorizationEligibility}: Only votes made by eligable votes are taken into account.
-\textbf{Completeness}: All correct votes should be counted. 
-\textbf{Accuracy}: Results should be accurate. No error allowed.
-\textbf{Personal verifiability}: Each user should be able to verify if his vote has been counted correctly.
-\textbf{Universal verifiability}: Each user should be able to calculate election results on their own.
+\textbf{Authorization}: Only votes made by eligable votes are taken into account.
 
 \textbf{Privacy}: relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
 
-\textbf{Ccoercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
+\textbf{Coercion resistance}: Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
 \textbf{availability}: system powinien być odporny na atak DoS.
 \textbf{Fairness}: No partial results are available until end of election.
 
@@ -158,6 +154,7 @@ Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 %Here is the  blind signature implementation for ECDSA [https://github.com/oleganza/bitcoin-papers/blob/master/BitcoinBlindSignatures.md]
 %Another post on Schnorr/DSA https://blog.cryptographyengineering.com/a-note-on-blind-signature-schemes/
 % My question: https://crypto.stackexchange.com/questions/77558/ed25519-blind-signature
+% sodium implementaiton https://github.com/dchest/tweetnacl-js/blob/5bf1ff5fa15e89ae249401b0d5aa54c5c5955041/nacl.js#L1076
 
 %Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
 
