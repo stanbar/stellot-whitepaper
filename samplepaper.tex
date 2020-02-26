@@ -173,14 +173,24 @@ Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 %Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
 
 \subsection{Voting process}
-As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of under laying blockchain technology. Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider. Voter chooses one of the available options and webapp client takes care of rest of the operations. In order to achieve vote anonymity, we useEspecially follows privacy rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare \textit{n} number of random transactions. where each of them uses different newly created publickey keypairIn order  which allow  create a new keypair on the frontend side, not revealing the private key to the backend. Client prepare one ACID transaction that includes five operations:
-1. Fund newly created account with the minimum required amount of lumens to process next operations. 1 XLM (cryptocurrency used in the stellar blockchain) for minimum account balance, 0.5 XLM for creating a trustline.
-2. Create trustline to vote token asset issuer.
-3. Send 1 vote token from distribution account to newly created account.
-4. Send 1 vote token from newly created account to one of the chosen parties.
-5. Distrust from vote token asset issuer in order to merge account.
-6. Merge newly created account to distribution account, bringing back
-remained XLM.
+As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of under laying blockchain technology. Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider. Voter chooses one of the available options and webapp client takes care of rest of the operations. In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare \textit{n} number of random transactions, where each of them uses different newly created publickey as a receiver address. Such transactions consists of six operations:
+\begin{itemize}
+\item 1. Fund newly created account with the minimum required amount of lumens to process next operations. 1 XLM (cryptocurrency used in the stellar blockchain) for minimum account balance, 0.5 XLM for creating a trustline.
+\item 2. Create trustline to vote token asset issuer.
+\item 3. Send 1 vote token from distribution account to newly created account.
+\item 4. Send 1 vote token from newly created account to one of the chosen parties.
+\item 5. Distrust from vote token asset issuer in order to merge account.
+\item 6. Merge newly created account to distribution account, bringing back remained XLM.
+\end{itemize}
+
+
+Voter start interactive session with Issuer where they proceed  exchange transactions and   Chaum Blind Signature \cite{blindsignatureschaum}. This process consists of 6 steps:
+\begin{itemize}
+\item Voter request Issuer for blinding key
+\end{itemize}
+Transaction is then blinded in order to follow Chaum Blind Signature scheme \cite{blindsignatureschaum}.
+This method requires some kind of interactivity 
+Here we take advantage of the fact that stellar transactions have ACID (atomicity, consistency, isolation, durability) properties. So no 
 The prepared transaction is then signed by a newly created account, send to the issuance/authorization server, which performs validation, sign and send it back to the client webapp. Now both issuance/authorization server and the voter can publish the transaction to the stellar network. The user of such path is completely abstracted from technology used underneath, while still leveraging all blockchain benefits. The simplified path could be enhanced by allowing the user to reveal his keypair, hence allowing him to send his vote token to another user, instead of voting on their own, same as on manual path. But just for sake of the proposed system, two separate paths are available.
 
 \subsection{Transaction Fees}
