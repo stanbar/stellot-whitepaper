@@ -33,7 +33,7 @@ Gdansk, Poland\\
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose e-voting system which satisfy transparency, audibility, verifiability and privacy. System is backed by open stellar blockchain, which turn outs to fits our needs.
+In this paper, we propose e-voting system which satisfy transparency, audibility, verifiability and privacy. System is backed by open stellar blockchain.
 
 %JS wypunktować co jest wkładem artykułu
 
@@ -194,7 +194,10 @@ In the backend, those environment variables are injected from .env file. In fron
 Now the application is ready to be published.
 
 \subsection{Fully Decentralized Blockchain Application}
-In the blockchain world in order to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example one could encode all eligible user addresses (or better hash of addresses) in smart contract and then allow redeeming vote token only to addresses which are present in there, very similar to traditional election system where all eligible voters are listed on paper, vote form is issued only if elector is present on such list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, i.e. ethereum oracle. To ensure immutability and integrity, such data can be hosted on IPFS (Content Addressed Network) where data is identified by its hash example.
+In the blockchain world in order to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example one could encode all eligible user addresses (or better hash of addresses) in smart contract and then allow redeeming vote token only to addresses which are present in there, very similar to traditional election system where all eligible voters are listed on paper. Ballot is issued only if elector is present on such list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such data can be hosted on IPFS (Content Addressed Network) where data is identified by its hash example.
+
+\section{System weakness}
+In our system, we assumed that Identity Provider and Issuance Server are honest actors. We assumed that we know the total number of eligible voters, and that only eligable voters are able to redeem tokens. The question is how can we know if the authorities doesn't publish falsify number of eliga who is eligable to redeem token  We relay on the fact that Issuance Server won't redeem tokens to bogus voters Identity Provider woncan not 
 
 \subsection{Demo}
 Demo represents the 2019 Polish parliamentary election, but for the sake of simplicity, the number of eligible voters equals 100. The created token is called Vote01122019. The demo can be accessed on https://voting.stasbar.com or locally
