@@ -80,9 +80,8 @@ Argues to not require TTP, instead introduce inspectors, and if they are corrupt
 \item \textbf{Authorization}: Only authorized voters can vote.
 \item \textbf{Un-reusability}: No one can vote more than once.
 \item \textbf{Privacy}: Relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
-\item \textbf{Coercion resistance}: It should be illegal to sell votes.Głos powinien być odporny na przekupstwo, tj. nie powinno być możliwe sprzedanie swojego głosu.
+\item \textbf{Coercion resistance}: It should be illegal to sell votes.
 
-\item \textbf{Un-reusability}: No one can vote more than once.
 \item \textbf{Fairness}: No partial results are available until end of election.
 \end{itemize}
 
@@ -130,8 +129,11 @@ of failure. This flaw has been addressed at the end of this survey. There are al
 Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claims that Blockchains face trillema ~\cite{ethereum} which allows them to choose only two of three properties: Decentralization, Security and Scalability. And here is the place where variety of different Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offers higher Scalability on the cost of Decentralization and Security. Stellar is one of such solutions. 
 At the date of writing, Ethereum is able to process 15 transactions per second (TPS). Whereas Stellar is able to process 1000 operations per seconds (OPS). 
 
+\section{Authentication}
+Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider.
+
 \subsection{Authorization}
-To protect from double token issuance, the proposed system links each token issuance transaction with a user identifier e.g. national identification number. Link is achieved by attaching HMAC of user identifiers in the transaction MEMO field. Thus all information required to perform authorization is contained in the blockchain itself. In consequence, such a system becomes more transparent. We use HMAC of user identifiers to prevent private data exposure, while still allowing to perform authorization check on a public blockchain. The user is eligible to issue token only if his user identifier HMAC is not present in any issuance transaction made from the distribution account.
+% how to check if user is eligable to perform vote, possible merge with auth and unreusability
 
 \subsection{Un-reusability}
 To protect from double token issuance, the proposed system links each token issuance transaction with a user identifier e.g. national identification number. Link is achieved by attaching HMAC of user identifiers in the transaction MEMO field. Thus all information required to perform authorization is contained in the blockchain itself. In consequence, such a system becomes more transparent. We use HMAC of user identifiers to prevent private data exposure, while still allowing to perform authorization check on a public blockchain. The user is eligible to issue token only if his user identifier HMAC is not present in any issuance transaction made from the distribution account.
@@ -173,6 +175,7 @@ Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 % sodium implementaiton https://github.com/dchest/tweetnacl-js/blob/5bf1ff5fa15e89ae249401b0d5aa54c5c5955041/nacl.js#L1076
 
 %Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
+
 
 \section{Voting process}
 As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of under laying blockchain technology. Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider. Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
