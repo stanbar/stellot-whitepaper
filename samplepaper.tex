@@ -103,22 +103,37 @@ Ethereum provides high flexibility, mainly because of its fully-fledged smart co
 \subsection{Architecture}
 \begin{figure}
 \begin{verbatim}
-                        +---------------+
-       +----------------+ Client Webapp +--------+
-       |                +--------+------+        |
-       |                         |               |
-+------v----------+              |               |
-| Identity        |              |            +--+---------+   +-v-------+
-| Provider        |              |            | Stellar    +---> Stellar |
-| (Profil Zaufany)|              |            | Horizon API|   | Network |
-+------+----------+              |            +--+---------+   +-^-------+
-       |            +------------v-----------+   |
-       |            | Issuance/Authorization |   |
-       +------------+        Server          +---+
-                    |                        |
-                    +------------------------+
+   +----+-----------------+    +-----------------+
+   -------+
+|  Identity        |     Provider  |
+| Issuance/Authorization |
+| Provider        <---->        Server      |    |
+| (Profil Zaufany)|    |
+|   +------------------^--+
+                      |     
++--------------^--+    +-^------------+   +----------+
+               |         |
+               |         |
+            +--v--------> Client Webapp +---> Stellar     +---> Stellar-v--+
+            | Client Webapp |
+            +-------^-------+
+                    |
+                    |
+  |           +------v---------+   | Horizon API |   | Network |
++---------------+
+             | Stellar     |
+             | Horizon API |
+             +------^------v--+
+                    |
+    +-------------+                |
+               +-----v----+
+| Issuance/Authorization |
+|               | Server tellar |
+         |
+      | Network |
+               +---------------+---------+
 \end{verbatim}
-\caption{Stellar based architecture}
+\caption{System architecturetellar based architecture}
 \label{fig:ascii-box}
 \end{figure} 
 
@@ -176,15 +191,7 @@ Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 
 \subsection{Voting process}
 As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of under laying blockchain technology. Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider. Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
-In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare transaction which consists of six operations:
-\begin{itemize}
-\item 1. Fund newly created account with the minimum required amount of lumens to process next operations. 1 XLM (cryptocurrency used in the stellar blockchain) for minimum account balance, 0.5 XLM for creating a trustline.
-\item 2. Create trustline to vote token asset issuer.
-\item 3. Send 1 vote token from distribution account to newly created account.
-\item 4. Send 1 vote token from newly created account to one of the chosen parties.
-\item 5. Distrust from vote token asset issuer in order to merge account.
-\item 6. Merge newly created account to distribution account, bringing back remained XLM.
-\end{itemize}
+In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare transaction which transfer 1 Vote Token from distribution account to one of the chosen parties.
 
 Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum} on ed25519 scheme. This process consists of 6 steps:
 \begin{itemize}
@@ -203,7 +210,7 @@ and send it back to Voter
 $s = s + a \pmod{q}$
 The pair (r’, s’) is a valid signature on transaction M.
 \end{itemize}
-Voter gets valid signature on transaction M, while Issuer knows only hash of transaction that is blinded by random factor \textit{b}.
+Voter gets valid signature on transaction M, while Issuer knows only blinded hash of transaction.
 This process can be visualized as:
 \begin{itemize}
     \item Voter prepare voting document.
@@ -213,13 +220,13 @@ This process can be visualized as:
     \item Put the document (ballot) into ballot box.
 \end{itemize}
 
-Since the signature on the ballot is valid, the vote gets correctly counted.
+Since the signature on the transaction (ballot) is valid, the transfer of 1 \textit{vote token} from distribution account to chosen party account successfully proceed.
 
 In order to protect the Issuer from signing an malicious transaction, we use cut-and-choose technique described in section \ref{cut-and-choose}.
 
 
 \subsection{Transaction Fees}
-Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on stellar network costs 0.00001XLM. EachManual path uses 1 operation (on the issuer side), whereas simplified path uses six operations. Let’s assume that no one possessed a stellar account yet, and everyone chose simplified path. In that case, each vote transaction costs 0.00006XLM. We know that the closing price for one Lumen in the day of the election was 0.229626 PLN. We can easly calculate 18470710 votes * 0.00006 XLM/vote * 0.229626 PLN/XLM = 254.48 PLN. Other operational transactions can be neglected due to very low influence on total sum.
+Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easly calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to very low influence on total sum.
 
 \subsection{Preparation}
 To create such an election, we need an issuer and distribution account, a new vote token, and accounts for all registered parties. Creating issuer and distribution account and creating new token is a multi-step process; well described on official stellar documentation Issuing Assets and Custom Assets Each party account is created similar to simplified path described above, but limited to the first two operations. See bootstrap.js for whole flow implementation. Variables that need to be propagated in backend and webpage code are:
