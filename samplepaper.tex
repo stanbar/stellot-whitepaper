@@ -183,12 +183,38 @@ As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistrati
 \item 6. Merge newly created account to distribution account, bringing back remained XLM.
 \end{itemize}
 
-Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum}. This process consists of 6 steps:
+Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum} on ed25519 scheme. This process consists of 6 steps:
 \begin{itemize}
-\item IssuerVoter generate random number \textit{r} and send it back to voter.
-\item User picks two random numbers \textit{a} and \textit{b} \textit{r} and send it back to voter.request Issuer for blinding key
-\item Voter transform the transaction by blinding key 
+\item Issuer generate random, number \textit{k} compute 
+\(r = g^k \pmod{p}\)
+and sends it back to Voter.
+\item Voter picks two random numbers \textit{a} and \textit{b}, use them to compute number \textit{e} as follows
+\[r’ = r*(g^a)*(y^b) \pmod{p}\]
+\[e’ = H(M || r’)\]
+\[e = e’ – b \pmod{q}\]
+and send it back to Issuer
+\item Issuer computes 
+\(s = ex + k \pmod{q}\)
+and send it back to Voter
+\item Voter computes 
+$s = s + a \pmod{q}$
+The pair (r’, s’) is a valid signature on transaction M.
 \end{itemize}
+Voter gets valid signature on transaction M, while Issuer knows only hash of transaction that is blinded by random factor \textit{b}. 
+This process can be visualized as:
+\begin{itemize}
+    \item Voter prepare voting document.
+    \item Place it into envelope along with carbon paper.
+    \item Ask Issuer to sign it.
+    \item Remove envelope and carbon paper.
+    \item Put the document (ballot) into ballot box.
+    
+    
+\end{itemize}
+
+Since the signature is valid, the voting gets correctly takedcounted 
+
+to placing ballot into envelope with carbon paper within it. And giving it to Issuer to make a signature on envelope
 Transaction is then blinded in order to follow 
 This method requires some kind of interactivity
 Here we take advantage of the fact that stellar transactions have ACID (atomicity, consistency, isolation, durability) properties. So no 
