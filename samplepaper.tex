@@ -200,7 +200,7 @@ and send it back to Voter
 $s = s + a \pmod{q}$
 The pair (r’, s’) is a valid signature on transaction M.
 \end{itemize}
-Voter gets valid signature on transaction M, while Issuer knows only hash of transaction that is blinded by random factor \textit{b}. 
+Voter gets valid signature on transaction M, while Issuer knows only hash of transaction that is blinded by random factor \textit{b}.
 This process can be visualized as:
 \begin{itemize}
     \item Voter prepare voting document.
@@ -208,11 +208,11 @@ This process can be visualized as:
     \item Ask Issuer to sign it.
     \item Remove envelope and carbon paper.
     \item Put the document (ballot) into ballot box.
-    
-    
 \end{itemize}
 
-Since the signature is valid, the voting gets correctly takedcounted 
+Since the signature on the ballot is valid, the vote gets correctly counted.
+
+There is one issue with this techunique. The Issuer has to sign blinded document. Malicious voter could give the Issuer any kind of document, and the Issuer would sign it blindly. In order to protect from this kind of vulnerability, we use method proposed in \cite{applied_cryptography}. 
 
 to placing ballot into envelope with carbon paper within it. And giving it to Issuer to make a signature on envelope
 Transaction is then blinded in order to follow 
