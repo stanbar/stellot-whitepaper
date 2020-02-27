@@ -1,4 +1,3 @@
-
 % This is samplepaper.tex, a sample chapter demonstrating the
 % LLNCS macro package for Springer Computer Science proceedings;
 % Version 2.20 of 2017/10/04
@@ -148,9 +147,11 @@ Privacy seems to be the hardest problem to achieve. Especially where each transa
 First one is to allow each voter to privately pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called \textbf{ANDOS} (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
 
 Another proposition on achieving privacy is \textbf{blind signatures} ~\cite{applied_cryptography}. This technique make it possible to sign encrypted(blinded) transaction and use the signature with decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it and send back to Alice. In result, Alice get valid signature without revealing her vote option. When Alice publish such transaction, Bob can not connect the previously signed transaction with Alice. 
-There is one problem, what If Alice prepare malicious transaction, send it to Bob, who then blindly sign the transaction? What is even worst, is the fact that Bob can not punish Alice, since he has already broke link between her identity and such malicious transaction during blind signature.
+There is one problem, Alice can prepare malicious transaction, send it to Bob, who then blindly sign the transaction. What is even worst, is the fact that Bob can not punish Alice, since he has already broke link between her identity and such malicious transaction during blind signature.
 
-Solution to this problem requires interactive protocol.
+\subsection{Solution to this problem requires interactive Cut-and-Choose protocol.}
+\label{cut-and-choose}
+
 Alice creates \(n\) (e.g. 100) \textit{random votes} \footnote{by \textit{random vote} we understand vote on random option}, encrypts each of them with different key and sends them to Bob. He asks(challenge) Alice for \(n-1\) keys, so he can decrypt and validate them, now: 
 \begin{itemize}
  \item If any transaction is malicious (try to issue more than 1 Vote token, perform any illegal operation), Alice loss her right to vote[, and gets punished].
@@ -159,7 +160,7 @@ Alice creates \(n\) (e.g. 100) \textit{random votes} \footnote{by \textit{random
 \end{itemize}
 Since all the votes are random, Bob can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote opinion. In fact he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
 
-There are two problems with such method.
+There are two problems with this method.
 First, there are \(\frac{1}{n}*100\%\) chance that, Alice will succeed cheating. In case where she steal all vote tokens, the election must be remade, because no more tokens can be issued from Issuer account. Additionally no consequences can be made to such attacker, because we gets rid of authentication during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from Bob for malicious transactions, she may just not respond, preventing from revealing the content of such transaction. In such case Bob should block on the request, preventing Alice from "taking another try in lottery".
 
 Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, forcing Bob to perform infinite many computations, achieving DoS attack, but it could be mitigated by introducing some kind of limits.
@@ -174,7 +175,8 @@ Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 %Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
 
 \subsection{Voting process}
-As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of under laying blockchain technology. Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider. Voter chooses one of the available options and webapp client takes care of rest of the operations. In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare \textit{n} number of random transactions, where each of them uses different newly created publickey as a receiver address. Such transactions consists of six operations:
+As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of under laying blockchain technology. Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider. Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
+In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare transaction which consists of six operations:
 \begin{itemize}
 \item 1. Fund newly created account with the minimum required amount of lumens to process next operations. 1 XLM (cryptocurrency used in the stellar blockchain) for minimum account balance, 0.5 XLM for creating a trustline.
 \item 2. Create trustline to vote token asset issuer.
@@ -213,16 +215,11 @@ This process can be visualized as:
 
 Since the signature on the ballot is valid, the vote gets correctly counted.
 
-There is one issue with this technique. The Issuer has to sign blinded document. Malicious voter could give the Issuer any kind of document, and the Issuer would sign it blindly. In order to protect from this kind of vulnerability, we use cut-and-choose technique.method proposed in \cite{applied_cryptography}. 
+In order to protect the Issuer from signing an malicious transaction, we use cut-and-choose technique described in section \ref{cut-and-choose}.
 
-to placing ballot into envelope with carbon paper within it. And giving it to Issuer to make a signature on envelope
-Transaction is then blinded in order to follow 
-This method requires some kind of interactivity
-Here we take advantage of the fact that stellar transactions have ACID (atomicity, consistency, isolation, durability) properties. So no 
-The prepared transaction is then signed by a newly created account, send to the issuance/authorization server, which performs validation, sign and send it back to the client webapp. Now both issuance/authorization server and the voter can publish the transaction to the stellar network. The user of such path is completely abstracted from technology used underneath, while still leveraging all blockchain benefits. The simplified path could be enhanced by allowing the user to reveal his keypair, hence allowing him to send his vote token to another user, instead of voting on their own, same as on manual path. But just for sake of the proposed system, two separate paths are available.
 
 \subsection{Transaction Fees}
-Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on stellar network costs 0.00001XLM. Manual path uses 1 operation (on the issuer side), whereas simplified path uses six operations. Let’s assume that no one possessed a stellar account yet, and everyone chose simplified path. In that case, each vote transaction costs 0.00006XLM. We know that the closing price for one Lumen in the day of the election was 0.229626 PLN. We can easly calculate 18470710 votes * 0.00006 XLM/vote * 0.229626 PLN/XLM = 254.48 PLN. Other operational transactions can be neglected due to very low influence on total sum.
+Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on stellar network costs 0.00001XLM. EachManual path uses 1 operation (on the issuer side), whereas simplified path uses six operations. Let’s assume that no one possessed a stellar account yet, and everyone chose simplified path. In that case, each vote transaction costs 0.00006XLM. We know that the closing price for one Lumen in the day of the election was 0.229626 PLN. We can easly calculate 18470710 votes * 0.00006 XLM/vote * 0.229626 PLN/XLM = 254.48 PLN. Other operational transactions can be neglected due to very low influence on total sum.
 
 \subsection{Preparation}
 To create such an election, we need an issuer and distribution account, a new vote token, and accounts for all registered parties. Creating issuer and distribution account and creating new token is a multi-step process; well described on official stellar documentation Issuing Assets and Custom Assets Each party account is created similar to simplified path described above, but limited to the first two operations. See bootstrap.js for whole flow implementation. Variables that need to be propagated in backend and webpage code are:
