@@ -185,7 +185,8 @@ As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistrati
 
 Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum}. This process consists of 6 steps:
 \begin{itemize}
-\item Voter request Issuer for blinding key
+\item IssuerVoter generate random number \textit{r} and send it back to voter.
+\item User picks two random numbers \textit{a} and \textit{b} \textit{r} and send it back to voter.request Issuer for blinding key
 \item Voter transform the transaction by blinding key 
 \end{itemize}
 Transaction is then blinded in order to follow 
