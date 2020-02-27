@@ -183,13 +183,13 @@ As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistrati
 \item 6. Merge newly created account to distribution account, bringing back remained XLM.
 \end{itemize}
 
-
-Voter start interactive session with Issuer where they proceed  exchange transactions and   Chaum Blind Signature \cite{blindsignatureschaum}. This process consists of 6 steps:
+Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum}. This process consists of 6 steps:
 \begin{itemize}
 \item Voter request Issuer for blinding key
+\item Voter transform the transaction by blinding key 
 \end{itemize}
-Transaction is then blinded in order to follow Chaum Blind Signature scheme \cite{blindsignatureschaum}.
-This method requires some kind of interactivity 
+Transaction is then blinded in order to follow 
+This method requires some kind of interactivity
 Here we take advantage of the fact that stellar transactions have ACID (atomicity, consistency, isolation, durability) properties. So no 
 The prepared transaction is then signed by a newly created account, send to the issuance/authorization server, which performs validation, sign and send it back to the client webapp. Now both issuance/authorization server and the voter can publish the transaction to the stellar network. The user of such path is completely abstracted from technology used underneath, while still leveraging all blockchain benefits. The simplified path could be enhanced by allowing the user to reveal his keypair, hence allowing him to send his vote token to another user, instead of voting on their own, same as on manual path. But just for sake of the proposed system, two separate paths are available.
 
