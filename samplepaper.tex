@@ -121,6 +121,7 @@ Ethereum provides high flexibility, mainly because of its fully-fledged smart co
 \label{fig:ascii-box}
 \end{figure} 
 
+Identity Provider and Issuance/Authorization Server ideally should be separate entities, but we als need to assume pesimistic scenario where
 Ideally, the system should only consist of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized identity provider and issuance/authorization server. Unfortunately proposed system requires a central authorization server for vote token issuance, thus becoming a single point
 of failure. This flaw has been addressed at the end of this survey. There are also many proposals on how to achieve authentication on the blockchain ecosystem, but we won't cover them in this paper.
 
@@ -134,6 +135,7 @@ Voter obtain authentication token from identity provider using one of available 
 
 \subsection{Authorization}
 % how to check if user is eligable to perform vote, possible merge with auth and unreusability
+As we discussed
 
 \subsection{Un-reusability}
 To protect from double token issuance, the proposed system links each token issuance transaction with a user identifier e.g. national identification number. Link is achieved by attaching HMAC of user identifiers in the transaction MEMO field. Thus all information required to perform authorization is contained in the blockchain itself. In consequence, such a system becomes more transparent. We use HMAC of user identifiers to prevent private data exposure, while still allowing to perform authorization check on a public blockchain. The user is eligible to issue token only if his user identifier HMAC is not present in any issuance transaction made from the distribution account.
@@ -178,7 +180,7 @@ Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 
 
 \section{Voting process}
-As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of under laying blockchain technology. Voter obtain authentication token from identity provider using one of available methods like OAuth2. This token is then presented to Issuance Server, who can authenticate the request by asking Identity Provider. Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
+As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of underlaying blockchain technology.  Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
 In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare transaction which transfer 1 Vote Token from distribution account to one of the chosen parties.
 
 Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum} on ed25519 scheme. This process consists of 6 steps:
@@ -245,4 +247,3 @@ The proposed system prototype satisfies core expectations. Authorities can not f
 \bibliographystyle{splncs04}
 \bibliography{refs}
 \end{document}
-
