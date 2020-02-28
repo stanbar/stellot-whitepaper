@@ -96,7 +96,7 @@ Argues to not require TTP, instead introduce inspectors, and if they are corrupt
 \section{System proposition}
 
 The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. I decided to use a government authorized polish system
-“Profil Zaufany” as an identity provider, with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. I assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. Vote token exchanging is permitted intentionally and treated as a feature. It’s no different from the traditional election system where some people delegate their vote decision to one family member who tells them what should they vote on. In this system, it’s possible to send the token and let the receiver to perform vote on thy behalf. This decision possibly allows unhealthy vote trading, so this feature can be easily prohibited by disabling manual path described in the following chapters. Stellar is capable of limiting users who are eligible to receive tokens, but I can not see any benefits from using it in proposed system, where user authentication is done by external service (Profil Zaufany), and authorization is done by our backend, which verifies if user is eligible for token issuance.
+“Profil Zaufany” as an identity provider, with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. I assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. 
 
 \subsection{Stellar platform}
 Ethereum provides high flexibility, mainly because of its fully-fledged smart contracts ecosystem, particularly it’s Turing-complete Solidity language. Stellar on the other hand is a blockchain platform specializing just in one application that is asset tokenization. Thus becoming easier, cheaper and faster than general-purpose Ethereum smart contracts. Here We will try to fit election system into Stellar functionality boundaries.
@@ -121,9 +121,12 @@ Ethereum provides high flexibility, mainly because of its fully-fledged smart co
 \label{fig:ascii-box}
 \end{figure} 
 
-Identity Provider and Issuance/Authorization Server ideally should be separate entities, but we als need to assume pesimistic scenario where
-Ideally, the system should only consist of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized identity provider and issuance/authorization server. Unfortunately proposed system requires a central authorization server for vote token issuance, thus becoming a single point
-of failure. This flaw has been addressed at the end of this survey. There are also many proposals on how to achieve authentication on the blockchain ecosystem, but we won't cover them in this paper.
+Proposed system consists of three parties: Government, Electoral and Blockchain. Both Governemnt and Electoral distrust each other, because each of the parties has interest in manipulating the process of election. Electoral demand from Government to be as transparent as possible. Government perform authentication and authorization process to prevent unauthorized votes or double \textit{vote token} issuance.
+
+Ideally \textit{Identity Provider} and \textit{Issuance/Authorization Server} ideally should be separate entities, but we also notice pessimistic scenario, where they both cooperate together to manipulate election results.
+
+Ideally, the system should only consist only  of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized \textit{identity provider} and \textit{issuance/authorization server}. Unfortunately proposed system requires a central authorization server for vote token issuance, thus becoming a single point
+of failure. This flaw has been addressed at the end of this papersurvey. There are also many proposals on how to achieve authentication on the blockchain ecosystem, but we won't cover them in this paper.
 
 \subsection{Scalability}
 
@@ -210,10 +213,9 @@ This process can be visualized as:
     \item Put the document (ballot) into ballot box.
 \end{itemize}
 
-Since the signature on the transaction (ballot) is valid, the transfer of 1 \textit{vote token} from distribution account to chosen party account successfully proceed.
-
 In order to protect the Issuer from signing an malicious transaction, we use cut-and-choose technique described in section \ref{cut-and-choose}.
 
+Since the signature on the transaction (ballot) is valid, Voter can publish it to the stellar network, and track it with the received transaction id.
 
 \section{Transaction Fees}
 Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easly calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to very low influence on total sum.
@@ -247,3 +249,4 @@ The proposed system prototype satisfies core expectations. Authorities can not f
 \bibliographystyle{splncs04}
 \bibliography{refs}
 \end{document}
+
