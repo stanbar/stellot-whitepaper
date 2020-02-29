@@ -143,11 +143,7 @@ Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claim
 At the date of writing, Ethereum is able to process 15 transactions per second (TPS). Whereas Stellar is able to process 1000 operations per seconds (OPS). 
 
 \section{Authentication and Authorization}
-Voter obtain authentication token from \textit{identity provider} using one of available methods like OAuth2. This token is then presented to \textit{authorization/issuance server}, who can authenticate the request by asking \textit{identity provider}. Next authorization/issuance server checks in their local database, if such voter have not already issued vote token. He could also use blockchain to store this information, but we don't see much improvement. didn't issue pre 
-
-\subsection{Authorization}
-% how to check if user is eligable to perform vote, possible merge with auth and unreusability
-If authentication process  is correctly 
+Voter obtain authentication token from \textit{identity provider} using one of available methods like OAuth2. This token is then presented to \textit{authorization/issuance server}, who can authenticate the request by asking \textit{identity provider}. Next authorization/issuance server checks in their local database, if such voter have not already issued vote token. He could also use blockchain to store this information, but we don't see much improvement.
 
 \subsection{Un-reusability}
 To protect from double token issuance, the proposed system links each token issuance transaction with a user identifier e.g. national identification number. Link is achieved by attaching HMAC of user identifiers in the transaction MEMO field. Thus all information required to perform authorization is contained in the blockchain itself. In consequence, such a system becomes more transparent. We use HMAC of user identifiers to prevent private data exposure, while still allowing to perform authorization check on a public blockchain. The user is eligible to issue token only if his user identifier HMAC is not present in any issuance transaction made from the distribution account.
@@ -213,14 +209,14 @@ $s = s + a \pmod{q}$
 The pair (r’, s’) is a valid signature on transaction M.
 \end{itemize}
 Voter gets valid signature on transaction M, while Issuer knows only blinded hash of transaction.
-This process can be visualized as:
-\begin{itemize}
-    \item Voter prepare voting document.
-    \item Place it into envelope along with carbon paper.
-    \item Ask Issuer to sign it.
-    \item Remove envelope and carbon paper.
-    \item Put the document (ballot) into ballot box.
-\end{itemize}
+%This process can be visualized as:
+%\begin{itemize}
+%    \item Voter prepare voting document.
+%    \item Place it into envelope along with carbon paper.
+%    \item Ask Issuer to sign it.
+%    \item Remove envelope and carbon paper.
+%    \item Put the document (ballot) into ballot box.
+%\end{itemize}
 
 In order to protect the Issuer from signing an malicious transaction, we use cut-and-choose technique described in section \ref{cut-and-choose}.
 
