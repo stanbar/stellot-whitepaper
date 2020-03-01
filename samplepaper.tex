@@ -15,7 +15,7 @@
 
 \begin{document}
 %
-\title{Voting on Blockchain}
+\title{Voting on Stellar Blockchain}
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
@@ -34,38 +34,17 @@ Gdansk, Poland\\
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose e-voting system which satisfy transparency, audibility, verifiability and privacy. System is backed by open stellar blockchain.
+In this paper, we propose e-voting system which leverages existing Stellar Blockchain network to satisfy most of the requirements set for e-voting, such as transparency, verifiability and voter anonymity/privacy. System is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve even more robust system. 
 
 %JS wypunktować co jest wkładem artykułu
 
-\keywords{Blockchain \and Voting  \and Tokenization} %JS  e? i? Voting 
+\keywords{Blockchain \and E-Voting \and Stellar \and Tokenization  \and Blind signature} %JS  e? i? Voting 
 \end{abstract}
 
 
 \section{Introduction}
-
-
-% merge with introduction
-\section{State of the art}
-
-\paragraph{Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} }
-
-\paragraph{E-voting with blockchain: An e-voting protocol with decentralisation and voter privacy ~\cite{hardwick2018voting} }
-Based purely on bitcoin network. Token based on Colored Coins. Can be ripped by sending AS malicious transaction. Very costly. Satisfy almost all properties. Yes, based on trusted party. Like me
-
-\paragraph{An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting}}
-Argues to not require TTP, instead introduce inspectors, and if they are corrupted (what we have to assume for pessimistic scenario), the election is also corrupted. But requires pre-registration with bitcoin public key. Or they don't argue any solution or In my opinion it's unpractical.
-
-\paragraph{Blockchain for democratic voting: how blockchain could cast of voter fraud ~\cite{casado2018blockchain} }
-
-\paragraph{Blockchain-enabled e-voting ~\cite{kshetri2018blockchain} }
-
-\paragraph{The future of democracy: Blockchain voting ~\cite{osgood2016future}}
-
-\paragraph{Secret Voting ~\cite{tam_2018} }
-
-\subsection{E-Voting system requirements}
-Requirements that robust e-voting system should satisfy follows:
+E-voting has been topic of research for years, especially in cryptography, which is inevitable part of the secure system. Is seems suprising that in most countries we still rely on analog election process. 
+E-voting at first glance seems to be trivial problem, especially in today level of technology. When we deep deeper it turns out that such system faces with requirements that are hard to satisfy all together. Those requirements includes
 \begin{itemize}
 \item \textbf{Immutability}: No one can change their mind after vote is made.
 \item \textbf{Verifiability}: Everyone should be able to verify if his vote has been counted correctly.
@@ -77,6 +56,27 @@ Requirements that robust e-voting system should satisfy follows:
 \item \textbf{Coercion resistance}: It should be illegal to exchange votes.
 \item \textbf{Fairness}: No partial results are available until end of election.
 \end{itemize}
+
+There are many propositions on how to design protocol that satisfy part of them, or even all of them, but they are often highly unpractical or rely privacy on trust to authorities. There are propositions ~\cite{liu2017voting} that argue not to rely on trusted third party, by introducing inspectors. But they assume that each eligible voter will proceed with pre-registration phase that require 
+\paragraph{An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting}}
+Argues to not require TTP, instead introduce inspectors, and if they are corrupted (what we have to assume for pessimistic scenario), the election is also corrupted. But requires pre-registration with bitcoin public key. Or they don't argue any solution or In my opinion it's unpractical.
+
+\paragraph{E-voting with blockchain: An e-voting protocol with decentralisation and voter privacy ~\cite{hardwick2018voting} }
+Based purely on bitcoin network. Token based on Colored Coins. Can be ripped by sending AS malicious transaction. Very costly. Satisfy almost all properties. Yes, based on trusted party. Like me
+
+\paragraph{Breaking the Encryption Scheme of the Moscow Internet ~\cite{gaudry2019breaking} }
+
+
+
+
+\paragraph{Blockchain for democratic voting: how blockchain could cast of voter fraud ~\cite{casado2018blockchain} }
+
+\paragraph{Blockchain-enabled e-voting ~\cite{kshetri2018blockchain} }
+
+\paragraph{The future of democracy: Blockchain voting ~\cite{osgood2016future}}
+
+\paragraph{Secret Voting ~\cite{tam_2018} }
+
 
 In this article we propose system that satisfy all of those requirements, based on stellar open blockchain network.
 
