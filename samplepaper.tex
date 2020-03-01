@@ -67,18 +67,21 @@ Argues to not require TTP, instead introduce inspectors, and if they are corrupt
 \paragraph{On Collusion ~\cite{buterin_2019} }
 
 \subsection{E-Voting system requirements}
+Requirements that robust e-voting system should satisfy are as follows:
 \begin{itemize}
-\item \textbf{Immutability}: Noone can change thier mind after vote is made.
+\item \textbf{Immutability}: No one can change thieir mind after vote is made.
 \item \textbf{Verifability}: Everyone should be able to verify if his vote has been counted correctly.
 \item \textbf{Trustless}: Each user should be able to compute results on it's own.
 \item \textbf{Scalability}: System should be able to handle large number of votes per second.
 \item \textbf{Authorization}: Only authorized voters can vote.
 \item \textbf{Un-reusability}: No one can vote more than once.
-\item \textbf{PrivacyPrivacy}: Relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
-\item \textbf{Coercion resistance}: It should be illegal to sell votes.
+\item \textbf{Privacy}: Relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
+\item \textbf{Coercion resistance}: It should be illegal to exchangesell votes.
 
 \item \textbf{Fairness}: No partial results are available until end of election.
 \end{itemize}
+
+In this article we propose system that satisfy all of those requirements, based on stellar open blockchain network.
 
 %JS czy to wszystko czy jesli zostanie spelnione to mozna wdrazac w panstwe,
 %w dyskusji trzeba sie do tego odniesc 
@@ -149,13 +152,13 @@ Voter obtain authentication token from \textit{identity provider} using one of a
 We assume that the number of eligible voters is public information. Hence becoming the value of a maximum number of tokens in this election. After asset creation, issuing accounts have to lockout from creating a new asset, so all participants can be sure that no more tokens are ever created. Additionally, it should be impossible to perform vote, after the end of the election. Unfortunately Stellar doesn’t have such feature build-in, although it can be done by blocking all new token issuance on issuance/authorization server.
 Assets in stellar blockchain, are divisible to 7 decimal points. This is an unwanted feature since we don’t want to allow users to vote by just one-tenth of their vote. To prevent it, we will treat 1 vote token as the smallest indivisible amount possible in XDR which is 1 scaled down by a factor of 10,000,000 (this format allows to represent decimal numbers in 7 digit precision, without introduction floating-point arithmetics and it’s innate errors).
 
-\section{PrivacAnonymity}
-\label{privacyanonymity}
-PrivacyAnonymity seems to be the hardest problem to achieve. Especially in conjunction with authorization and data stored on public blockchain. There are some propositions on how to solve this problem. 
+\section{Privacy}
+\label{privacy}
+Privacy seems to be the hardest problem to achieve. Especially in conjunction with authorization and data stored public blockchain. There are some propositions on how to solve this problem. 
 
 First one is to allow each voter to privately pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called \textbf{ANDOS} (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
 
-Another proposition on achieving privacyprivacy is \textbf{blind signatures} ~\cite{applied_cryptography}. This technique make it possible to sign encrypted(blinded) transaction and use the signature with decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it and send back to Alice. In result, Alice get valid signature without revealing her vote option. When Alice publish such transaction, Bob can not connect the previously signed transaction with Alice. 
+Another proposition on achieving privacy is \textbf{blind signatures} ~\cite{applied_cryptography}. This technique make it possible to sign encrypted(blinded) transaction and use the signature with decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it and send back to Alice. In result, Alice get valid signature without revealing her vote option. When Alice publish such transaction, Bob can not connect the previously signed transaction with Alice. 
 There is one problem, Alice can prepare malicious transaction, send it to Bob, who then blindly sign the transaction. What is even worst, is the fact that Bob can not punish Alice, since he has already broke link between her identity and such malicious transaction during blind signature.
 
 \subsection{Solution to this problem requires interactive Cut-and-Choose protocol.}
@@ -174,7 +177,7 @@ First, there are \(\frac{1}{n}*100\%\) chance that, Alice will succeed cheating.
 
 Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, forcing Bob to perform infinite many computations, achieving DoS attack, but it could be mitigated by introducing some kind of limits.
 
-Despite all those problems, \textbf{this algorithm achieve privacyprivacy requirement}.
+Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 
 %Here is the  blind signature implementation for ECDSA [https://github.com/oleganza/bitcoin-papers/blob/master/BitcoinBlindSignatures.md]
 %Another post on Schnorr/DSA https://blog.cryptographyengineering.com/a-note-on-blind-signature-schemes/
@@ -186,7 +189,7 @@ Despite all those problems, \textbf{this algorithm achieve privacyprivacy requir
 
 \section{Voting process}
 As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of underlaying blockchain technology.  Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
-In order to achieve vote anonymity, we use rules described in section ~\ref{privacyprivacy} \nameref{privacyprivacy}. Client webapp prepare transaction which transfer 1 Vote Token from distribution account to one of the chosen parties.
+In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare transaction which transfer 1 Vote Token from distribution account to one of the chosen parties.
 
 Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum} on ed25519 scheme. This process consists of 6 steps:
 \begin{itemize}
@@ -196,7 +199,7 @@ and sends it back to Voter.
 \item Voter picks two random numbers \textit{a} and \textit{b}, use them to compute number \textit{e} as follows
 \[r’ = r*(g^a)*(y^b) \pmod{p}\]
 \[e’ = H(M || P || r’)\]
-\[e = e’ +– b \pmod{q}\]
+\[e = e’ + b \pmod{q}\]
 and send it back to Issuer
 \item Issuer computes 
 \(s = ex + k \pmod{q}\)
