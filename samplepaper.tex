@@ -222,15 +222,17 @@ In order to protect the Issuer from signing an malicious transaction, we use cut
 
 Since the signature on the transaction (ballot) is valid, Voter can publish it to the stellar network, and track it with the received transaction id.
 
+
+
 \section{Transaction Fees}
 Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easly calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to very low influence on total sum.
 
 \section{Preparation}
-To create such an election, we need an issuer and distribution account, a new vote token, and accounts for all registered parties. Creating issuer and distribution account and creating new token is a multi-step process; well described on official stellar documentation Issuing Assets and Custom Assets Each party account is created similar to simplified path described above, but limited to the first two operations. See bootstrap.js for whole flow implementation. Variables that need to be propagated in backend and webpage code are:
+To create such an election, we need an issuer, and distribution account, and a new vote token, and accounts for all registered parties. Creating issuer, and distribution account and creating new token is a multi-step process; well described on official stellar documentation. Issuing Assets and Custom Assets Each party account is created similar to simplified path described above, but limited to the first two operations. See bootstrap.js for whole flow implementation. Variables that need to be propagated in backend and webpage code are:
 • asset name, asset issuer public key
 • limit of possible vote tokens (number of eligible voters). • token expiration (end of election).
 • distribution account public key.
-• list of (party name, party account public key).
+• list of (candidateparty name, candidateparty codeaccount public key).
 In the backend, those environment variables are injected from .env file. In fronted, we could do similar using e.g. Webpack DefinePlugin, but for simplicity, I decided to not use any bundler.
 Now the application is ready to be published.
 
