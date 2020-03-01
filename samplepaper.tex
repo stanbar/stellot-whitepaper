@@ -43,8 +43,8 @@ In this paper, we propose e-voting system which leverages existing Stellar Block
 
 
 \section{Introduction}
-E-voting has been topic of research for years, especially in cryptography, which is inevitable part of the secure system. Is seems suprising that in most countries we still rely on analog election process. 
-E-voting at first glance seems to be trivial problem, especially in today level of technology. When we deep deeper it turns out that such system faces with requirements that are hard to satisfy all together. Those requirements includes
+E-voting has been topic of research for years, especially in cryptography, which is inevitable part of the secure system. Is seems suprising that in most countries, we still rely on analog election process, especially in today level of technology, especially after the Bitcoin convinced that money (which seems to face similar problem) can be done without central authority. In this paper we cover problems and solutions on how to achieve e-voting by leveraging existing blockchain ecosystem. 
+First let's point out the requirements that every robust voting system should satisfy, either analog or electronic. Those requirements includes:
 \begin{itemize}
 \item \textbf{Immutability}: No one can change their mind after vote is made.
 \item \textbf{Verifiability}: Everyone should be able to verify if his vote has been counted correctly.
@@ -57,7 +57,10 @@ E-voting at first glance seems to be trivial problem, especially in today level 
 \item \textbf{Fairness}: No partial results are available until end of election.
 \end{itemize}
 
-There are many propositions on how to design protocol that satisfy part of them, or even all of them, but they are often highly unpractical or rely privacy on trust to authorities. There are propositions ~\cite{liu2017voting} that argue not to rely on trusted third party, by introducing inspectors. But they assume that each eligible voter will proceed with pre-registration phase that require 
+When we deep deeper it turns out that those requirements are hard to satisfy all together. Especially trustless, authorization, privacy and verifiability. There are many propositions on how to design protocol that satisfy part of them, or even all of them, but they are often highly unpractical or rely privacy on trust to authorities. There are propositions ~\cite{liu2017voting} that argue not to rely on trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than actual eligible voters.assume that Additionally they require pre-registration phase which assume that each voter posses bitcoin account (co raczej mało prawdopodobne) and lack full verifability, because only issuer and coordinator are eligable to compute results ? tru ?
+
+
+user to issuer each eligible voter will proceed with pre-registration phase that require 
 \paragraph{An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting}}
 Argues to not require TTP, instead introduce inspectors, and if they are corrupted (what we have to assume for pessimistic scenario), the election is also corrupted. But requires pre-registration with bitcoin public key. Or they don't argue any solution or In my opinion it's unpractical.
 
