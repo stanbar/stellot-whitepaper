@@ -164,7 +164,7 @@ Vote option is expressed in strictly encoded 32 byte MEMO field available in blo
 \label{fig:ballot-encoding}
 \end{figure} 
 
-We propose questions and options for multi option ballots, and further extensions. Random string of bits is added to prevent from preliminary results that could be achieved by calculating the same MEMO fields.
+We propose questions and options for multi option ballots, and further extensions.
 The MEMO field is encrypted using publicly available special public key, preventing from preliminary results. At the end of election the issuer publish corresponding private key, allowing everyone to calculate the election results on their own. Random string of bits is added to prevent from preliminary results that could be achieved by summing equal memo fields.
 
 \section{Privacy}
