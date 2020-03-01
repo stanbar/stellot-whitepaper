@@ -34,7 +34,7 @@ Gdansk, Poland\\
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose e-voting system which leverages existing Stellar Blockchain network to satisfy most of the requirements set for e-voting, such as transparency, verifiability and voter anonymity/privacy. System is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve even more robust system. 
+In this paper, we propose an e-voting system that leverages the existing Stellar Blockchain network to satisfy most of the requirements set for e-voting, such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
 
 %JS wypunktować co jest wkładem artykułu
 
@@ -43,31 +43,30 @@ In this paper, we propose e-voting system which leverages existing Stellar Block
 
 
 \section{Introduction}
-E-voting has been topic of research for years, especially in cryptography, which is inevitable part of the secure system. Is seems suprising that in most countries, we still rely on analog election process, especially in today level of technology, especially after the Bitcoin convinced that money (which seems to face similar problem) can be done without central authority. In this paper we cover problems and solutions on how to achieve e-voting by leveraging existing blockchain ecosystem. 
-First let's point out the requirements that every robust voting system should satisfy, either analog or electronic. Those requirements includes:
+E-voting has been a topic of research for years, especially in cryptography, which is an inevitable part of the system security. Is seems surprising that in most countries, we still rely on the analog election process, especially in today's level of technology, especially after the Bitcoin convinced that money (which seems to face similar problems) can be done without a central authority. In this paper, we cover problems and solutions on how to achieve e-voting by leveraging the existing blockchain ecosystem. 
+First let's point out the requirements that every robust voting system should satisfy, either analog or electronic. Those requirements include:
 \begin{itemize}
-\item \textbf{Immutability}: No one can change their mind after vote is made.
+\item \textbf{Immutability}: No one can change their mind after the vote is made.
 \item \textbf{Verifiability}: Everyone should be able to verify if his vote has been counted correctly.
-\item \textbf{Trustless}: Each user should be able to compute results on it's own.
-\item \textbf{Scalability}: System should be able to handle large number of votes per second.
+\item \textbf{Trustless}: Each user should be able to compute results on its own.
+\item \textbf{Scalability}: The system should be able to handle a large number of votes per second.
 \item \textbf{Authorization}: Only authorized voters can vote.
 \item \textbf{Un-reusability}: No one can vote more than once.
-\item \textbf{Privacy}: Relation between voter and his vote, must be keep in secret. Each voter must be sure about his opinion privacy. 
+\item \textbf{Privacy}: Relation between voter and his vote, must be kept in secret. Each voter must be sure about his vote privacy. 
 \item \textbf{Coercion resistance}: It should be illegal to exchange votes.
-\item \textbf{Fairness}: No partial results are available until end of election.
+\item \textbf{Fairness}: No partial results are available until the end of the election.
 \end{itemize}
 
-When we deep deeper it turns out that those requirements are hard to satisfy all together. Especially trustless, authorization, privacy and verifiability. There are many propositions on how to design protocol that satisfy part of them, or even all of them, but they are often highly unpractical or rely privacy on trust to authorities. One proposition ~\cite{liu2017voting} argue not to rely on trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than actual number of eligible voters. Additionally they require pre-registration phase which assume that each voter posses two pair of bitcoin account upfront, which seems to be unacceptable, at least for current adoption of this technology. Another proposition ~\cite{hardwick2018voting} allows central authority to pair voter identity with its vote option. We consider it unacceptable flaw, because attacker who get access to such system might potentially steal this information, even if central authority is honest entity. Recently (8 September, 2019) Moscow decided to test e-voting system based on Ethereum blockahin for thier local elections ~\cite{gaudry2019breaking}. Unfortunately the system had many flaws mentioned previously, and additionally problem with weak encryption. 
-In this article we propose system that seems to satisfy most of the requirements, including privacy and verifability.
+When we deep deeper it turns out that those requirements are hard to satisfy all together. Especially trustless, authorization, privacy, and verifiability. There are many propositions on how to design a protocol that satisfies part of them, or even all of them, but they are often highly unpractical or rely vote privacy on trust to authorities. One proposition ~\cite{liu2017voting} argue not to rely on a trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than the actual number of eligible voters. Additionally, they require a pre-registration phase which assumes that each voter possesses two pair of bitcoin account upfront, which seems to be unacceptable, at least for current adoption of this technology. Another proposition ~\cite{hardwick2018voting} allows the central authority to pair voter identity with its vote option. We consider it an unacceptable flaw because an attacker who gets access to such a system might potentially steal this information, even if the central authority is an honest entity. Recently (8 September 2019) Moscow decided to test the e-voting system based on Ethereum blockchain for their local elections ~\cite{gaudry2019breaking}. Unfortunately, the system had many flaws mentioned previously, and additionally problem with weak encryption.  
+In this article, we propose a system that seems to satisfy most of the requirements, including privacy and verifiability. The additional notable advantage is the fact that users of our system are completely abstracted from blockchain technology used underneath.
 
 %JS czy to wszystko czy jesli zostanie spelnione to mozna wdrazac w panstwe,
 %w dyskusji trzeba sie do tego odniesc 
 
 
-\section{Verifiability, Trustless and Immutability}
- Blockchain technology provides two major properties that are highly desirable in applications like election voting. Those properties are immutability which ensures that no one can modify the data once wrote into a blockchain. Another property is transparency that allows everyone to validates the election correctness and calculate results on its own. In consequences, one can distrust authorities, while trust voting results. 
-
-Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveraging already existing infrastructure.
+\section{Verifiability, Trustless, and Immutability}
+Blockchain technology provides two major properties that are highly desirable in applications like election voting. Those properties are immutability which ensures that no one can modify the data once wrote into a blockchain. Another property is transparency that allows everyone to validates the election correctness and calculate results on its own. In consequence, one can distrust authorities, while trust voting results. 
+Blockchain initially introduced by Satoshi Nakamoto in Bitcoin Whitepaper offered one simple application, i.e. ledger for transferring Bitcoin cryptocurrency. 5 years later Vitalik Buterin proposed generalization to this concept by allowing to process not only transactions but also so-called smart contracts which are in fact scripts run on the Ethereum platform. Those “scripts” are executed and validated by all Ethereum nodes and use blockchain as persistent storage. This innovation allowed to create domain-specific behavior on top of Ethereum blockchain, leveraging already existing infrastructure.
 
 %\subsection{Tokenization}
 Currently, the most popular application of smart contracts is token issuance. Those tokens can represent any arbitrary asset either in the virtual or physical world. One can create tokens for funding his startup; hence token represent company shares. This pattern is called ICO (Initial Coin Offering) or STO (Security Token Offering), alluding to IPO (Initial Public Offering). Another one can issue tokens backed by a physical asset like national currency; bypassing slow and expensive international transfers and taxes from exchanging cryptocurrencies with national currencies. This pattern is called Stable Coin. There are many other token applications particularly vote tokenization, used here in this survey.
@@ -78,7 +77,7 @@ The goal of the system is to provide the highest level of transparency while kee
 “Profil Zaufany” as an Authentication Server(AS), with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. We assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. 
 
 \subsection{Stellar platform}
-Ethereum provides high flexibility, mainly because of its fully-fledged smart contracts ecosystem, particularly it’s Turing-complete Solidity language. Stellar on the other hand is a blockchain platform specializing just in one application that is asset tokenization. Thus becoming easier, cheaper and faster than general-purpose Ethereum smart contracts. Here We will try to fit election system into Stellar functionality boundaries.
+Ethereum provides high flexibility, mainly because of its fully-fledged smart contracts ecosystem, particularly it’s Turing-complete Solidity language. Stellar on the other hand is a blockchain platform specializing just in one application that is asset tokenization. Thus becoming easier, cheaper and faster than general-purpose Ethereum smart contracts. Here We will try to fit the election system into Stellar functionality boundaries.
 
 
 \subsection{Architecture}
@@ -107,20 +106,20 @@ Ethereum provides high flexibility, mainly because of its fully-fledged smart co
 \label{fig:ascii-box}
 \end{figure} 
 
-Proposed system consists of three parties: Government, Electoral and Blockchain. Both Government and Electoral distrust each other, because each of the parties has interest in manipulating the process of election. Electoral demand from Government to be as transparent as possible. Government perform authentication and authorization process to prevent unauthorized votes or double \textit{vote token} issuance.
+The proposed system consists of three parties: Government, Electoral, and Blockchain. Both Government and Electoral distrust each other, because each of the parties has an interest in manipulating the process of election. Electoral demand from Government to be as transparent as possible. Government perform authentication and authorization process to prevent unauthorized votes or double \textit{vote token} issuance.
 
-Ideally Authentication Server (AS) and Token Distribution Server (TDS) should be separate entities, but we assume pessimistic scenario, where they both cooperate together to manipulate election results. Moreover, the system should consist only of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized AS and TDS. Unfortunately proposed system requires a central authority for voter authenticationauthentication for vote token issuance, thus becoming a single point of failure. This flaw has been addressed at the end of this paper. There are also many proposals on how to achieve authentication on the blockchain ecosystem, but we won't cover them in this paper.
+Ideally, Authentication Server (AS) and Token Distribution Server (TDS) should be separate entities, but we assume the pessimistic scenario, where they both cooperate to manipulate election results. Moreover, the system should consist only of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized AS and TDS. Unfortunately, the proposed system requires a central authority for voter authentication, thus becoming a single point of failure. This flaw has been addressed at the end of this paper. There are also many proposals on how to achieve authentication on the blockchain ecosystem, but we won't cover them in this paper.
 
 \subsection{Scalability}
 
-Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claims that Blockchains face trillema ~\cite{ethereum} which allows them to choose only two of three properties: Decentralization, Security and Scalability. And here is the place where variety of different Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offers higher Scalability on the cost of Decentralization and Security. Stellar is one of such solutions. 
-At the date of writing, Ethereum is able to process 15 transactions per second (TPS). Whereas Stellar is able to process 1000 operations per seconds (OPS). 
+Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claims that Blockchains face trillema ~\cite{ethereum} which allows them to choose only two of three properties: Decentralization, Security, and Scalability. And here is the place where a variety of different Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offer higher Scalability on the cost of Decentralization and Security. Stellar is one of such solutions. 
+At the date of writing, Ethereum can process 15 transactions per second (TPS). Whereas Stellar can process 1000 operations per second (OPS). 
 
 \section{Authentication and Authorization}
-Voter obtain authentication token from AS\textit{identity provider} using one of available methods like OAuth2/OpenID Connect. This token is then presented to TDS\textit{authorization/issuance server}, who can authenticate the request by asking AS\textit{identity provider}. Next, TDSauthorization/issuance server checks in it's local database, if such user have not already issued vote token. Preventing from double \textit{vote token} issuance.
+Voter obtains authentication token from AS using one of the available methods like OAuth2/OpenID Connect. This token is then presented to TDS, who can authenticate the request by asking AS. Next, TDS checks in its local database, if such user has not already issued a vote token. Preventing from double \textit{vote token} issuance.
 
-\subsection{Vote Token}
-We assume that the number of eligible voters is public information. Hence becoming the value of a maximum number of tokens in this election. After asset creation, issuing accounts have to lockout from creating a new asset, so all participants can be sure that no more tokens are ever created. Additionally, it should be impossible to perform vote, after the end of the election. Unfortunately Stellar doesn’t have such feature build-in, although it can be done by blocking all new token transfersissuance fromon TDS to ballot-box accountissuance/authorization server.
+\section{Vote Token}
+We assume that the number of eligible voters is public information. Hence becoming the value of a maximum number of tokens in this election. After asset creation, issuing accounts have to lockout from creating a new asset, so all participants can be sure that no more tokens are ever created. Additionally, it should be impossible to perform vote, after the end of the election. Unfortunately Stellar doesn’t have such feature build-in, although it can be done by blocking all new token transfers from TDS to ballot-box account.
 Assets in stellar blockchain, are divisible to 7 decimal points. This is an unwanted feature since we don’t want to allow users to vote by just one-tenth of their vote. To prevent it, we will treat 1 vote token as the smallest indivisible amount possible in XDR which is 1 scaled down by a factor of 10,000,000 (this format allows to represent decimal numbers in 7 digit precision, without introduction floating-point arithmetics and it’s innate errors).
 Vote option is expressed in strictly encoded 32 byte MEMO field available in blockchain transaction. Frame structure is presented in Fig. \ref{fig:ballot-encoding}. 
 \begin{figure}
@@ -138,109 +137,105 @@ Vote option is expressed in strictly encoded 32 byte MEMO field available in blo
 \label{fig:ballot-encoding}
 \end{figure} 
 
-We propose questions and options for multi option ballots, and further extensions.
-The MEMO field is encrypted using publicly available special public key, preventing from preliminary results. At the end of election the issuer publish corresponding private key, allowing everyone to calculate the election results on their own. Random string of bits is added to prevent from preliminary results that could be achieved by summing equal memo fields.
+We propose questions and options for multi-option ballots and further extensions.
+The MEMO field is encrypted using the publicly available special public key, preventing from preliminary results. At the end of the election, the authorities publish corresponding private key, allowing everyone to calculate the election results on their own. A random string of bits is added to prevent preliminary results that could be achieved by summing equal memo fields.
 
 \section{Privacy}
 \label{privacy}
 Privacy seems to be the hardest problem to achieve. Especially in conjunction with authorization and data stored public blockchain. There are some propositions on how to solve this problem. 
 
-First one is to allow each voter to privately pick one authorization code which can then be attached to transaction making it valid. Method which allows to achieve exactly this is called ANDOS (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
+The first one is to allow each voter to privately pick one authorization code which can then be attached to the transaction making it valid. Method which allows to achieve exactly this is called ANDOS (All-or-nothing-disclosure-of-secrets) ~\cite{andos} ~\cite{salomaa1990secret} ~\cite{applied_cryptography}. Unfortunately, it has some unacceptable flaw i.e. each voter has to communicate with all other voters. It seems to be highly unpractical in public elections, but might be acceptable in smaller contexts. 
 
-Another proposition on achieving privacy is \textbf{blind signatures} ~\cite{applied_cryptography}. This technique make it possible to sign encrypted(blinded) transaction and use the signature with decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it and send back to Alice. In result, Alice get valid signature without revealing her vote option. When Alice publish such transaction, Bob can not connect the previously signed transaction with Alice. 
-There is one problem, Alice can prepare malicious transaction, send it to Bob, who then blindly sign the transaction. What is even worst, is the fact that Bob can not punish Alice, since he has already broke link between her identity and such malicious transaction during blind signature.
+Another proposition on achieving privacy is \textbf{blind signatures} ~\cite{applied_cryptography}. This technique makes it possible to sign encrypted(blinded) transaction and use the signature with the decrypted(unblinded) transaction. In other words, Alice can prepare her vote transaction, encrypt it, send it to Bob, who then sign it and send it back to Alice. As a result, Alice gets a valid signature without revealing her vote option. When Alice publishes such a transaction, Bob can not connect the previously signed transaction with Alice. 
+There is one problem, Alice can prepare malicious transaction, send it to Bob, who then blindly sign the transaction. What is even worst, is the fact that Bob can not punish Alice, since he has already broken the link between her identity and such malicious transaction during blind signature.
 
 \subsection{Solution to this problem requires interactive Cut-and-Choose protocol.}
 \label{cut-and-choose}
 
 Alice creates \(n\) (e.g. 100) random votes \footnote{by \textit{random vote} we understand vote on random candidate}, encrypts each of them with different key and sends them to Bob. He challenges Alice for \(n-1\) unblinded transactions, so he can compare if they are the same as previously claimed, and if so, validate them, now: 
 \begin{itemize}
- \item If any transaction is malicious (try to issue more than 1 \textit{vote token}, perform any illegal operation), Alice loss her right to vote and optionally gets punished.
+ \item If any transaction is malicious (try to issue more than 1 \textit{vote token}, perform any illegal operation), Alice loses her right to vote and optionally gets punished.
 
  \item If all of them are correct, he asks Alice if the missing transaction match her vote decision
  \begin{itemize}
     \item is yes, then he signs the missing transaction and sends it back to Alice.
-    \item if no, she repeat the process, until gets the transaction with vote matching her option.
+    \item if no, she repeats the process, until she gets the transaction with vote matching her option.
  \end{itemize}
 \end{itemize}
-Since all the votes are random, Bob can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote opinion. In fact he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
+Since all the votes are random, Bob can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote opinion. In fact, he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
 
 There are two problems with this method.
-First, there are \(\frac{1}{n}*100\%\) chance that, Alice will succeed cheating. In case where she steal all vote tokens, the election must be remade, because no more tokens can be issued from Issuer account. Additionally no consequences can be made to such attacker, because we gets rid of authentication during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from Bob for malicious transactions, she may just not respond, preventing from revealing the content of such transaction. In such case Bob should block on the request, preventing Alice from "taking another try in lottery".
+First, there are \(\frac{1}{n}*100\%\) chance that Alice will succeed in cheating. In the case where she steals all vote tokens, the election must be remade, because no more tokens can be issued from the Issuer account. Additionally, no consequences can be made to such an attacker, because we have broken the link between the user and the transaction during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from Bob for malicious transactions, she may just not respond, preventing from revealing the content of such transaction. In such a case Bob should block on the request, preventing Alice from "taking another try in the lottery".
 
-Second, Alice may lie that she still didn't receive signed transaction with her vote opinion, forcing Bob to perform infinite many computations, achieving DoS attack, but it could be mitigated by introducing some kind of limits.
+Second, Alice may lie that she still didn't receive signed transactions with her vote opinion, forcing Bob to perform infinite many computations, achieving the DoS attack, but it could be mitigated by introducing some kind of limits.
 
-Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
+Despite all those problems, \textbf{this algorithm achieves privacy requirement}.
 
 %Here is the  blind signature implementation for ECDSA [https://github.com/oleganza/bitcoin-papers/blob/master/BitcoinBlindSignatures.md]
 %Another post on Schnorr/DSA https://blog.cryptographyengineering.com/a-note-on-blind-signature-schemes/
 % My question: https://crypto.stackexchange.com/questions/77558/ed25519-blind-signature
-% sodium implementaiton https://github.com/dchest/tweetnacl-js/blob/5bf1ff5fa15e89ae249401b0d5aa54c5c5955041/nacl.js#L1076
-
-%Homomorphic encryption, Mix-Networks, Secure multi-party computatio, Shamir's Secret Sharing.
+% sodium implementation https://github.com/dchest/tweetnacl-js/blob/5bf1ff5fa15e89ae249401b0d5aa54c5c5955041/nacl.js#L1076
 
 
-\section{Voting process}
-As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of underlaying blockchain technology.  Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
-In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}.
 
-Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum} on ed25519 scheme. This process consists of 6 steps:
+\section{Blind signature implementation}
+
+To achieve vote anonymity, we use the rules described in section ~\ref{privacy} \nameref{privacy}. Voter start interactive session with Issuer where they proceed Chaum bBlind sSignature \cite{blindsignatureschaum} on ed25519 scheme. 
+
+Let's assume Alice to be Voter, Bob to be Issuer, P to be Bob public key, M to be the vote token transaction from TDS to the ballot-box.
+This process consists of following steps:
 \begin{itemize}
-\item Issuer generate random, number \textit{k} compute 
-\(r = g^k \pmod{p}\)
-and sends it back to Voter.
-\item Voter picks two random numbers \textit{a} and \textit{b}, use them to compute number \textit{e} as follows
-\[r’ = r*(g^a)*(y^b) \pmod{p}\]
-\[e’ = H(M || P || r’)\]
-\[e = e’ + b \pmod{q}\]
-and send it back to Issuer
-\item Issuer computes 
-\(s = ex + k \pmod{q}\)
-and send it back to Voter
-\item Voter computes 
-$s = s + a \pmod{q}$
-The pair (r’, s’) is a valid signature on transaction M.
+\item Bob generate random nonce number \textit{k} in the range $(1, q-1)$, compute 
+\(r = Gg^k \pmod{p}\)
+and sends it back to Alice.
+\item Alice picks two random numbers \textit{a} and \textit{b} in the range (1, q-1), and use them to compute challenge numberr \textit{e} as follows:
+\[R'r’ = r*(G^a)*(P^b) \pmod{p}\]
+\[e'’ = H(M || P || Rr’)\]
+\[e = e'’ + b \pmod{q}\]
+and send it back to Bob
+\item Bob signs it 
+\(s = e*x + k \pmod{q}\)
+and send it back to Alice
+\item Alice computes 
+$s' = s + a \pmod{q}$
+The pair (R'r’, s'’) is a valid signature on transaction M.
 \end{itemize}
-Voter gets valid signature on transaction M, while Issuer knows only blinded hash of transaction.
-%This process can be visualized as:
-%\begin{itemize}
-%    \item Voter prepare voting document.
-%    \item Place it into envelope along with carbon paper.
-%    \item Ask Issuer to sign it.
-%    \item Remove envelope and carbon paper.
-%    \item Put the document (ballot) into ballot box.
-%\end{itemize}
+Alice gets valid signature on transaction M, while Bob knows only blinded hash of the transaction M.
+This process can be visualized as:
+\begin{itemize}
+    \item Alice prepares a voting ballot.
+    \item Place it into the envelope along with carbon paper.
+    \item Ask Bob to sign the envelope.
+    \item Alice removes envelope and carbon paper.
+    \item Alice cast the ballot into the ballot box.
+\end{itemize}
 
-In order to protect the Issuer from signing an malicious transaction, we use cut-and-choose technique described in section \ref{cut-and-choose}.
+To protect the Issuer from signing a malicious transaction, we use the cut-and-choose technique described in section \ref{cut-and-choose}.
 
 Since the signature on the transaction (ballot) is valid, Voter can publish it to the stellar network, and track it with the received transaction id.
 
-%\includegraphics[scale=0.5]{blind-signature.png}
-
 \section{Transaction Fees}
-Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easly calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to very low influence on total sum.
+Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of the transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to the very low influence on the total sum.
 
 \section{Preparation}
-To create such an election, we need an issuer, distribution account, and a new vote token. Creating issuer, distribution account and creating new token is a multi-step process; well described on official stellar documentation. See bootstrap.js for whole flow implementation. Variables that need to be propagated in backend and webpage code are:
+To create such an election, we need an issuer, distribution account, and a new vote token. This process is well described on official stellar documentation. Variables that need to be propagated in backend and webpage code are:
 • asset name, asset issuer public key, distribution account public key, ballot-box account public key.
 • limit of possible vote tokens (number of eligible voters). 
 • list of (candidate name, candidate code).
 • keypair for encrypting/decrypting transaction MEMO fields before/after election end.
 
 \section{Fully Decentralized Blockchain Application}
-In the blockchain world in order to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example one could encode all eligible voter addresses (or better hash of addresses) in smart contract and then allow redeeming vote token only to addresses which are present in there, very similar to traditional election system where all eligible voters are listed on paper. Ballot is issued only if elector is present on such list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such list can be hosted on IPFS (Content Addressed Network) where data is identified by its hash.
+In the blockchain world to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example, one could encode all eligible voter addresses (or better hash of addresses) in the smart contract and then allow redeeming vote token only to addresses which are present in there, very similar to traditional election system where all eligible voters are listed on paper. The ballot is issued only if the elector is present on such a list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such a list can be hosted on IPFS (Content Addressed Network) where data is identified by its hash. Unfortunately, Stellar doesn't have such a feature yet.
 
 \section{System weakness}
-In our system, we assumed that ASIdentity Provider and TDSIssuance Server are honest actors. We assumed that we know the total number of eligible voters, and that only eligible voters are able to redeem tokens. The question is how can we know if the authorities doesn't publish greater number of eligible voters and redeem this extra number of tokens to themselves. Being able to significantly influence the election results. Preregistration phase doesn't help here, since malicious government also can take part in it, generating extra tokens. There are some mitigation proposition where it would be required from voter to compute some kind of proof-of-work that would require a lot of computing power by one actor to create a lot of votes.
+In our system, we assumed that AS and TDS are honest actors. We assumed that we know the total number of eligible voters and that only eligible voters can redeem tokens. The question is how can we know if the authorities don't publish a greater number of eligible voters and redeem this extra number of tokens to themselves. Being able to significantly influence the election results. The pre-registration phase doesn't help here, since the malicious government also can take part in it, generating extra tokens. There is some mitigation proposition where it would be required from voters to compute some kind of proof-of-work that would require a lot of computing power by one actor to create a lot of votes.
 
 \section{Results}
-The proposed system satisfies all assumed requirements. Each vote is recorded on Blockchain, and everyone can calculate election results without trusting authorities. Thanks to blind signature, Voter can be sure that his decision will be kept private. Unfortunately the system still rely on trust to issuer, who decide who is eligible to receive vote right. If this single point of failure could be eliminated, we would achieve truly decentralized trustless system, without central authorities.
-Besides that, we confirmed that blockchain can be used not only for cryptocurrencies, but also in assets tokenization and building dapps (decentralized applications). Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is speed and transaction fees. We estimated costs of 2019 Polish parliamentary election to 11,27 USD. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queuing overhead. Doing it would also allow to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such system on different blockchain platforms. Source code and demo are available under following links \url{https://github.com/stasbar/stellar-voting}, \url{https://voting.stasbar.com}.
+The proposed system satisfies all assumed requirements. Each vote is recorded on Blockchain, and everyone can calculate election results without trusting authorities. Thanks to a blind signature, Voter can be sure that his decision will be kept private. Unfortunately, the system still relies on trust to the issuer, who decide who is eligible to receive vote right. If this single point of failure could be eliminated, we would achieve a truly decentralized trustless system, without central authorities.
+Besides that, we confirmed that blockchain can be used not only for cryptocurrencies but also in assets tokenization and building dapps (decentralized applications). Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is speed and transaction fees. We estimated the costs of the 2019 Polish parliamentary election to 11,27 USD. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queuing overhead. Doing it would also allow us to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such systems on different blockchain platforms. Source code and demo are available under following links \url{https://github.com/stasbar/stellar-voting}, \url{https://voting.stasbar.com}.
 
-\section{Discussion}
 %JS podkreslic zalety systemu, jakie funkcjonalnosci sie udalo zrealizowac, jakie nie jak je mozna skompensowac.
 
 \bibliographystyle{splncs04}
 \bibliography{refs}
 \end{document}
-
