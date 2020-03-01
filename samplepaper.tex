@@ -57,13 +57,9 @@ First let's point out the requirements that every robust voting system should sa
 \item \textbf{Fairness}: No partial results are available until end of election.
 \end{itemize}
 
-When we deep deeper it turns out that those requirements are hard to satisfy all together. Especially trustless, authorization, privacy and verifiability. There are many propositions on how to design protocol that satisfy part of them, or even all of them, but they are often highly unpractical or rely privacy on trust to authorities. There are propositions ~\cite{liu2017voting} that argue not to rely on trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than actual eligible voters.assume that Additionally they require pre-registration phase which assume that each voter posses bitcoin account (co raczej mało prawdopodobne) and lack full verifability, because only issuer and coordinator are eligable to compute results ? tru ?
+When we deep deeper it turns out that those requirements are hard to satisfy all together. Especially trustless, authorization, privacy and verifiability. There are many propositions on how to design protocol that satisfy part of them, or even all of them, but they are often highly unpractical or rely privacy on trust to authorities. There are propositions ~\cite{liu2017voting} that argue not to rely on trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than actual number of eligible voters. Additionally they require pre-registration phase which assume that each voter posses two pair of bitcoin account upfront, which seems to be unacceptable, at least for current adoption of this technology.
 
-
-user to issuer each eligible voter will proceed with pre-registration phase that require 
-\paragraph{An E-voting Protocol Based on Blockchain. ~\cite{liu2017voting}}
-Argues to not require TTP, instead introduce inspectors, and if they are corrupted (what we have to assume for pessimistic scenario), the election is also corrupted. But requires pre-registration with bitcoin public key. Or they don't argue any solution or In my opinion it's unpractical.
-
+Another  proposition 
 \paragraph{E-voting with blockchain: An e-voting protocol with decentralisation and voter privacy ~\cite{hardwick2018voting} }
 Based purely on bitcoin network. Token based on Colored Coins. Can be ripped by sending AS malicious transaction. Very costly. Satisfy almost all properties. Yes, based on trusted party. Like me
 
@@ -98,7 +94,7 @@ Currently, the most popular application of smart contracts is token issuance. Th
 
 \section{System proposition}
 The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. I decided to use a government authorized polish system
-“Profil Zaufany” as an identity provider, with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. We assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. 
+“Profil Zaufany” as an Authentication Server(AS), with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. We assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. 
 
 \subsection{Stellar platform}
 Ethereum provides high flexibility, mainly because of its fully-fledged smart contracts ecosystem, particularly it’s Turing-complete Solidity language. Stellar on the other hand is a blockchain platform specializing just in one application that is asset tokenization. Thus becoming easier, cheaper and faster than general-purpose Ethereum smart contracts. Here We will try to fit election system into Stellar functionality boundaries.
@@ -107,27 +103,24 @@ Ethereum provides high flexibility, mainly because of its fully-fledged smart co
 \subsection{Architecture}
 \begin{figure}
 \begin{verbatim}
-                         +                    +
-        Government       |      Electoral     |      Blockchain
-                         |                    |
-                         |                    |
-   +-------------------+ |                    |
-   | Identity Provider | |                    |
-   | (Profil Zaufany)  | |                    |
-   +-----------------^-+ |                    |
-                     |   |  +---------------+ | +-------------+   +---------+
-                     +------> Client Webapp +---> Stellar     +---> Stellar |
-                     |   |  +---------------+ | | Horizon API |   | Network |
-+--------------------v-+ |                    | +-------------+   +---------+
-|Issuance/Authorization| |                    |
-|       Server         | |                    |
-+----------------------+ |                    |
-                         |                    |
-                         |                    |
-                         |                    |
-                         |                    |
-                         +                    +
-
+                          +                    +
+         Government       |      Electoral     |      Blockchain
+                          |                    |
+                          |                    |
++-----------------------+ |                    |
+| Authentication Server | |                    |
+|         (AS)          | |                    |
++---------------------^-+ |                    |
+                      |   |  +---------------+ | +-------------+   +---------+
+                      +------> Client Webapp +---> Stellar     +---> Stellar |
+                      |   |  +---------------+ | | Horizon API |   | Network |
+   +------------------v-+ |                    | +-------------+   +---------+
+   | Token Distribution | |                    |
+   |     Server (TDS)   | |                    |
+   +--------------------+ |                    |
+                          |                    |
+                          |                    |
+                          +                    +
 \end{verbatim}
 \caption{System architecture}
 \label{fig:ascii-box}
@@ -135,10 +128,9 @@ Ethereum provides high flexibility, mainly because of its fully-fledged smart co
 
 Proposed system consists of three parties: Government, Electoral and Blockchain. Both Government and Electoral distrust each other, because each of the parties has interest in manipulating the process of election. Electoral demand from Government to be as transparent as possible. Government perform authentication and authorization process to prevent unauthorized votes or double \textit{vote token} issuance.
 
-Ideally \textit{Identity Provider} and \textit{Issuance/Authorization Server} should be separate entities, but we notice pessimistic scenario, where they both cooperate together to manipulate election results.
+Ideally Authentication Server (AS) and Token Distribution Server (TDS) should be separate entities, but we assume pessimistic scenario, where they both cooperate together to manipulate election results.
 
-Ideally, the system should consist only of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized \textit{identity provider} and \textit{issuance/authorization server}. Unfortunately proposed system requires a central authorization server for vote token issuance, thus becoming a single point
-of failure. This flaw has been addressed at the end of this paper. There are also many proposals on how to achieve authentication on the blockchain ecosystem, but we won't cover them in this paper.
+Ideally, the system should consist only of a client webpage that allows users to interact with the Stellar network, getting rid of the centralized AS and TDS. Unfortunately proposed system requires a central authority for authentication for vote token issuance, thus becoming a single point of failure. This flaw has been addressed at the end of this paper. There are also many proposals on how to achieve authentication on the blockchain ecosystem, but we won't cover them in this paper.
 
 \subsection{Scalability}
 
