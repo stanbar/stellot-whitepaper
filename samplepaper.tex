@@ -165,7 +165,7 @@ Vote option is expressed in strictly encoded 32 byte MEMO field available in blo
 \end{figure} 
 
 We propose questions and options for multi option ballots, and further extensions. Random string of bits is added to prevent from preliminary results that could be achieved by calculating the same MEMO fields.
-The MEMO field is encrypted using publicly available special public key, preventing from preliminary results. At the end of election the issuer publish corresponding private key, allowing everyone to calculate the election results on their own.
+The MEMO field is encrypted using publicly available special public key, preventing from preliminary results. At the end of election the issuer publish corresponding private key, allowing everyone to calculate the election results on their own. Random string of bits is added to prevent from preliminary results that could be achieved by summing equal memo fields.
 
 \section{Privacy}
 \label{privacy}
@@ -208,24 +208,7 @@ Despite all those problems, \textbf{this algorithm achieve privacy requirement}.
 
 \section{Voting process}
 As oppose to ~\cite{liu2017voting}, our system doesn't require any preregistration phase, nor any knowledge of underlaying blockchain technology.  Voter chooses one of the available options and webapp client takes care of rest of the operations. In such, the voter is completely abstracted from technology used underneath.
-In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}. Client webapp prepare transaction which transfer 1 Vote Token from distribution account to ballot-box account. Vote option is expressed in strictly encoded 32 byte MEMO field available in blockchain transaction. Frame structure is presented in Fig. \ref{fig:ballot-encoding}. 
-\begin{figure}
-\begin{verbatim}
-+------+-------------------------+-----------------------+---------------+
-| Name |     Question code       |     Option code       | Random string |
-+------------------------------------------------------------------------+
-|      |                         |                       |               |
-| Bits | n=ceil(lg(+Questions+)) | m=ceil(lg(+Options+)) |  r=256+n+m    |
-|      |                         |                       |               |
-+------+-------------------------+-----------------------+---------------+
-
-\end{verbatim}
-\caption{Voting ballot encoded in 32 byte MEMO field}
-\label{fig:ballot-encoding}
-\end{figure} 
-
-The MEMO field is encrypted using publicly available special public key, preventing from preliminary results. At the end of election the issuer publish corresponding private key, allowing everyone to calculate the election results on their own.
-
+In order to achieve vote anonymity, we use rules described in section ~\ref{privacy} \nameref{privacy}.
 
 Voter start interactive session with Issuer where they proceed Chaum Blind Signature \cite{blindsignatureschaum} on ed25519 scheme. This process consists of 6 steps:
 \begin{itemize}
