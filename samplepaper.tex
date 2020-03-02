@@ -27,7 +27,7 @@
 % If there are more than two authors, 'et al.' is used.
 %
 \institute{Faculty of Electronics, Telecommunications and Informatics\\
-Gdansk University of Technology\\
+Gdansk Univerity of Technology\\
 Gdansk, Poland\\
 \email{s160518@student.pg.edu.gda.pl}}
 %
@@ -73,7 +73,7 @@ Currently, the most popular application of smart contracts is token issuance. Th
 
 
 \section{System proposition}
-The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. I decided to use a government authorized polish system
+The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. WeI decided to use a government authorized polish system
 “Profil Zaufany” as an Authentication Server(AS), with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. We assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. 
 
 \subsection{Stellar platform}
@@ -180,25 +180,25 @@ Despite all those problems, \textbf{this algorithm achieves privacy requirement}
 
 \section{Blind signature implementation}
 
-To achieve vote anonymity, we use the rules described in section ~\ref{privacy} \nameref{privacy}. Voter start interactive session with Issuer where they proceed Chaum bBlind sSignature \cite{blindsignatureschaum} on ed25519 scheme. 
+To achieve vote anonymity, we use the rules described in section ~\ref{privacy} \nameref{privacy}. Voter start interactive session with Issuer where they proceed Chaum blind signature \cite{blindsignatureschaum} on ed25519 scheme. 
 
-Let's assume Alice to be Voter, Bob to be Issuer, P to be Bob public key, M to be the vote token transaction from TDS to the ballot-box.
+Let's assume Alice to be Voter, Bob to be Issuer, P to be Bob public key, H to be hash function, || to be concatenation operator, M to be the vote token transaction from TDS to the ballot-box.
 This process consists of following steps:
 \begin{itemize}
 \item Bob generate random nonce number \textit{k} in the range $(1, q-1)$, compute 
-\(r = Gg^k \pmod{p}\)
+\(r = G^k \pmod{p}\)
 and sends it back to Alice.
-\item Alice picks two random numbers \textit{a} and \textit{b} in the range (1, q-1), and use them to compute challenge numberr \textit{e} as follows:
-\[R'r’ = r*(G^a)*(P^b) \pmod{p}\]
-\[e'’ = H(M || P || Rr’)\]
-\[e = e'’ + b \pmod{q}\]
+\item Alice picks two random numbers \textit{a} and \textit{b} in the range (1, q-1), use them to compute challenge number \textit{e}
+\[R' = r*(G^a)*(P^b) \pmod{p}\]
+\[e' = H(R’M || P || MR’)\]
+\[e = e' + b \pmod{q}\]
 and send it back to Bob
 \item Bob signs it 
 \(s = e*x + k \pmod{q}\)
 and send it back to Alice
 \item Alice computes 
 $s' = s + a \pmod{q}$
-The pair (R'r’, s'’) is a valid signature on transaction M.
+The pair (R', s') is a valid signature on transaction M.
 \end{itemize}
 Alice gets valid signature on transaction M, while Bob knows only blinded hash of the transaction M.
 This process can be visualized as:
@@ -210,9 +210,9 @@ This process can be visualized as:
     \item Alice cast the ballot into the ballot box.
 \end{itemize}
 
-To protect the Issuer from signing a malicious transaction, we use the cut-and-choose technique described in section \ref{cut-and-choose}.
+To protect the BobIssuer from signing a malicious transaction, we use the cut-and-choose technique described in section \ref{cut-and-choose}.
 
-Since the signature on the transaction (ballot) is valid, Voter can publish it to the stellar network, and track it with the received transaction id.
+Since the signature on the transaction (ballot) is valid, AliceVoter can publish it directly to the stellar network, and track it with the received transaction id. 
 
 \section{Transaction Fees}
 Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of the transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to the very low influence on the total sum.
