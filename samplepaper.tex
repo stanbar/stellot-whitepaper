@@ -73,7 +73,7 @@ Currently, the most popular application of smart contracts is token issuance. Th
 
 
 \section{System proposition}
-The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. WeI decided to use a government authorized polish system
+The goal of the system is to provide the highest level of transparency while keeping sensitive data private. Additionally, it should be illegal to issue more than one vote token to one elector. Hence there should be a way of identifying and authorizing voters. We decided to use a government authorized polish system
 “Profil Zaufany” as an Authentication Server(AS), with the assumption that every eligible voter is registered there. The total number of votes tokens should be limited to the total number of eligible voters. We assume that this number is publicly available on the day of the election. In consequence, everyone can verify that there were no more token issued. 
 
 \subsection{Stellar platform}
@@ -152,11 +152,12 @@ There is one problem, Alice can prepare malicious transaction, send it to Bob, w
 \subsection{Solution to this problem requires interactive Cut-and-Choose protocol.}
 \label{cut-and-choose}
 
-Alice creates \(n\) (e.g. 100) random votes \footnote{by \textit{random vote} we understand vote on random candidate}, encrypts each of them with different key and sends them to Bob. He challenges Alice for \(n-1\) unblinded transactions, so he can compare if they are the same as previously claimed, and if so, validate them, now: 
+Alice creates \(n\) (e.g. 100) random  vote batch transctions.s \footnote{by \textit{random vote batch} we understand, batch of all possible trasactions with unique vote option on random candidate}, encrypts each of them with different key and sends them to Bob. He challenges Alice for \(n-1\) unblinded batch of transactions, so he can compare if they are the same as previously claimed, and if so, validate them, now: 
 \begin{itemize}
  \item If any transaction is malicious (try to issue more than 1 \textit{vote token}, perform any illegal operation), Alice loses her right to vote and optionally gets punished.
 
- \item If all of them are correct, he asks Alice if the missing transaction match her vote decision
+ \item If all of them are correct, he signsasks Alice if the missing batch of transactions transaction and sends it back to Alice.
+ % write why it could be brenchmatch her vote decision
  \begin{itemize}
     \item is yes, then he signs the missing transaction and sends it back to Alice.
     \item if no, she repeats the process, until she gets the transaction with vote matching her option.
@@ -190,7 +191,7 @@ This process consists of following steps:
 and sends it back to Alice.
 \item Alice picks two random numbers \textit{a} and \textit{b} in the range (1, q-1), use them to compute challenge number \textit{e}
 \[R' = r*(G^a)*(P^b) \pmod{p}\]
-\[e' = H(R’M || P || MR’)\]
+\[e' = H(R’|| P || M)\]
 \[e = e' + b \pmod{q}\]
 and send it back to Bob
 \item Bob signs it 
@@ -210,9 +211,9 @@ This process can be visualized as:
     \item Alice cast the ballot into the ballot box.
 \end{itemize}
 
-To protect the BobIssuer from signing a malicious transaction, we use the cut-and-choose technique described in section \ref{cut-and-choose}.
+To protect the Bob from signing a malicious transaction, we use the cut-and-choose technique described in section \ref{cut-and-choose}.
 
-Since the signature on the transaction (ballot) is valid, AliceVoter can publish it directly to the stellar network, and track it with the received transaction id. 
+Since the signature on the transaction (ballot) is valid, Alice can publish it directly to the stellar network, and track it with the received transaction id. 
 
 \section{Transaction Fees}
 Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of the transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to the very low influence on the total sum.
