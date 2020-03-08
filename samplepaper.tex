@@ -15,7 +15,7 @@
 
 \begin{document}
 %
-\title{Voting on Stellar Blockchain}
+\title{Practical Voting on Stellar Blockchain}
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
@@ -27,14 +27,14 @@
 % If there are more than two authors, 'et al.' is used.
 %
 \institute{Faculty of Electronics, Telecommunications and Informatics\\
-Gdansk Univerity of Technology\\
+Gdansk University of Technology\\
 Gdansk, Poland\\
 \email{s160518@student.pg.edu.gda.pl}}
 %
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose an e-voting system that leverages the existing Stellar Blockchain network to satisfy most of the requirements set for e-voting, such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
+In this paper, we propose  an production-ready privacy-first e-voting system that leverages the existing Stellar Blockchain network to satisfy most of the requirements set for e-voting, such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
 
 %JS wypunktować co jest wkładem artykułu
 
@@ -124,13 +124,13 @@ Assets in stellar blockchain, are divisible to 7 decimal points. This is an unwa
 Vote option is expressed in strictly encoded 32 byte MEMO field available in blockchain transaction. Frame structure is presented in Fig. \ref{fig:ballot-encoding}. 
 \begin{figure}
 \begin{verbatim}
-+------+-------------------------+-----------------------+---------------+
-| Name |     Question code       |     Option code       | Random string |
-+------------------------------------------------------------------------+
-|      |                         |                       |               |
-| Bits | n=ceil(lg(|Questions|)) | m=ceil(lg(|Options|)) |  r=256+n+m    |
-|      |                         |                       |               |
-+------+-------------------------+-----------------------+---------------+
++------+-------------------------+-------------------------+---------------+
+| Name |     #1 Answer code      |      #2 Answer code     | Random string |
++--------------------------------------------------------------------------+
+|      |                         |                         |               |
+| Bits | An1=ceil(lg(|Answers1|)) | An2=ceil(lg(|Answers2|)) |  r=256-sum(A)6+n+m    |
+|      |                         |                         |               |
++------+-------------------------+-------------------------+---------------+
 
 \end{verbatim}
 \caption{Voting ballot encoded in 32 byte MEMO field}
@@ -152,16 +152,12 @@ There is one problem, Alice can prepare malicious transaction, send it to Bob, w
 \subsection{Solution to this problem requires interactive Cut-and-Choose protocol.}
 \label{cut-and-choose}
 
-Alice creates \(n\) (e.g. 100) random  vote batch transctions.s \footnote{by \textit{random vote batch} we understand, batch of all possible trasactions with unique vote option on random candidate}, encrypts each of them with different key and sends them to Bob. He challenges Alice for \(n-1\) unblinded batch of transactions, so he can compare if they are the same as previously claimed, and if so, validate them, now: 
+Alice creates \(n\) (e.g. 100) random vote batch transctions. \footnote{by \textit{random vote batch} we understand, batch of all possible trasactions with unique vote option}, encrypts each of them with different key and sends them to Bob. He challenges Alice for \(n-1\) unblinded batch of transaction, so he can compare if they are the same as previously claimed, and if so, validate them, now: 
 \begin{itemize}
  \item If any transaction is malicious (try to issue more than 1 \textit{vote token}, perform any illegal operation), Alice loses her right to vote and optionally gets punished.
 
- \item If all of them are correct, he signsasks Alice if the missing batch of transactions transaction and sends it back to Alice.
- % write why it could be brenchmatch her vote decision
- \begin{itemize}
-    \item is yes, then he signs the missing transaction and sends it back to Alice.
-    \item if no, she repeats the process, until she gets the transaction with vote matching her option.
- \end{itemize}
+ \item If all of them are correct, he signs the missing batch of transactions and sends it back to Alice.
+ % write why it could be brench
 \end{itemize}
 Since all the votes are random, Bob can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote opinion. In fact, he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
 
