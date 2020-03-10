@@ -15,7 +15,7 @@
 
 \begin{document}
 %
-\title{Practical Voting on Stellar Blockchain}
+\title{Practical Voting on Blockchain}
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
@@ -34,7 +34,7 @@ Gdansk, Poland\\
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose  an production-ready privacy-first e-voting system that leverages the existing Stellar Blockchain network to satisfy most of the requirements set for e-voting, such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
+In this paper, we propose an production-ready privacy-first e-voting system that leverages the existing Stellar Blockchain network to satisfy most of the requirements set for e-voting, such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
 
 %JS wypunktować co jest wkładem artykułu
 
@@ -124,13 +124,13 @@ Assets in stellar blockchain, are divisible to 7 decimal points. This is an unwa
 Vote option is expressed in strictly encoded 32 byte MEMO field available in blockchain transaction. Frame structure is presented in Fig. \ref{fig:ballot-encoding}. 
 \begin{figure}
 \begin{verbatim}
-+------+-------------------------+-------------------------+---------------+
-| Name |     #1 Answer code      |      #2 Answer code     | Random string |
-+--------------------------------------------------------------------------+
-|      |                         |                         |               |
-| Bits | An1=ceil(lg(|Answers1|)) | An2=ceil(lg(|Answers2|)) |  r=256-sum(A)6+n+m    |
-|      |                         |                         |               |
-+------+-------------------------+-------------------------+---------------+
++----+-------------------------+-------------------------+---------------+
+|Name|     #1 Answer code      |      #2 Answer code     | Random string |
++------------------------------------------------------------------------+
+|    |                         |                         |               |
+|Bits| A1=ceil(lg(|Answers1|)) | A2=ceil(lg(|Answers2|)) |  r=256-sum(A) |
+|    |                         |                         |               |
++----+-------------------------+-------------------------+---------------+
 
 \end{verbatim}
 \caption{Voting ballot encoded in 32 byte MEMO field}
@@ -158,6 +158,8 @@ Alice creates \(n\) (e.g. 100) random vote batch transctions. \footnote{by \text
 
  \item If all of them are correct, he signs the missing batch of transactions and sends it back to Alice.
  % write why it could be brench
+ % write about batching
+ % write about seqNumber
 \end{itemize}
 Since all the votes are random, Bob can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote opinion. In fact, he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
 
