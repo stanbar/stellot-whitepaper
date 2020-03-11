@@ -152,23 +152,24 @@ There is one problem, Alice can prepare malicious transaction, send it to Bob, w
 \subsection{Solution to this problem requires interactive Cut-and-Choose protocol.}
 \label{cut-and-choose}
 
-Alice creates \(n\) (e.g. 100) random vote batch transctions. \footnote{by \textit{random vote batch} we understand, batch of all possible trasactions with unique vote option}, encrypts each of them with different key and sends them to Bob. He challenges Alice for \(n-1\) unblinded batch of transaction, so he can compare if they are the same as previously claimed, and if so, validate them, now: 
+Alice creates \(n\) (e.g. 100) random vote batch transactions. Batch consist of all possible vote options. If there is 6 candidates, and n equals 100, then we need to create 100 batches of 6 transactions each (600 transactions). Each batch gets \footnote{by \textit{random vote batch} we understand, batch of all possible trasactions with unique vote option}, blindedencrypts each of them with different blinding factor. Alice sends them to Bobkey and sends them to Bob. WhoHe challenges Alice for \(n-1\) unblinded batch of transaction. He uses them to validate, their structure, especially if they don't try to issue more than 1 \textit{vote token} or perform any illegal operation.so he can compare if they are the same as Then:
+previously claimed, and if so, validate them, now: 
 \begin{itemize}
- \item If any transaction is malicious (try to issue more than 1 \textit{vote token}, perform any illegal operation), Alice loses her right to vote and optionally gets punished.
+ \item If any transaction is malicious,  (try to issue more than 1 \textit{vote token}, perform any illegal operation), Alice loses her right to vote and optionally gets punished.
 
- \item If all of them are correct, he signs the missing batch of transactions and sends it back to Alice.
+ \item If all of them are correct, he compute signs on the missing batch of transactions, and sends ithem back to Alice. She picks the sign that correspond to transaction of her choice, unblind it and add it to the transaction.
  % write why it could be brench
  % write about batching
  % write about seqNumber
 \end{itemize}
-Since all the votes are random, Bob can not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote opinion. In fact, he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
+Since all the votes are random, Bob does not know which transaction gets published to the network, because he's sign, will be transformed (unblinded) before adding to transaction while still keeping it's cryptography validity. In result, Bobcan not know what vote option is under the last encrypted transaction, he also doesn't know the address of such transaction, so he can not connect Alice with her vote decisopinion. In fact, he doesn't know anything about such transaction, but since he checked and validated randomly selected \(\frac{n-1}{n}*100\%\) previous transactions, he can assume with high probability that this one is also not malicious.
 
 There are two problems with this method.
-First, there are \(\frac{1}{n}*100\%\) chance that Alice will succeed in cheating. In the case where she steals all vote tokens, the election must be remade, because no more tokens can be issued from the Issuer account. Additionally, no consequences can be made to such an attacker, because we have broken the link between the user and the transaction during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets key request from Bob for malicious transactions, she may just not respond, preventing from revealing the content of such transaction. In such a case Bob should block on the request, preventing Alice from "taking another try in the lottery".
+First, there are \(\frac{1}{n}*100\%\) chance that Alice will succeed in cheating. In the case where she steals all vote tokens, the election must be remade, because no more tokens can be issued from the distribution accountIssuer account. Additionally, no consequences can be made to such an attacker, because we have broken the link between the user and the transaction during blind signature. Introducing punishment for attacker who try to perform malicious transaction seems to be negligible, because when Alice gets challenged to unblind malicious transaction key request from Bob for malicious transactions, she may just not respond, preventing from revealing the content of such transaction. In such a case Bob should block on the challengerequest, preventing Alice from "taking another try in the lottery".
 
 Second, Alice may lie that she still didn't receive signed transactions with her vote opinion, forcing Bob to perform infinite many computations, achieving the DoS attack, but it could be mitigated by introducing some kind of limits.
 
-Despite all those problems, \textbf{this algorithm achieves privacy requirement}.
+In result, we getDespite all those problems, \textbf{this protocolalgorithm that achieves voter anonymity privacy requirement}.
 
 %Here is the  blind signature implementation for ECDSA [https://github.com/oleganza/bitcoin-papers/blob/master/BitcoinBlindSignatures.md]
 %Another post on Schnorr/DSA https://blog.cryptographyengineering.com/a-note-on-blind-signature-schemes/
@@ -181,7 +182,7 @@ Despite all those problems, \textbf{this algorithm achieves privacy requirement}
 
 To achieve vote anonymity, we use the rules described in section ~\ref{privacy} \nameref{privacy}. Voter start interactive session with Issuer where they proceed Chaum blind signature \cite{blindsignatureschaum} on ed25519 scheme. 
 
-Let's assume Alice to be Voter, Bob to be Issuer, P to be Bob public key, H to be hash function, || to be concatenation operator, M to be the vote token transaction from TDS to the ballot-box.
+Let's assume Alice to be Voter, Bob to be Issuer, P to be Bob public key, H to be hash function, || to be concatenation operator, M to be the \textit{vote token transaction} from TDS to the ballot-box.
 This process consists of following steps:
 \begin{itemize}
 \item Bob generate random nonce number \textit{k} in the range $(1, q-1)$, compute 
@@ -199,7 +200,7 @@ and send it back to Alice
 $s' = s + a \pmod{q}$
 The pair (R', s') is a valid signature on transaction M.
 \end{itemize}
-Alice gets valid signature on transaction M, while Bob knows only blinded hash of the transaction M.
+Alice gets valid signature on transaction M, while Bob knows only \textbf{blinded hash} of the transaction M.
 This process can be visualized as:
 \begin{itemize}
     \item Alice prepares a voting ballot.
@@ -217,14 +218,14 @@ Since the signature on the transaction (ballot) is valid, Alice can publish it d
 Let’s evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of the transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to the very low influence on the total sum.
 
 \section{Preparation}
-To create such an election, we need an issuer, distribution account, and a new vote token. This process is well described on official stellar documentation. Variables that need to be propagated in backend and webpage code are:
-• asset name, asset issuer public key, distribution account public key, ballot-box account public key.
+To create such an election, we need an issuer, distribution account, ballot-box account, and a new vote token. This process is well described on official stellar documentation. Variables that need to be propagated in backend and webapppage code are:
+• asset name, asset issuer accountIdpublic key, distribution accountId and public key, ballot-box accountId public key.
 • limit of possible vote tokens (number of eligible voters). 
 • list of (candidate name, candidate code).
 • keypair for encrypting/decrypting transaction MEMO fields before/after election end.
 
 \section{Fully Decentralized Blockchain Application}
-In the blockchain world to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example, one could encode all eligible voter addresses (or better hash of addresses) in the smart contract and then allow redeeming vote token only to addresses which are present in there, very similar to traditional election system where all eligible voters are listed on paper. The ballot is issued only if the elector is present on such a list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such a list can be hosted on IPFS (Content Addressed Network) where data is identified by its hash. Unfortunately, Stellar doesn't have such a feature yet.
+In the blockchain world to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example, one could encode all eligible voter addresses or some special one-time codes, (or better hash of addresses) in the smart contract, and then allow redeeming vote token only to addresses/codes which are present in there, very similar to traditional election system where all eligible voters are listed on paper. The ballot is issued only if the elector is present on such a list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such a list can be hosted on IPFS (Content Addressed Network) where data is identified by its hash. Unfortunately, Stellar doesn't have such a feature yet.
 
 \section{System weakness}
 In our system, we assumed that AS and TDS are honest actors. We assumed that we know the total number of eligible voters and that only eligible voters can redeem tokens. The question is how can we know if the authorities don't publish a greater number of eligible voters and redeem this extra number of tokens to themselves. Being able to significantly influence the election results. The pre-registration phase doesn't help here, since the malicious government also can take part in it, generating extra tokens. There is some mitigation proposition where it would be required from voters to compute some kind of proof-of-work that would require a lot of computing power by one actor to create a lot of votes.
