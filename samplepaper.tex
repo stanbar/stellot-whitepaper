@@ -48,8 +48,8 @@ to satisfy most important requirements for e-voting systems: such as transparenc
 % np slepy podpis
 % Wydaje mi się że właśnie to:
 
-% - production-ready: jest to rozwiązanie które ma sens wdrażania już dziś. Inne publikacje operają się albo na bitcoinie (który nie jest przystosowany do tworzenia na nim alpikacji tego typu), Eethereum który aktualnie nie radzi sobie ze skalowalnością w dodatku (z tego co się orientujewydaje mi się), że nie da się zaimplementować algorytmu ślepego podpisu w smart contractcie bez ujawniania klucza prywatnego, więc platformy smart contractowe nic tu nie dają. , Co więcej inne publikacje zakładają, że kazdy głosujący posiada portfel bitcoinowy, co moim zdaniem jest mrzonką. Ten system nie wymaga od użytkownika żadnej wiedzy.
-albo są na tyle abstrakcyjne że nie mówią o żadnym konkretnym blockchainie. Ten system 
+% - production-ready: jest to rozwiązanie które ma sens wdrażania już dziś. Inne publikacje operają się albo na bitcoinie (który nie jest przystosowany do tworzenia na nim alpikacji tego typu), Ethereum który aktualnie nie radzi sobie ze skalowalnością w dodatku (z tego co się orientuje), nie da się zaimplementować algorytmu ślepego podpisu w smart contractcie bez ujawniania klucza prywatnego, więc platformy smart contractowe nic tu nie dają. Co więcej inne publikacje zakładają, że kazdy głosujący posiada portfel bitcoinowy, co moim zdaniem jest mrzonką. Ten system nie wymaga od użytkownika żadnej wiedzy.
+
 % - privacy-first - cały protokół jest stworzony do okoła prywatności użytkownika. Cokolwiek by się nie działo, prywatność użytkownika jest zachowana. (no chyba, że algorytm ślepych podpisów jest dziurawy)
 
 
@@ -81,6 +81,7 @@ First let's select   the requirements that every robust voting system should sat
 When we have deeper look at this requirements 
 it turns out that they are hard to be satisfied all together. Especially trustless, authorization, privacy, and verifiability. 
 %JS DLACZEGO
+% 
 There are many ideas on how to design a protocol that satisfies part of them, or even all of them, but they are often highly unpractical or rely vote privacy on trust to authorities. One proposition ~\cite{liu2017voting} argue not to rely on a trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than the actual number of eligible voters. Additionally, they require a pre-registration phase which assumes that each voter possesses two pair of bitcoin account upfront, which seems to be unacceptable, at least for current adoption of this technology. Another approach ~\cite{hardwick2018voting} allows the central authority to pair voter identity with its vote option. We consider it an unacceptable flaw because an attacker who gets access to such a system might potentially steal this information, even if the central authority is an honest entity. Recently (8 September 2019) Moscow decided to test the e-voting system based on Ethereum blockchain for their local elections ~\cite{gaudry2019breaking}. Unfortunately, the system had many flaws mentioned previously, and additionally problem with weak encryption.  
 In this paper, we propose a system that satisfy  the selected requirements, including privacy and verifiability. 
 The additional notable advantage is the fact that users of our system are completely abstracted from blockchain technology used underneath.
