@@ -11,7 +11,7 @@
 %
 % If you use the hyperref package, please uncomment the following line
 % to display URLs in blue roman font according to Springer's eBook style:
-% \renewcommand\UrlFont{\color{blue}\rmfamily}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
 
 \begin{document}
 %
@@ -42,13 +42,16 @@ Department of Computer Science Technology and Computation,\\ University of Alica
 %
 \begin{abstract}
 In this paper, we propose an production-ready privacy-first e-voting system that leverages the existing Stellar Blockchain network 
-tohat satisfy most important requirements for e-voting systems: such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
+to satisfy most important requirements for e-voting systems: such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
 
 %JS wypunktować co jest wkładem artykułu
 % np slepy podpis
 % Wydaje mi się że właśnie to:
-% - production-ready 
-% - privacy-first
+
+% - production-ready: jest to rozwiązanie które ma sens wdrażania już dziś. Inne publikacje operają się albo na bitcoinie (który nie jest przystosowany do tworzenia na nim alpikacji tego typu), Eethereum który aktualnie nie radzi sobie ze skalowalnością w dodatku (z tego co się orientujewydaje mi się), że nie da się zaimplementować algorytmu ślepego podpisu w smart contractcie bez ujawniania klucza prywatnego, więc platformy smart contractowe nic tu nie dają. , Co więcej inne publikacje zakładają, że kazdy głosujący posiada portfel bitcoinowy, co moim zdaniem jest mrzonką. Ten system nie wymaga od użytkownika żadnej wiedzy.
+albo są na tyle abstrakcyjne że nie mówią o żadnym konkretnym blockchainie. Ten system 
+% - privacy-first - cały protokół jest stworzony do okoła prywatności użytkownika. Cokolwiek by się nie działo, prywatność użytkownika jest zachowana. (no chyba, że algorytm ślepych podpisów jest dziurawy)
+
 
  
 \keywords{Blockchain \and E-Voting \and Stellar \and Tokenization  \and Blind signature} %JS  e? i? Voting 
