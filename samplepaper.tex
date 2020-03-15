@@ -41,8 +41,7 @@ Department of Computer Science Technology and Computation,\\ University of Alica
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose an production-ready and privacy-first e-voting system based on decentralized Stellar Blockchain network. We argue that proposedsuch system satisfy all requirements stated for robust e-voting systems such as scalability, transparency, verifiability, and voter anonymity/privacy. has potential to be used in large 
-to satisfy most important requirements for e-voting systems: such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
+In this paper, we propose an production-ready and privacy-first e-voting system based on decentralized Stellar Blockchain network. We argue that proposed system satisfy all requirements stated for robust e-voting system such as scalability, transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. The voter anonymity is achieved by blind-signature technique, while signer is protected by cut-and-choose method. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
 
 %JS wypunktować co jest wkładem artykułu
 % np slepy podpis
@@ -290,6 +289,9 @@ This process can be visualized as:
 To protect the Bob from signing a malicious transaction, we use the cut-and-choose technique described in section \ref{cut-and-choose}.
 
 Since the signature on the transaction (ballot) is valid, Alice can publish it directly to the stellar network, and track it with the received transaction id. 
+
+\section{Sequence Number}
+Each Stellar account has it's own transaction counter called sequence number. One account can not 
 
 \section{Transaction Fees}
 We evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of the transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to the very low influence on the total sum.
