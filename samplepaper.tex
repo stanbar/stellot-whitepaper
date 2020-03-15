@@ -291,7 +291,7 @@ To protect the Bob from signing a malicious transaction, we use the cut-and-choo
 Since the signature on the transaction (ballot) is valid, Alice can publish it directly to the stellar network, and track it with the received transaction id. 
 
 \section{Sequence Number}
-Each Stellar account has it's own transaction counter called sequence number. One account can not 
+Each Stellar account has it's own transaction counter called sequence number. Once the transaction is submitted to network, the next transaction has to be submitted with incremented sequence number otherwise it will be rejected. This is very troublesome in our use case, because when TDS sign many transactions in close timee account can not 
 
 \section{Transaction Fees}
 We evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of the transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to the very low influence on the total sum.
