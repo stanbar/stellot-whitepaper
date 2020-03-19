@@ -38,6 +38,9 @@ Department of Computer Science Technology and Computation,\\ University of Alica
 \email{\{hmora,dgil\}@dtic.ua.es}
 }
 
+ 
+\authorrunning{S. Barański et al.}
+
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
@@ -90,7 +93,7 @@ When we have deeper look at this requirements
 it turns out that they are hard to be satisfied all together. Especially authorization, privacy, and verifiability with trustless. 
 % JS DLACZEGO
 % SB Privacy and authorization seems to stay in opposite to each other. The same with trustless and verifiability. Authorization seems to be really tricky to achieve without authentication. Privacy require to break link between voter and his vote. Authorization require prior authentication. 
-% 
+
 There are many ideas on how to design a protocol that satisfies part of them, or even all of them, but they are often highly unpractical or rely vote privacy on trust to authorities. One proposition ~\cite{liu2017voting} argue not to rely on a trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than the actual number of eligible voters. Additionally, they require a pre-registration phase which assumes that each voter possesses two pair of bitcoin account upfront, which seems to be unacceptable, at least for current adoption of this technology. Another approach ~\cite{hardwick2018voting} allows the central authority to pair voter identity with its vote option. We consider it an unacceptable flaw because an attacker who gets access to such a system might potentially steal this information, even if the central authority is an honest entity. Recently (8 September 2019) Moscow decided to test the e-voting system based on Ethereum blockchain for their local elections ~\cite{gaudry2019breaking}. Unfortunately, the system had many flaws mentioned previously, and additionally problem with weak encryption.  
 In this paper, we propose a system that satisfy  the selected requirements, including privacy and verifiability. 
 The additional notable advantage is the fact that users of our system are completely abstracted from blockchain technology used underneath.
@@ -290,7 +293,7 @@ To protect the Bob from signing a malicious transaction, we use the cut-and-choo
 
 Since the signature on the transaction (ballot) is valid, Alice can publish it directly to the stellar network, and track it with the received transaction id. 
 
-\section{Scalability Issue - Sequence Number}
+\section{Scalability Issue - Sequence Number - Draft}
 Each Stellar account has it's own transaction counter called sequence number. Once the transaction is submitted to network, the next transaction has to be submitted with incremented sequence number, otherwise it will be rejected. This is very troublesome in our use case, because, when the TDS sign two transactions for two users, the second one, can not publish it's transaction, before the first doesn't do so. It could be mitigated by introducing some kind of time frames for each user, but it would significantly limit the number of transactions per second and would allow TDS to identify transaction submission with time frame, compromising privacy.
 Instead we use concept called Channels. Channel is simply a intermediary account that provides his sequence number to process transaction on someone else behalf. Those channel accounts could be managed by TDS and allocated for each new transaction request. Unfortunately, when we get privacy of such process into account, it turns out that TDS could easly associate channel with our identity, striping us from previously acquired anonymity. 
 We could allow user to create new channel account, for each batch of transactions during blind-signature process. Here we face with another problem, which is the fact, that the channel account is responsible to pay the transaciton fee. Thus, such account has to be funded prior to providing intermediary service. Funding has to be done with the same care as vote transaction, since they are equally capable of breaking privacy. 
@@ -327,7 +330,8 @@ In our system, we assumed that AS and TDS are honest actors. We assumed that we 
 The proposed system satisfies all assumed requirements. Each vote is recorded on Blockchain, and everyone can calculate election results without trusting authorities. Thanks to a blind signature, Voter can be sure that his decision will be kept private. Unfortunately, the system still relies on trust to the issuer, who decide who is eligible to receive vote right. If this single point of failure could be eliminated, we would achieve a truly decentralized trustless system, without central authorities.
 Besides that, we confirmed that blockchain can be used not only for cryptocurrencies but also in assets tokenization and building dapps (decentralized applications). Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is speed and transaction fees. We estimated the costs of the 2019 Polish parliamentary election to 11,27 USD. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queuing overhead. Doing it would also allow us to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such systems on different blockchain platforms. Source code and demo are available under following links \url{https://github.com/stasbar/stellar-voting}, \url{https://voting.stasbar.com}.
 
-  
+\section{Discussion and Future Works}
+%podsumowac co sie udało zrobic, jakie są główne osiągnięcia przedstawione w artykule
 %JS Future works :wdrozenie na eti
 
 \bibliographystyle{splncs04}
