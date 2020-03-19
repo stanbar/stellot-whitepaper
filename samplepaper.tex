@@ -300,12 +300,16 @@ We could allow user to create new channel account, for each batch of transaction
 % lack better word for "capable of breaking privacy", any suggestions ?
 
 % TDS publish channel funding
+\paragraph{TDS publish channel funding}
 Additionally the funding transaction has to be published to the network by TDS. Otherwise we are back to be origin problem of sequence number blocking. But if the transaction is published by TDS, it is able to identify us by the channel used to pass the transaction trought. He allocate us the channel, so he knows exactly who will pass the transaction through it, so the blind signature losses it's privacy value.
 
 % User publish channel funding
+\paragraph{User publish channel funding}
 User generate new x random channel account keypairs, for each of them, create transaction funding this channel, sends them to TDS, who allocate for him channel from channel pool to perform blind-transaction on my-channel funding transaction. Then, we don't instantly redeem this transaction to fund my channel, because in the next step (vote transaction) the TDS could determine what transaction uses already created channel and which don't. So I send him random-channel-throught-vote-transaction to perform blind signature. And now I can publish create-channel-transaction, followed by vote transaction. 
 Problem: if the TDS assign unique funding-channel for each voter, then he can identify voter with his vote by associating the transaction that was send throughout that channel. So we lose privacy !
 
+\paragraph{3rd party publish channel funding}
+3rd party that voting host has no connection to, publish channel funding. 
 
 
 \section{Transaction Fees}
