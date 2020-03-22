@@ -44,7 +44,7 @@ Department of Computer Science Technology and Computation,\\ University of Alica
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose an production-ready and privacy-first e-voting system based on decentralized Stellar Blockchain network. We argue that proposed system satisfy all requirements stated for robust e-voting system such as scalability, transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. The voter anonymity is achieved by blind-signature technique, while signer is protected by cut-and-choose method. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
+In this paper, we propose an privacy-first e-voting system based on decentralized Stellar Blockchain network. We argue that proposed system satisfy all requirements stated for robust e-voting system such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. The voter anonymity is achieved by blind-signature technique, while signer is protected by cut-and-choose method. Open Stellar blockchain allows everyone to verify the election results without having to trust central authority. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
 
 %JS wypunktować co jest wkładem artykułu
 % np slepy podpis
@@ -171,13 +171,14 @@ Ideally, Authentication Server (AS) and Token Distribution Server (TDS) should b
 %\subsection{Scalability}
 
 Blockchain is famous for being very slow. Ethereum creator Vitalik Buterin claims that Blockchains face trillema ~\cite{ethereum} which allows them to choose only two of three properties: Decentralization, Security, and Scalability. 
-And here is the place where a variety of different Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offer higher Scalability on the cost of Decentralization and Security. Stellar uses its own consensus protocol called Federated Byzantine Agreement(FBA) ~\cite{mazieres2015stellar}, which is decentralized variant of Byzantine Agreement consensus protocol, which is .   is one of such solutions. 
+And here is the place where a variety of different Blockchain platforms comes out offering something unique. While most conservative Blockchain like Bitcoin and Ethereum put on Security and Decentralization, others offer higher Scalability on the cost of Decentralization and Security. Stellar uses its own consensus protocol called Federated Byzantine Agreement(FBA) ~\cite{mazieres2015stellar}, which is decentralized variant of Byzantine Agreement consensus protocol, which is fast, cheap, has flexible trust model, doesn't require mining and is secure against adversaries with vast computational power (51\% attack).
+
 %JS to troche niebezpiecznie pisac ze zaimplementowany system
 %poswieca bezpieczenstwo kosztem skalowalnosc 
 %trzeba by tu uzasadnic ze nie bedzie to mialo 
 %wplywu na zaufanie do wynikow glosowania
 
-As for the March 2020, Ethereum can process 15 transactions per second (TPS). Whereas Stellar can process 1000 operations per second (OPS).
+As for the March 2020, Ethereum can process 15 transactions per second (TPS). Whereas Stellar can process 10 TPS, while each transaction can contain up to 100 operations.
 %JS skad ta informacja \cite lub footnote
 %JS co z tego wynika, jakie zalozenia co do wydajnosci systemow glosowania,
 %jesli by przyjac ze wszyscy polacy moga glosowac
@@ -293,21 +294,21 @@ To protect the Bob from signing a malicious transaction, we use the cut-and-choo
 
 Since the signature on the transaction (ballot) is valid, Alice can publish it directly to the stellar network, and track it with the received transaction id. 
 
-\section{Scalability Issue - Sequence Number - Draft}
-Each Stellar account has it's own transaction counter called sequence number. Once the transaction is submitted to network, the next transaction has to be submitted with incremented sequence number, otherwise it will be rejected. This is very troublesome in our use case, because, when the TDS sign two transactions for two users, the second one, can not publish it's transaction, before the first doesn't do so. It could be mitigated by introducing some kind of time frames for each user, but it would significantly limit the number of transactions per second and would allow TDS to identify transaction submission with time frame, compromising privacy.
-Instead we use concept called Channels. Channel is simply a intermediary account that provides his sequence number to process transaction on someone else behalf. Those channel accounts could be managed by TDS and allocated for each new transaction request. Unfortunately, when we get privacy of such process into account, it turns out that TDS could easly associate channel with our identity, striping us from previously acquired anonymity. 
-We could allow user to create new channel account, for each batch of transactions during blind-signature process. Here we face with another problem, which is the fact, that the channel account is responsible to pay the transaciton fee. Thus, such account has to be funded prior to providing intermediary service. Funding has to be done with the same care as vote transaction, since they are equally capable of breaking privacy. 
-% lack better word for "capable of breaking privacy", any suggestions ?
+%\section{Scalability Issue - Sequence Number - Draft}
+%Each Stellar account has it's own transaction counter called sequence number. Once the transaction is submitted to network, the next transaction has to be submitted with incremented sequence number, otherwise it will be rejected. This is very troublesome in our use case, because, when the TDS sign two transactions for two users, the second one, can not publish it's transaction, before the first doesn't do so. It could be mitigated by introducing some kind of time frames for each user, but it would significantly limit the number of transactions per second and would allow TDS to identify transaction submission with time frame, compromising privacy.
+%Instead we use concept called Channels. Channel is simply a intermediary account that provides his sequence number to process transaction on someone else behalf. Those channel accounts could be managed by TDS and allocated for each new transaction request. Unfortunately, when we get privacy of such process into account, it turns out that TDS could easly associate channel with our identity, striping us from previously acquired anonymity. 
+%We could allow user to create new channel account, for each batch of transactions during blind-signature process. Here we face with another problem, which is the fact, that the channel account is responsible to pay the transaciton fee. Thus, such account has to be funded prior to providing intermediary service. Funding has to be done with the same care as vote transaction, since they are equally capable of breaking privacy. 
+%% lack better word for "capable of breaking privacy", any suggestions ?
 
-\paragraph{TDS publish channel funding}
-Additionally the funding transaction has to be published to the network by TDS. Otherwise we are back to be origin problem of sequence number blocking. But if the transaction is published by TDS, it is able to identify us by the channel used to pass the transaction trought. He allocate us the channel, so he knows exactly who will pass the transaction through it, so the blind signature losses it's privacy value.
+%\paragraph{TDS publish channel funding}
+%Additionally the funding transaction has to be published to the network by TDS. Otherwise we are back to be origin problem of sequence number blocking. But if the transaction is published by TDS, it is able to identify us by the channel used to pass the transaction trought. He allocate us the channel, so he knows exactly who will pass the transaction through it, so the blind signature losses it's privacy value.
 
-\paragraph{User publish channel funding}
-User generate new x random channel account keypairs, for each of them, create transaction funding this channel, sends them to TDS, who allocate for him channel from channel pool to perform blind-transaction on my-channel funding transaction. Then, we don't instantly redeem this transaction to fund my channel, because in the next step (vote transaction) the TDS could determine what transaction uses already created channel and which don't. So I send him random-channel-throught-vote-transaction to perform blind signature. And now I can publish create-channel-transaction, followed by vote transaction. 
-Problem: if the TDS assign unique funding-channel for each voter, then he can identify voter with his vote by associating the transaction that was send throughout that channel. So we lose privacy !
+%\paragraph{User publish channel funding}
+%User generate new x random channel account keypairs, for each of them, create transaction funding this channel, sends them to TDS, who allocate for him channel from channel pool to perform blind-transaction on my-channel funding transaction. Then, we don't instantly redeem this transaction to fund my channel, because in the next step (vote transaction) the TDS could determine what transaction uses already created channel and which don't. So I send him random-channel-throught-vote-transaction to perform blind signature. And now I can publish create-channel-transaction, followed by vote transaction. 
+%Problem: if the TDS assign unique funding-channel for each voter, then he can identify voter with his vote by associating the transaction that was send throughout that channel. So we lose privacy !
 
-\paragraph{3rd party publish channel funding}
-3rd party that voting host has no connection to, publish channel funding. 
+%\paragraph{3rd party publish channel funding}
+%3rd party that voting host has no connection to, publish channel funding. 
 
 
 \section{Transaction Fees}
