@@ -134,8 +134,14 @@ Below we describe our approach
 to implementation of 
 the election system on Stellar functionality boundaries.
 
+\begin{figure}
+\includegraphics[width=9cm]{stellot-architecture.png}
+\centering
+\caption{Architecture of our e-Voting system}
+\label{fig:architecture}
+\end{figure} 
+\iffalse
 
-%\subsection{}
 \begin{figure}
 \begin{verbatim}
                           +                    +
@@ -160,6 +166,7 @@ the election system on Stellar functionality boundaries.
 \caption{Architecture of our e-Voting system}
 \label{fig:ascii-box}
 \end{figure} 
+\fi
 
 The big pictue of our system has been shown in Figure \ref{fig:ascii-box}.
 The proposed system consists of three parties: Government, Electoral, and Blockchain. Both Government and Electoral distrust each other, because each of the parties has an interest in manipulating the process of election. Electoral demand from Government to be as transparent as possible. Government perform authentication and authorization process to prevent unauthorized votes or double \textit{vote token} issuance.
@@ -196,6 +203,8 @@ We assume that the number of eligible voters is public information. Hence becomi
 Assets in stellar blockchain, are divisible to 7 decimal points. This is an unwanted feature since we don’t want to allow users to vote by just one-tenth of their vote. To prevent it, we will treat 1 vote token as the smallest indivisible amount possible in XDR which is 1 scaled down by a factor of 10,000,000 (this format allows to represent decimal numbers in 7 digit precision, without introduction floating-point arithmetics and it’s innate errors).
 Vote option is expressed in strictly encoded 32 byte MEMO field available in blockchain transaction. Frame structure is presented in Figure \ref{fig:ballot-encoding}. 
 %JS co na rysunku jest? opisac
+
+
 
 \begin{figure}
 \begin{verbatim}
@@ -326,6 +335,14 @@ To create such an election, we need an distribution account, ballot-box account,
 \section{Fully Decentralized Blockchain Application}
 In the blockchain world to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example, one could encode all eligible voter addresses or some special one-time codes, in the smart contract, and then allow redeeming vote token only to addresses/codes which are present in there, very similar to traditional election system where all eligible voters are listed on paper. The ballot is issued only if the elector is present on such a list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such a list can be hosted on IPFS (Content Addressed Network) where data is identified by its hash. Unfortunately, Stellar doesn't have such a feature yet.
 
+\begin{figure}
+\includegraphics[width=9cm]{stellot-decentralization.png}
+\centering
+\caption{Centralized and decentralized parts of the system}
+\label{fig:decentralization}
+\end{figure} 
+
+
 \section{System weakness}
 In our system, we assumed that AS and TDS are honest actors. We assumed that we know the total number of eligible voters and that only eligible voters can redeem tokens. The question is how can we know if the authorities don't publish a greater number of eligible voters and redeem this extra number of tokens to themselves. Being able to significantly influence the election results. The pre-registration phase doesn't help here, since the malicious government also can take part in it, generating extra tokens. There is some mitigation proposition where it would be required from voters to compute some kind of proof-of-work that would require a lot of computing power by one actor to create a lot of votes.
 
@@ -333,7 +350,7 @@ In our system, we assumed that AS and TDS are honest actors. We assumed that we 
 %podsumowac co sie udało zrobic, jakie są główne osiągnięcia przedstawione w artykule
 %JS Future works :wdrozenie na eti
 The proposed system satisfies all outlined requirements. Each vote is recorded on Blockchain, and everyone can calculate election results without trusting authorities. Thanks to a blind signature, Voter can be sure that his decision will be kept private. Unfortunately, the system still relies on trust to the issuer, who decide who is eligible to receive vote right. If this single point of failure could be eliminated, we would achieve a truly decentralized trustless system, without central authorities.
-Besides that, we confirmed that blockchain can be used not only for cryptocurrencies, but also in assets tokenization and immutable, verifalbe and transpartent database untrusted system building dapps (decentralized applications). Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is speed and transaction fees. We estimated the costs of the 2019 Polish parliamentary election to 11,27 USD. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queuing overhead. Doing it would also allow us to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such systems on different blockchain platforms. We provide general-purpose voting platform demo at \url{https://voting.stasbar.com} with its source code at \url{https://github.com/stasbar/stellar-voting}.
+Besides that, we confirmed that blockchain can be used not only for cryptocurrencies, but also in assets tokenization and as a part of trusted system where it acts as immutable, verifiable and transparent database. Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is speed and transaction fees. We estimated the costs of the 2019 Polish parliamentary election to 11,27 USD. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queuing overhead. Doing it would also allow us to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such systems on different blockchain platforms. We provide general-purpose voting platform demo at \url{https://voting.stasbar.com} with its source code at \url{https://github.com/stasbar/stellar-voting}.
 Starting with the general-purpose voting platform, we would like to target all kinds of votings including domain-specific elections, straw polls, referendums, plebiscites. We believe that our goal is also to digitize the academic/government votings. Such elections require domain-specific applications, and so we would like to create a framework for these types of solutions. Especially the Auth-Server is something that will differ in every institution. We plan to test such system first at our University. When applied successfully, we will scale the product to other domains. 
 
 
