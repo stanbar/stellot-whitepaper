@@ -15,7 +15,7 @@
 
 \begin{document}
 %
-\title{e-Voting on Stellar Blockchain - Draft}
+\title{e-Voting on Stellar Blockchain}
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
@@ -39,12 +39,21 @@ Department of Computer Science Technology and Computation,\\ University of Alica
 }
 
  
-\authorrunning{S. Barański et al. - Draft}
+\authorrunning{S. Barański et al.}
 
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper, we propose an privacy-first e-voting system based on decentralized Stellar Blockchain network. We argue that proposed system satisfy all requirements stated for robust e-voting system such as transparency, verifiability, and voter anonymity/privacy. The system is designed in such a way, that voter is completely abstracted from blockchain technology used underneath. The voter anonymity is achieved by blind-signature technique, while signer is protected by cut-and-choose method. Open Stellar blockchain allows everyone to verify the election results without having to trust central authority. We point out the weakness, strengths and possible improvements to achieve an even more robust system. 
+In this paper, we propose an privacy preserving e-voting system based on decentralized Stellar Blockchain network. 
+We argue that proposed system satisfy all requirements stated for robust e-voting system such as: transparency, verifiability, and voter anonymity/privacy. 
+The architecture of the system 
+completely abstracts the voter from used blockchain technology. %  underneath.
+To keep the user privacy we propose a privacy-first protocol
+that protects  voter anonymity using blind-signature technique, while signer is protected by cut-and-choose method. Open Stellar blockchain allows everyone to verify the election results without having to trust central authority. 
+We evaluate our approach 
+indicate  the weakness, strengths and possible improvements to achieve an even more robust system. 
+ 
+
 
 %JS wypunktować co jest wkładem artykułu
 % np slepy podpis
@@ -60,7 +69,7 @@ In this paper, we propose an privacy-first e-voting system based on decentralize
 
 
  
-\keywords{Blockchain \and E-Voting \and Stellar \and Tokenization  \and Blind signature} %JS  e? i? Voting 
+\keywords{Blockchain \and E-Voting \and Stellar \and Tokenization  \and Blind signature}  
 \end{abstract}
 
 
@@ -72,7 +81,7 @@ E-voting has been a topic of research for years, especially in cryptography, whi
 % SB rozumiem że chodziło Panu głównie o demokrację bezpośrednią.  Moim zdaniem jest to świetny pomysł, ponieważ zmniejsza to skłonność (jak najbardziej zrozumiałą) do deklaracji obietnic przez polityków. Rola polityków sprowadza się głównie do prowadzenie dyskusji, debat, reprezentacji, zarządzania krajem. Obywatel sam podejmuje decyzję które argumenty przemawiają do niego i na tej podstawie podejmuje głos. Dodatkowo system jest o wiele bardziej elastyczny, wyborca może zgadzać się w niektórych kwestiach z jedną z partii a w innych z drugą. W demokracji bezpośredniej możliwe jest odzwierciedlenie takich postaw. Zwalnia to również polityków z chęci podejmowania decyzji ze skutkiem krótko terminowym, gdyż nie można by było przypisać dobrze podjętych decyzji jednej partii lecz wszystkim ludziom.   Niewątpliwym minusem może być to, że większość zwykłych osób nie miało by czasu i kwalifikacji do zagłębienia się w temat i długoterminowe konsekwencje danej decyzji, przez co nie brało by udziału w głosowaniu lub głosowałoby na "najlepiej sprzedających bajki" polityków. Często decyzję podejmowane są na podstawie poufnych informacji do których nie może mieć dostępu opinia publiczna. Przykładowo epidemiolodzy przewidują że wirus zabije od 10-30% całej ludzkości. Taka informacja spowodowała by ogromną panikę która mogła by jeszcze bardziej wzmocnić efekty pandemii. Dlatego decyzja o wprowadzeniu kwarantanny powinna zostać podjęta przez grupę osób które mają dostęp do takiej poufjnej informacji. 
 % system najbardziej zbliżony do bezpośredniego istnieje aktualnie w Szwajcarii
 % pytanie czy praca nie jest już zbyt obszerna na pisanie o takich rzeczach ? 
-
+% Napisać o płynnej demokracji - https://pl.wikipedia.org/wiki/Demokracja_p%C5%82ynna 
 
 In this paper, we describe problems and solutions on how to built e-voting system by 
 using the  blockchain ecosystem. 
@@ -91,8 +100,10 @@ First let's select   the requirements that every robust voting system should sat
 
 When we have deeper look at this requirements 
 it turns out that they are hard to be satisfied all together. Especially authorization, privacy, and verifiability with trustless. 
-% JS DLACZEGO
-% SB Privacy and authorization seems to stay in opposite to each other. The same with trustless and verifiability. Authorization seems to be really tricky to achieve without authentication. Privacy require to break link between voter and his vote. Authorization require prior authentication. 
+Privacy and authorization looks to be opposite to each other. 
+The same with trustless and verifiability. Authorization is 
+really tricky to achieve without authentication. 
+Privacy require to break link between voter and his vote. Authorization require prior authentication. 
 
 There are many ideas on how to design a protocol that satisfies part of them, or even all of them, but they are often highly unpractical or rely vote privacy on trust to authorities. One proposition ~\cite{liu2017voting} argue not to rely on a trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than the actual number of eligible voters. Additionally, they require a pre-registration phase which assumes that each voter possesses two pair of bitcoin account upfront, which seems to be unacceptable, at least for current adoption of this technology. Another approach ~\cite{hardwick2018voting} allows the central authority to pair voter identity with its vote option. We consider it an unacceptable flaw because an attacker who gets access to such a system might potentially steal this information, even if the central authority is an honest entity. Recently (8 September 2019) Moscow decided to test the e-voting system based on Ethereum blockchain for their local elections ~\cite{gaudry2019breaking}. Unfortunately, the system had many flaws mentioned previously, and additionally problem with weak encryption.  
 In this paper, we propose a system that satisfy  the selected requirements, including privacy and verifiability. 
@@ -333,7 +344,7 @@ To create such an election, we need an distribution account, ballot-box account,
 
 
 \section{Fully Decentralized Blockchain Application}
-In the blockchain world to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example, one could encode all eligible voter addresses or some special one-time codes, in the smart contract, and then allow redeeming vote token only to addresses/codes which are present in there, very similar to traditional election system where all eligible voters are listed on paper. The ballot is issued only if the elector is present on such list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such list can be hosted on IPFS (Content Addressed Network) where data is identified by its hash. Unfortunately, Stellar doesn't have such a feature yet. Right now, only part of the system is decentralized. Since this system relies on a centralized AS, it inherits it's property too. Fig. 3 present the centralization/decentralization parts of the system.Right now our system is just partly decentralized.
+In the blockchain world to ensure absolute trust, everything should be blockchain contained, which is often hard, impractical and/or expensive. For example, one could encode all eligible voter addresses or some special one-time codes, in the smart contract, and then allow redeeming vote token only to addresses/codes which are present in there, very similar to traditional election system where all eligible voters are listed on paper. The ballot is issued only if the elector is present on such list. While this might work for a small list of addresses, it can become overkill for election when the cost of such a huge smart contract is taken into account. Fortunately, there are already blockchains that allow linking data from outside the blockchain, by using Oracles. To ensure immutability and integrity, such list can be hosted on IPFS (Content Addressed Network) where data is identified by its hash. Unfortunately, Stellar doesn't have such a feature yet. Right now, only part of the system is decentralized. Since this system relies on a centralized AS, it inherits it's property too. Fig. 3 present the centralization/decentralization parts of the system.
 
 \begin{figure}
 \includegraphics[width=9cm]{stellot-decentralization.png}
@@ -343,14 +354,24 @@ In the blockchain world to ensure absolute trust, everything should be blockchai
 \end{figure} 
 
 
-\section{System weakness}
-In our system, we assumed that AS and TDS are honest actors. We assumed that we know the total number of eligible voters and that only eligible voters can redeem tokens. The question is how can we know if the authorities don't publish a greater number of eligible voters and redeem this extra number of tokens to themselves. Being able to significantly influence the election results. The pre-registration phase doesn't help here, since the malicious government also can take part in it, generating extra tokens. There is some mitigation proposition where it would be required from voters to compute some kind of proof-of-work that would require a lot of computing power by one actor to create a lot of votes.
+%\section{System weakness}
 
 \section{Discussion and Future Works}
+
+
 %podsumowac co sie udało zrobic, jakie są główne osiągnięcia przedstawione w artykule
 %JS Future works :wdrozenie na eti
 The proposed system satisfies all outlined requirements. Each vote is recorded on Blockchain, and everyone can calculate election results without trusting authorities. Thanks to a blind signature, Voter can be sure that his decision will be kept private. Unfortunately, the system still relies on trust to the issuer, who decide who is eligible to receive vote right. If this single point of failure could be eliminated, we would achieve a truly decentralized trustless system, without central authorities.
-Besides that, we confirmed that blockchain can be used not only for cryptocurrencies, but also in assets tokenization and as a part of trusted system where it acts as immutable, verifiable and transparent database. Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best options in this category is speed and transaction fees. We estimated the costs of the 2019 Polish parliamentary election to 11,27 USD. To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queuing overhead. Doing it would also allow us to accurately measure how the proposed system behaves on heavy overload. It would be interesting to compare such systems on different blockchain platforms. We provide general-purpose voting platform demo at \url{https://voting.stasbar.com} with its source code at \url{https://github.com/stasbar/stellar-voting}.
+
+
+It should be noted that, we assumed that AS and TDS are honest actors,
+and we know the total number of eligible voters and that only eligible voters can redeem tokens. The question is how can we know if the authorities don't publish a greater number of eligible voters and redeem this extra number of tokens to themselves. Being able to significantly influence the election results. The pre-registration phase doesn't help here, since the malicious government also can take part in it, generating extra tokens. There is some mitigation proposition where it would be required from voters to compute some kind of proof-of-work that would require a lot of computing power by one actor to create a lot of votes.
+
+With our system we show how blockchain can be used not only for cryptocurrencies, but also in assets tokenization and as a part of trusted system where it acts as immutable, verifiable and transparent database. Stellar is just one of many platforms that could be used in such cases, but it turns out that it handles it very well. What makes Stellar one of the best
+options in this category is speed and transaction fees. We estimated the costs of the 2020 Polish parliamentary election to 11,27 USD. 
+To estimate transaction speed we would need to host a local instance of Stellar Horizon API server to isolate from network latency and possible queuing overhead. Doing it would also allow us to accurately measure how the proposed system behaves on heavy overload. 
+It would be interesting to compare such systems on different blockchain platforms. 
+We provide general-purpose voting platform demo at \url{https://voting.stasbar.com} with its source code at \url{https://github.com/stasbar/stellar-voting}.
 Starting with the general-purpose voting platform, we would like to target all kinds of votings including domain-specific elections, straw polls, referendums, plebiscites. We believe that our goal is also to digitize the academic/government votings. Such elections require domain-specific applications, and so we would like to create a framework for these types of solutions. Especially the Auth-Server is something that will differ in every institution. We plan to test such system first at our University. When applied successfully, we will scale the product to other domains. 
 
 
