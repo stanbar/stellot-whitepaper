@@ -83,6 +83,8 @@ E-voting has been a topic of research for years, especially in cryptography, whi
 % pytanie czy praca nie jest już zbyt obszerna na pisanie o takich rzeczach ? 
 % Napisać o płynnej demokracji - https://pl.wikipedia.org/wiki/Demokracja_p%C5%82ynna 
 
+% AS: Szwajcarzy stanowią prawo poprzez głosowanie nad istotnymi uchwałami w sposób bezpośredni. 
+
 In this paper, we describe problems and solutions on how to built e-voting system by 
 using the  blockchain ecosystem. 
 First let's select   the requirements that every robust voting system should satisfy, either analog or electronic. Those requirements include:
@@ -333,6 +335,10 @@ Since the signature on the transaction (ballot) is valid, Alice can publish it d
 
 \section{Transaction Fees}
 We evaluate the proposed system in the context of transaction fees. To do this we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the stellar network costs 0.00001XLM. Our vote transaction consists of just one operation (transfer of 1 \textit{vote token}, and so the total cost of the transaction also equals 0.00001XLM. We know that the closing price for one Lumen in the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00001 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx \textbf{11,27 USD}\). Other operational transactions can be neglected due to the very low influence on the total sum.
+
+\section{Securing webapp}
+Hijacked become single
+
 
 \section{Preparation}
 To create such an election, we need an distribution account, ballot-box account, and a new vote token. Variables that need to be propagated in backend and webapp code are:
