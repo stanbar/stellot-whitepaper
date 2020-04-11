@@ -28,7 +28,7 @@ Higinio Mora\inst{2}, David Gil\inst{2}}
 % First names are abbreviated in the running head.
 % If there are more than two authors, 'et al.' is used.
 %
-\institute{Faculty of Electronics, Telecommunications and Informatics\\
+\institute{Faculty of Electronics,Telecommunications and Informatics\\
 Gdansk University of Technology\\
 Gdansk, Poland\\
 \and
@@ -108,7 +108,15 @@ really tricky to achieve without authentication.
 Privacy require to break link between voter and his vote. Authorization require prior authentication. 
 
 There are many ideas on how to design a protocol that satisfies part of them, or even all of them, but they are often highly unpractical or rely vote privacy on trust to authorities. One proposition ~\cite{liu2017voting} argue not to rely on a trusted third party, by introducing inspectors. But they still rely on fact that issuer won't generate more ballots than the actual number of eligible voters. Additionally, they require a pre-registration phase which assumes that each voter possesses two pair of bitcoin account upfront, which seems to be unacceptable, at least for current adoption of this technology. Another approach ~\cite{hardwick2018voting} allows the central authority to pair voter identity with its vote option. We consider it an unacceptable flaw because an attacker who gets access to such a system might potentially steal this information, even if the central authority is an honest entity. Recently (8 September 2019) Moscow decided to test the e-voting system based on Ethereum blockchain for their local elections ~\cite{gaudry2019breaking}. Unfortunately, the system had many flaws mentioned previously, and additionally problem with weak encryption.  
-In this paper, we propose a system that satisfy  the selected requirements, including privacy and verifiability. 
+In this paper, we propose a system that satisfy the outlined requirements, including privacy and verifiability.
+
+\paragraph Thus, the paper makes the following contributions:
+\begin{itemize}
+    \item It describes i-voting system powered by Stellar blockchain network and its limited smart contract capabilities, and it's limited smart contract techniques.
+    \item It describes practical aspect of blockchain i-voting where user is completely abstracted from technology used underneath, thus no knowledge of wallets and keypairs are needed.
+    \item It describes blind-signature over ed25519 and transactions batching to achieve voter privacyhow voter privacy is achieved using blind-signatures over ed25519 scheme, with conjunction of transaction batching.
+    \item It describes how organizer is protected from malicious users by cut-and-choose technique.
+\end{itemize}
 The additional notable advantage is the fact that users of our system are completely abstracted from blockchain technology used underneath.
 
 
@@ -382,4 +390,4 @@ Starting with the general-purpose voting platform, we would like to target all k
 
 \bibliographystyle{splncs04}
 \bibliography{refs}
-\end{document}
+\end{document} 
