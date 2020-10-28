@@ -33,15 +33,21 @@
 
 
 % Author Orchid ID: enter ID or remove command
-\newcommand{\orcidauthorB}{0000-0001-5029-6768} % Add \orcidA{} behind the author's name
+\newcommand{\orcidauthorA}{0000-0001-7181-8860} 
+\newcommand{\orcidauthorB}{0000-0001-5029-6768}
+\newcommand{\orcidauthorC}{0000-0002-5879-032X}
+\newcommand{\orcidauthorD}{0000-0003-0791-8298}
+\newcommand{\orcidauthorE}{0000-0002-8591-0710}
+
+% Add \orcidA{} behind the author's name
 %\newcommand{\orcidauthorB}{0000-0000-000-000X} % Add \orcidB{} behind the author's name
 
 % Authors, for the paper (add full first names)
-\Author{Stanis\l{}aw Bara{\'n}ski $^{1,\ddagger}$,%\orcidA{}, 
-Julian Szyma{\'n}ski $^{1,\ddagger,*}$,
-Andrzej Sobecki $^{1,\ddagger}$,
-David Gil $^{2,\ddagger}$
-and Higinio Mora $^{2,\ddagger}$}
+\Author{Stanis\l{}aw Bara{\'n}ski $^{1,}$\orcidA{}, 
+Julian Szyma{\'n}ski $^{1,*,}$\orcidB{},
+Andrzej Sobecki $^{1,}$\orcidA{},
+David Gil $^{2,}$\orcidA{} \\
+and Higinio Mora $^{2,}$\orcidA{}}
 
 
 % Authors, for metadata in PDF
@@ -49,17 +55,18 @@ and Higinio Mora $^{2,\ddagger}$}
 
 % Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
 \address{%
-$^{1}$ \quad Department of Electronic, Telecommunication and Informatics, Gda{\'n}sk University of Technology; \{stanislaw.baranski\}\{julian.szymanski\}\{andrzej.sobecki\}@pg.edu.pl\\
-$^{2}$ \quad Department of Computer Science Technology and Computation, University of Alicante,  Spain; \{dgil\}\{hmora\}@dtic.ua.es}
+$^{1}$ \quad Department of Electronic, Telecommunication and Informatics, Gda{\'n}sk University of Technology, 80-233 Gda{\'n}sk; Poland;  \{stanislaw.baranski\}\{julian.szymanski\}\{andrzej.sobecki\}@pg.edu.pl\\
+$^{2}$ \quad Department of Computer Science Technology and Computation, University of Alicante, 
+03690 San Vicente del Raspeig, Alicante; Spain; \{dgil\}\{hmora\}@dtic.ua.es}
 
  
 
 % Contact information of the corresponding author
-\corres{Correspondence: julian.szymanski@pg.edu.pl, Gda{\'n}sk University of Technology, Narutowicza 11/12 Gda{\'n}sk Poland, WETI KASK}
+\corres{Correspondence: julian.szymanski@pg.edu.pl, Gda{\'n}sk University of Technology, WETI KASK, ul. Narutowicza 11/12, 80-233 Gda{\'n}sk, Poland}
 
 % Current address and/or shared authorship
 %\firstnote{Current address: Affiliation 3} 
-\secondnote{These authors contributed equally to this work.}
+%\secondnote{These authors contributed equally to this work.}
 % The commands \thirdnote{} till \eighthnote{} are available for further notes
 
 
@@ -69,10 +76,9 @@ $^{2}$ \quad Department of Computer Science Technology and Computation, Universi
 In this paper, we propose a privacy-preserving i-voting system based on the public Stellar Blockchain network. 
 We argue that the proposed system satisfies all requirements stated for a robust i-voting system including transparency, verifiability, and voter anonymity. 
 The practical architecture of the system abstracts a voter from blockchain technology used underneath.
-To keep user privacy, we propose a privacy-first protocol
-that protects voter anonymity.
-By using the Stellar public network, everyone can verify the election results without having to trust a central authority. 
-Additionally, high throughput and low transaction fees allow handling large scale voting at low costs. As a result we built an open-source, cheap, and secure system for i-voting that uses public blockchain, where everyone can participate and verify the election process.
+To keep user privacy, we propose a privacy-first protocol that protects voter anonymity.
+%By using the Stellar public network, everyone can verify the election results without having to trust a central authority. 
+Additionally, high throughput and low transaction fees allow handling large scale voting at low costs. As a result we built an open-source, cheap, and secure system for i-voting that uses public blockchain, where everyone can participate and verify the election process without the need to trust a central authority.
 The main contribution to the field is a method based on a blind signature used to construct reliable voting protocol.
 The proposed method fulfills all requirements defined for i-voting systems, which is challenging to achieve altogether.
 %We evaluate our approach indicating the strengths, weaknesses, and possible improvements.
@@ -90,7 +96,7 @@ The proposed method fulfills all requirements defined for i-voting systems, whic
 
 
 Modern democracy requires effective tools to allow citizens to interact with a government. One of the key elements of democracy is elections. Despite the rapid development of e-government services,
-this fundamental element of democracy is still not prevalent. Not many societies have successfully deployed e-voting\footnote{electronic voting -- usage of electronic technologies in elections-related procedures, which must include at least the act of voting} systems. 
+this fundamental element of democracy is still not prevalent. Not many societies have successfully deployed e-voting (electronic voting -- usage of electronic technologies in elections-related procedures, which must include at least the act of voting) systems. 
 Switzerland or Estonia are examples of countries that successfully introduce alternative ways to traditional voting, especially with the usage of the Internet (i-voting). However, these are minor cases.
 The reasons for slow progress in the introduction of modern tools for democracy can be of a different sort, but the technology behind is still developing and cover wider areas of the functionality.
 This topic is also being researched for many years, 
@@ -155,7 +161,7 @@ There are many other token applications, particularly vote token, where token re
 \paragraph{Public vs. Private blockchain}
 Blockchain technology has become popular mainly because of its openness, neutrality, censorship-resistant, and permissionless.  We can think of open blockchains as a pure democracy, where developers are legislators, miners are deputy, and users are electoral. All parties incentives themselves to act honestly. If developers (legislators) do not do their best to improve the ecosystem, miners and users will choose different, better blockchains. If miners start to form cartel, censor transactions, or approve illegal transactions, users will stop using this blockchain. If users stop using the blockchain, the whole project collapses; thus, developers and miners lose their job. This perfect equilibrium makes public blockchains great. Everything is strengthened by the fact that each of them holds some shares in the project in the form of cryptocurrency, so the gains and losses are tangible. 
 
-Things change significantly when we strip blockchain from being public––the most fundamental property. Private Blockchains are just immutable, integral, distributed database. It must be admitted that private blockchains have many advantages, they can handle higher transaction throughput, do not require costly mining, are asymptotic resistant\footnote{Asymptotic resistant mean that the node consisting of large computational resources does not gain any advantages in the network, especially can not proceed 51\% attack, that is possible in PoW protocols} and are easier to manage. On the other hand, private blockchains are not as transparent as public ones; their security model is based on trust in institutions, whereas open blockchains security is based on game theory and market forces. A public blockchain is a decentralized, trusted third party. That is why we believe that solutions based on public blockchains are superior to the private ones.
+Things change significantly when we strip blockchain from being public––the most fundamental property. Private Blockchains are just immutable, integral, distributed database. It must be admitted that private blockchains have many advantages, they can handle higher transaction throughput, do not require costly mining, are asymptotic resistant (Asymptotic resistant mean that the node consisting of large computational resources does not gain any advantages in the network, especially can not proceed 51\% attack, that is possible in PoW protocols) and are easier to manage. On the other hand, private blockchains are not as transparent as public ones; their security model is based on trust in institutions, whereas open blockchains security is based on game theory and market forces. A public blockchain is a decentralized, trusted third party. That is why we believe that solutions based on public blockchains are superior to the private ones.
 
 %JS 
 %jest tego duzo https://scholar.google.com/scholar?hl=pl&as_sdt=0%2C5&q=voting+voting+ethereum&btnG=
@@ -166,7 +172,7 @@ Things change significantly when we strip blockchain from being public––the 
 \label{related-work}
 Recently (8 September 2019), Moscow decided to test the i-voting system based on Ethereum blockchain for their local Parliament elections~\cite{gaudry2019breaking}. 
 To ensure the transparency of the election procedure,
-the source code has been provided publicly \footnote{https://github.com/moscow-technologies/blockchain-voting}.
+the source code has been provided publicly (\url{https://github.com/moscow-technologies/blockchain-voting}).
 In the solution, the blockchain has been used to store votes---one transaction per vote.
 The voting procedure required the registration of voters. To do this
 the voter had to fill in account details with personal information
@@ -255,14 +261,16 @@ Also, SCP does not introduce the concept of mining; therefore, the incentive of 
 \begin{figure}[h!]
 \includegraphics[width=9cm]{figs/Stellar-network-viz.png}
 \centering
-\caption{Stellar public network structure. Source: https://stellarbeat.io}
+\caption{Stellar public network structure. Source: \url{https://stellarbeat.io}}
 \label{fig:network-viz}
 \end{figure} 
 we can see the Stellar public network graph. Nodes represent the validators (servers running Stellar Core software), and edges represent their quorum slices. At the time of writing, the network consists of 59 Node validators held by 18 organizations, most of them located in the USA, Europe, and East Asia.
 
 According to FLP impossibility~\cite{fischer1985impossibility}, all of those consensus protocols face the trilemma, where only two of three properties can be achieved. Those properties are Fault tolerance, Safety, and Liveness. Fault tolerance is defined as the ability to survive node failure. Most of the consensus protocols choose this property as one of the three properties. The decision has to be made between Liveness and Safety. Safety (also called Consistency) prevents a distributed system from partitioning, meaning that, if nodes do not agree on a transaction, they will not split into two different ledgers with different states; instead, they will rather wait until the conflict is resolved. Liveness, on the other hand, guarantees that the system will never stop; it will always respond and accept new transactions. When the conflict occurs, the system is split into two different states, and hopefully, at some point, one of them will be rejected, bringing back the consistency.
 
-Most of the Nakamoto Consensus protocols favor Liveness. Proof-of-Work (PoW) used in both Bitcoin and Ethereum, allows a temporary split of the blockchain. The main issue comes with the confirmation period. We can never\footnote{Although the hardness of modifying and recalculating a large number of blocks is very hard, it is possible, and the attack can be successfully performed~\cite{sayeed2019assessing}.} be absolutely sure if the chain in which our transaction was included will not be rejected in favor of a longer forked chain. In practice, many systems require some fixed number of confirmations\footnote{Number of confirmations is counted in a length of blocks appended on top of a block including our transaction} to be made to trust a transaction. Typically, for Bitcoin, 2-3 confirmations are required, where each confirmation takes on average 10min (20-30 in total). In Ethereum, the number of confirmations is higher, about 15-30, but the confirmation takes on average 15sec (3 - 7.5 min in total). 
+Most of the Nakamoto Consensus protocols favor Liveness. Proof-of-Work (PoW) used in both Bitcoin and Ethereum, allows a temporary split of the blockchain. The main issue comes with the confirmation period. We can never be absolutely sure if the chain in which our transaction was included will not be rejected in favor of a longer forked chain. 
+Although the hardness of modifying and recalculating a large number of blocks is very hard, it is possible, and the attack can be successfully performed~\cite{sayeed2019assessing}.
+In practice, many systems require some fixed number of confirmations (Number of confirmations is counted in a length of blocks appended on top of a block including our transaction) to be made to trust a transaction. Typically, for Bitcoin, 2-3 confirmations are required, where each confirmation takes on average 10min (20-30 in total). In Ethereum, the number of confirmations is higher, about 15-30, but the confirmation takes on average 15sec (3 - 7.5 min in total). 
 
 SCP and other vote-based protocols choose Safety. Once the quorum of the network agrees on the state, the ledger is closed and can not be reverted. Also, the confirmation speed is much faster. In Stellar, the ledger closes in about 3-5sec. 
 
@@ -302,7 +310,7 @@ There is no requirement for the client-app platform. Our framework uses a web pl
 Ethereum provides high flexibility, mainly because of its fully-fledged smart contracts ecosystem, especially its Turing-complete Ethereum Virtual Machine (EVM), which allows it to run any domain-specific scripts. 
 On the other hand, Stellar is a blockchain platform specializing just in one of infinite many Ethereum applications––asset tokenization~\cite{li2019tokenization}. Those tokens can represent almost everything, company shares, stocks, national currencies, commodities, personal tokens~\cite{Personal27:online}, or even other tokens or cryptocurrencies. For us, the token represents vote-ballots. 
 Issuing a token on Ethereum requires preparing and publishing a smart contract, which can be relatively expensive and error-prone~\cite{Analysis57:online}.
-Since tokens are first-class citizens of the Stellar network, they can be easily issued, managed, and optimized. The most important advantage over Ethereum in large-scale elections is the transaction fees, which in Stellar are nearly free. At the time of writing, \$0.0000008 per operation \footnote{In Stellar, there is a distinction between transaction and operation. Each transaction can hold up to 100 operations. All operations within a transaction are executed atomically}, while Ethereum consumes (depending on the smart contract) about \$0.5 per transaction. 
+Since tokens are first-class citizens of the Stellar network, they can be easily issued, managed, and optimized. The most important advantage over Ethereum in large-scale elections is the transaction fees, which in Stellar are nearly free. At the time of writing, \$0.0000008 per operation. In Stellar, there is a distinction between transaction and operation. Each transaction can hold up to 100 operations. All operations within a transaction are executed atomically, while Ethereum consumes (depending on the smart contract) about \$0.5 per transaction. 
 
 Additionally, Stellar allows specifying a source account that will pay a transaction fee––in our case, voting organizers. We leverage this functionality to create user-friendly voting flow, abstracting users from used blockchain technology.
 
@@ -318,7 +326,7 @@ for making eg.: president elections. % in Poland.
 
 The proposed system consists of three parties shown in Figure \ref{fig:architecture}: Government, Electoral, and Blockchain. Both Government and Electoral distrust each other because they have an interest in manipulating the process of election. 
 Electoral demand from Government to be as transparent as possible. The government performs the authentication and authorization process to prevent unauthorized votes or \textit{double vote token issuance}. Transparency and Verifiability are achieved by storing votes in the Stellar blockchain. The blockchain's openness allows the votes to be audited and counted by anyone, either by querying public nodes or joining the network with its own node. Voter Privacy is achieved by breaking the link between authentication and authorization using the blind signature technique (discussed in Section \ref{privacy}). As a result, the voter who gets authorized can not be linked with its identity used in the authentication process.
-Authorized voters receive from TDS the vote token to their temporary wallet created on the client-side app. The vote token is then sent to the ballot-box account, where the election results are counted. The transaction is submitted directly to the public blockchain nodes or nodes hosted by organizers (in the next section we describe, why the fact that transaction goes through organizer nodes does not break the voter privacy). When any of the blockchain nodes receives the transaction, it gets validated and included in the next block\footnote{Stellar uses the notion of ledger instead of block}. Since the Stellar blockchain is public, everyone can query the blockchain node and count the transactions that were sent to the ballot-box. The ballot option is stored in the transaction's extra field (in Stellar transaction, the extra field is called "memo"). This field must be encrypted, preventing preliminary results, which are illegal in most countries. We will discuss the encryption method in Section \ref{encryption}.
+Authorized voters receive from TDS the vote token to their temporary wallet created on the client-side app. The vote token is then sent to the ballot-box account, where the election results are counted. The transaction is submitted directly to the public blockchain nodes or nodes hosted by organizers (in the next section we describe, why the fact that transaction goes through organizer nodes does not break the voter privacy). When any of the blockchain nodes receives the transaction, it gets validated and included in the next block (Stellar uses the notion of ledger instead of block). Since the Stellar blockchain is public, everyone can query the blockchain node and count the transactions that were sent to the ballot-box. The ballot option is stored in the transaction's extra field (in Stellar transaction, the extra field is called "memo"). This field must be encrypted, preventing preliminary results, which are illegal in most countries. We will discuss the encryption method in Section \ref{encryption}.
 %JS dodac: gdzie są zapisywane glosy - dlaczego to jest bezpieczne jak trafia token do blockchaina
 %jak sie przeklada na glos i jak to pozniej jest liczone
 %SB Czy teraz jest ok ?
@@ -369,11 +377,11 @@ k_v * K_b = k_v * k_b * G = k_b * k_v * G = k_b * K_v.
 
 During the voting, each voter uses publicly available $K_b$ in conjunction with its $k_v$ to encrypt its memo field. After the end of the voting, organizers publish corresponding $k_b$, which in combination with $K_v$, is used to decrypt each vote memo field. This way, we achieve asymmetric encryption, where each voter uses a different symmetric key.
 
-With this schema, our system relies on a central authority––the organizers––that promise to reveal the decryption key after the end of the election. To mitigate this issue, we can split the decryption-key $k_b$ using Shamir's Secret Sharing~\cite{shamir1979share} among multiple trusted parties (e.g., candidates). The results can be decrypted only when the majority of them\footnote{ Shamir's Secret Sharing allows split the key into $m$ parts, where just $n \leq m$ parts are sufficient to reconstruct the key.} reveal their parts altogether.  This way, we decentralize the trust placed on the central authority. Although not perfect, because the majority of the key-part holders can conspire and use it together to get the insight into the current state of the results, or even not reveal them at all––blocking the voting results. Our system requires trust in the majority of key-holders.
+With this schema, our system relies on a central authority––the organizers––that promise to reveal the decryption key after the end of the election. To mitigate this issue, we can split the decryption-key $k_b$ using Shamir's Secret Sharing~\cite{shamir1979share} among multiple trusted parties (e.g., candidates). The results can be decrypted only when the majority of them (Shamir's Secret Sharing allows split the key into $m$ parts, where just $n \leq m$ parts are sufficient to reconstruct the key) reveal their parts altogether.  This way, we decentralize the trust placed on the central authority. Although not perfect, because the majority of the key-part holders can conspire and use it together to get the insight into the current state of the results, or even not reveal them at all––blocking the voting results. Our system requires trust in the majority of key-holders.
 
 \subsection{Privacy}
 \label{privacy}
-Blockchain by design is fully transparent and traceable system \footnote{There are some exceptions like Monero~\cite{van2013cryptonote} and Zerocash~\cite{sasson2014zerocash}}. Each transfer can be easily traced down to its origin. Here comes the problem, how to distribute the token to the user, guaranteeing that no one can track it back to its identity. The easiest solution is to trust the organizers that they will not record the act of authorizing the vote with our identity. This is the weakest form of guarantee because even if organizers are honest entities, we can not be sure that unauthorized intruder does not get access to the system. We need to be prepared for the worst scenario, where all information is recorded and accessible to everyone. Such an assumption forces us to design a protocol where users "play costume party" to mislead the organizers about their identity. 
+Blockchain by design is fully transparent and traceable system but it should be noted  are some exceptions like Monero~\cite{van2013cryptonote} and Zerocash~\cite{sasson2014zerocash}. Each transfer can be easily traced down to its origin. Here comes the problem, how to distribute the token to the user, guaranteeing that no one can track it back to its identity. The easiest solution is to trust the organizers that they will not record the act of authorizing the vote with our identity. This is the weakest form of guarantee because even if organizers are honest entities, we can not be sure that unauthorized intruder does not get access to the system. We need to be prepared for the worst scenario, where all information is recorded and accessible to everyone. Such an assumption forces us to design a protocol where users "play costume party" to mislead the organizers about their identity. 
 
 One technique allowing such action is called CoinJoin transaction~\cite{CoinJoin41:online}. In CoinJoin, multiple users conspire together in token laundering. $n$ users create one transaction, which consists of $n$ inputs and produce output to $n$ new addresses; each new address is in possession of the user who participated in the procedure. That way, the chance that the output of the CoinJoin transaction is the user's input equals $\frac{1}{n}$. If we proceed with this operation $m$ times, we get $\frac{1}{n^m}$ chance that the output is actually the input token of the particular user. 
 
@@ -447,7 +455,9 @@ This process can be visualized as:
     \item Alice takes a signed message from the envelope.
 \end{itemize}
 
-This technique seems perfect until we realize the consequences of the words "Bob signs message $M$ blindly." If Bob knows nothing about the message $M$, Alice can send him any arbitrary transaction, e.g., transfer all remaining vote tokens to her account, and he would sign it because––he is blind. To prevent it, we can use cut-and-choose \footnote{Cut-and-Choose works as follows: Alice creates $n$ (e.g., 100) random votes batch transactions. The batch consists of all possible vote options. For example, if there are six candidates, and $n$ equals 100, then we need to create 100 batches of 6 transactions each (600 transactions). Each batch gets blinded with different blinding factor. Alice sends them to Bob. Who challenges Alice for \(n-1\) unblinded batch of transaction. He uses them to validate their structure, especially if they do not try to issue more than one vote token or perform any illegal operation. The one unrevealed transaction can be used by Alice to cast a vote anonymously.}  method to mitigate the chance of cheating to a minimum.
+This technique seems perfect until we realize the consequences of the words "Bob signs message $M$ blindly." If Bob knows nothing about the message $M$, Alice can send him any arbitrary transaction, e.g., transfer all remaining vote tokens to her account, and he would sign it because––he is blind. To prevent it, we can use cut-and-choose method to mitigate the chance of cheating to a minimum.
+The Cut-and-Choose works as follows: Alice creates $n$ (e.g., 100) random votes batch transactions. The batch consists of all possible vote options. For example, if there are six candidates, and $n$ equals 100, then we need to create 100 batches of 6 transactions each (600 transactions). Each batch gets blinded with different blinding factor. Alice sends them to Bob. Who challenges Alice for \(n-1\) unblinded batch of transaction. He uses them to validate their structure, especially if they do not try to issue more than one vote token or perform any illegal operation. The one unrevealed transaction can be used by Alice to cast a vote anonymously.
+
 
 There is still one more problem. In Stellar, to guarantee consistency, each account has a sequence number counter. Only transactions with sequence number 1 greater than the current account sequence number are processed by validators. For example, if some account's sequence number is $100$, then the network accepts transaction only if the sequence number is $101$. Processing valid transaction increments the account's sequence number; therefore, the next transaction's sequence number must be $102$, and so on. Stellar transactions are synchronous; even if we use the concept of channels~\cite{Channels80:online}, channels are still synchronous. That means, if Alice and Bob proceed with blind signature on Stellar transaction, where Bob's account is the source, only Alice can submit the transaction to the network, no one else. That way, Bob can connect the transaction submitted to the network by recording his account sequence number at the time of the blind signature. We could eliminate the problem by making the user create the Stellar channel account that would serve as a source account for the transaction. However, Stellar requires each account to be funded with a minimal amount of 1XLM, an account can be funded by the Bob, but then we are back to the original problem of sequence numbers. For Blockchains that does not rely on sequence numbers, transactions can be prepared and submitted asynchronously; therefore, the problem does not exist. Here in Stellar, we sign blindly not the transaction, but introduce the intermediary step where the blind signature subject is the authorization token. Such token can be redeemed for ballot transaction asynchronously and so, anonymously. Let's see how it is implemented. 
 
@@ -526,8 +536,8 @@ It should be noted that all of those methods sacrifice privacy to some degree. I
 \label{result}
 
 \subsection{Scalability}
-Scalability is currently one of the most significant problems in blockchain technology. At the time of writing, Bitcoin public network can process 3-7 TPS (transactions per second), Ethereum about 7-15 TPS, Stellar up to 200TPS\footnote{In fact, the limit 200 is denoted in operations per second. In Stellar, there is a distinction between transaction and operation. One transaction can hold up to 100 operations 
-that execute atomically}~\cite{Protocol19:online}. 
+Scalability is currently one of the most significant problems in blockchain technology. At the time of writing, Bitcoin public network can process 3-7 TPS (transactions per second), Ethereum about 7-15 TPS, Stellar up to 200TPS. In fact, the limit 200 is denoted in operations per second. In Stellar, there is a distinction between transaction and operation. One transaction can hold up to 100 operations 
+that execute atomically~\cite{Protocol19:online}. 
 In most protocols, each node stores all blockchain state and validate all transactions individually. Although this provides high security, the whole blockchain network can not process more transactions than a single node can. If we take presidential elections, where millions of people are casting a vote (sending a transaction), it may quickly turn out that the number is insufficient.
 
 At the time of writing, the Stellar public network process about 30 operations per second~\cite{StellarN45:online}, which is about 15\% of total capacity. If we assume that the rest 85\% is available for our application, then we can state that the Stellar public network is capable of handling about $\floor{\frac{170}{6}} = 28$ votes per second (one vote transaction consist of 6 operations). If we assume an optimistic scenario where users are voting in uniform distribution during the 12 hours. Then Stellar can process $26 * 12 * 3600 = 1.1$ million total votes. If we compare this number with current attempts highlighted in the introduction section (102k and 82k votes cast), our system is doing very well. 
@@ -542,9 +552,10 @@ Stellar plans to introduce a lightning network into its ecosystem~\cite{Lightnin
 Because of the rapid development of lightning network standardization (BOLT)~\cite{poon2016bitcoin}, we leave the research of LN in our system for future work. 
 
 \subsection{Transaction Fees}
-We evaluate the proposed system in the context of transaction fees. To do this, we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18 470 710 people participated in such an election. Each operation on the Stellar network costs 0.00001 XLM. Our vote transaction consists of 6 operations, so the transaction's total cost equals 0.00006 XLM. We know that the closing price for one Lumen at the day of the election was 0.061 USD. We can easily calculate \(18470710 vote * 0.00006 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx 67.62 USD\). Other operational transactions can be neglected due to the very low influence on the total sum.
+We evaluate the proposed system in the context of transaction fees. To do this, we can estimate how much would cost the 2019 Polish parliamentary election, handled by the proposed system. We already know that 18,470,710 people participated in such an election. Each operation on the Stellar network costs 0.00001XLM. Our vote transaction consists of 6 operations, so the transaction's total cost equals 0.00006XLM. We know that the closing price for one Lumen at the day of the election was 0.061USD. We can easily calculate \(18470710 vote * 0.00006 \frac{XLM}{vote} * 0.061 \frac{USD}{XLM} \approx 67.62USD\). Other operational transactions can be neglected due to the very low influence on the total sum.
 
-It is hard to compare how the costs would look like using other Blockchains because, on smart contract platforms, the price depends on a smart contract execution time. On Ethereum, if we assume, the cost of the standard ERC-20 \footnote{ERC-20 is a standard interface for tokens created on Ethereum.  https://eips.ethereum.org/EIPS/eip-20} token transfer to 200.000 gas\footnote{gas is a unit in which Ethereum smart contract execution is measured.}, and the gas price at the day of the election to 15 gwei \footnote{gwei is a denomination of Ether (ETH), $1 ETH = 10^{9} gwei$} \footnote{https://etherscan.io/chart/gasprice} then sending the ERC-20 token would cost $15 * 200000 * 10^{-9} = 0.0003 ETH$, the price of ETH at that time was 180 USD. So the total cost of the elections would be approximately \(18470710 vote * 0.0003 \frac{ETH}{vote} * 180 \frac{USD}{ETH} = 99 7418.34  USD\). 
+It is hard to compare how the costs would look like using other Blockchains because, on smart contract platforms, the price depends on a smart contract execution time. On Ethereum, if we assume, the cost of the standard ERC-20  (a standard interface for tokens created on Ethereum \url{https://eips.ethereum.org/EIPS/eip-20}) token transfer to 200.000 gas (a unit in which Ethereum smart contract execution is measured), and the gas price at the day of the election to 15 gwei (a denomination of Ether (ETH), $1 ETH = 10^{9} gwei$ (\url{https://etherscan.io/chart/gasprice}) then sending the ERC-20 token would cost $15 * 200000 * 10^{-9} = 0.0003 ETH$, the price of ETH at that time was 
+180USD. So the total cost of the elections would be approximately \(18470710 vote * 0.0003 \frac{ETH}{vote} * 180 \frac{USD}{ETH} = 99 7418.34  USD\). 
 
 Those estimations are purely theoretical because, at the time of writing, neither Stellar nor Ethereum can handle 18 million transactions in one day. Additionally, the transaction fee is dynamically adjusted based on network congestion, which is unpredictable in public networks. Nevertheless, Stellar, compared to Ethereum, is much cheaper.
 
@@ -612,11 +623,24 @@ The proposed approach based on Stellar blockchain fulfills all requirements defi
 %Our approach has an advantage over existing solutions employing blockchain technology as it fulfills all together requirements stated for a robust i-voting system and can be applied on a public blockchain network.
 The implementation has been made publicly available as open-source and software available within Stellar testnet and is ready to deploy and perform general-purpose voting.
 
-\section*{Acknowledgements} 
+\authorcontributions{Software, Writing-original draft, Validation S.B.; Supervision, Writing-original draft, Conceptualization, J.S.;
+Project administration, Writing-review and editng, A.S.; Methodology, Writing-review and editng, Investigation, D.G.; Conceptualization, Funding acquisition , Writing-original draft, H.M. All authors have
+read and agreed to the published version of the manuscript.} 
+
+
+\funding{
 The work was supported partially by founds of 
-Department of Computer Architecture,  Gda\'nsk University of Technology, and the University of Alicante.
-Also, the development of the project has been supported by the grant founded by Stellar Community Found.
-The authors would like to thank Johan Stén for his help with cryptography issues related to the implementation of the protocol.
+Department of Computer Architecture,  
+ Faculty of Electronics, Telecommunications and Informatics,
+Gda\'nsk University of Technology, and 
+ Conselleria of Innovation, Universities, Science and Digital Society, of the Community of Valencia, Spain, under project AICO/2020/206.
+ 
+\noindent The development of the project has been also supported by the grant founded by Stellar Community Found.}
+
+\acknowledgments{
+The authors would like to thank Johan Stén for his help with cryptography issues related to the implementation of the protocol.}
+
+\conflictsofinterest{The authors declare no conflict of interest.}
 
  \reftitle{References}
 
@@ -625,4 +649,3 @@ The authors would like to thank Johan Stén for his help with cryptography issue
  
  
 \end{document}
-
